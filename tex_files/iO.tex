@@ -1,7 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass{article}
-\usepackage[T1]{fontenc}
 \usepackage{amssymb, amsmath, graphicx, enumerate, mathtools, listings, algorithm, algpseudocode}
 
 \setlength{\oddsidemargin}{.25in}
@@ -16,7 +15,6 @@
 \usepackage{fullpage}
 \usepackage[pdftex]{hyperref}
 \usepackage{amsthm}
-\usepackage[utf8]{inputenc}
 \usepackage[draft]{todonotes}
 \usepackage{times}
 \usepackage{comment}
@@ -55,17 +53,7 @@
 \usepackage{relsize}
 \usepackage{extarrows}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% bibliography settings
-\usepackage[backend=biber,style=alphabetic,sorting=anyt]{biblatex}
-\bibliography{pcpip-references}
-\renewcommand*{\bibfont}{\small}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % THEOREM ENVIRONMENTS
@@ -88,8 +76,6 @@
 \newtheorem{example}[corollary]{Example}
 \newtheorem{exercise}[corollary]{Exercise}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MACROS
@@ -156,25 +142,25 @@ To recap the previous lecture, we introduced the notion of program obfuscation a
 
 \section{Definitions}
 Recall that for VBB security, we had to specify the model of computation. In other words, our proofs and discussions were such that there was a difference between turing machines and circuits. In these notes, $\io$ definitions will be provided for circuits; however, these definitions and proofs will port over to other models of computation nicely. Note, from here on, a circuit is represented simply with $C$.
-\begin{definition}
+
     An $\io$ for circuits is a ppt algorithm $\mathcal{O}$ such that:
         \begin{enumerate}
-            \item \underline{Correctness}: $\forall{k}\in\mathbb{N}, \forall{C}, \mathcal{O}(1^k, C) \equiv C$
-            \item \underline{Efficiency}: $\forall{k}\in\mathbb{N}, \forall{C}, \lvert \mathcal{O}(1^k, C) \rvert = \text{poly}(k, \lvert C \rvert)$
-            \item $\io$ \underline{Security}: $\forall{C_1,C_2}$ such that $\lvert C_1 \rvert = \lvert C_2 \rvert, C_1 \equiv C_2$,
+            \item Correctness: $\forall{k}\in\mathbb{N}, \forall{C}, \mathcal{O}(1^k, C) \equiv C$
+            \item Efficiency: $\forall{k}\in\mathbb{N}, \forall{C}, \lvert \mathcal{O}(1^k, C) \rvert = \text{poly}(k, \lvert C \rvert)$
+            \item $\io$ Security: $\forall{C_1,C_2}$ such that $\lvert C_1 \rvert = \lvert C_2 \rvert, C_1 \equiv C_2$,
                 \begin{align*}
                     \mathcal{O}(1^k, C_1) & \ci \mathcal{O}(1^k, C_2)
                 \end{align*}
         \end{enumerate}
-\end{definition}
+
 \noindent
 Looking at the definiton of $\io$ above, we can see that $\io$ is to VBB what witness indistinguishability is to Zero-Knowledge. $\io$ is a weaker notion of security when compared to VBB, but it is still useful. We will show that with just $\io$ and one-way functions, we can achieve a public key encryption scheme.
 
 
 \section{Using $\io$ for Public-Key Encryption}
-\begin{theorem}
+
     $\io + \text{OWF} \Rightarrow \text{PKE}$
-\end{theorem}
+
 \subsection{Proof Overview}
 The above is proved by proving the following two lemmas:
     \begin{enumerate}
@@ -186,17 +172,17 @@ Therefore, to continue on with the proof, we introduce the concept of Witness En
     \subsubsection{Definitions}
     A Witness Encryption scheme for a relation $R = \{(x, w) | V_R(x, w) = 1\}$, where $R \in NP$, is a tuple of algorithms $(E, D)$ such that:
         \begin{enumerate}
-            \item Correctness: $\forall{k}\in\N, \forall{m}\in\{0, 1\},\forall{(x, w)}\in R,$
+            \item Correctness: $\forall k \in\N, \forall{m}\in\{0, 1\},\forall{(x, w)}\in R,$
                 \begin{align*}
                     \Pr[D(1^k, E(1^k, x, m), w) = m] = 1
                 \end{align*}
             \item Security: $\forall{x}\not\in R, E(1^k, x, 0) \ci E(1^k, x, 1)$.
         \end{enumerate}
-\begin{lemma}
+
 $\io \Rightarrow \text{Witness Encryption}$
-\end{lemma}
+
 Let $\mathcal{O}$ be an $\io$. We construct a candidate witness encryption scheme $(E, D)$:
-\begin{mdframed}%[frametitle={Witness Encryption from $\io$}]
+
 \begin{align*}
     C_{x,m}(y) &:= \left\{\begin{array}{cc}
                                 m& \text{if $(x, y) \in R$} \\
@@ -205,13 +191,13 @@ Let $\mathcal{O}$ be an $\io$. We construct a candidate witness encryption schem
     E(1^k, x, m) &:= \mathcal{O}(C_{x, m}) \\
     D(1^k, c, w) &:= c(w)
 \end{align*}
-\end{mdframed}
-\begin{proof}
+
+
 To show that this construction is a valid Witness Encryption $(E, D)$, we need to show that correctness and security are satisfied:
 \begin{enumerate}
-    \item \underline{Correctness:} This property is trivial to prove as the obfuscated circuit $C_{x, m}$ when given an input $w$ will output the message if and only if $(x, w)$ is in the relation $R$.
+    \item Correctness: This property is trivial to prove as the obfuscated circuit $C_{x, m}$ when given an input $w$ will output the message if and only if $(x, w)$ is in the relation $R$.
 
-    \item \underline{Security:} Proving security begins with fixing $x \not \in R$. Note that the circuits $C_{x, 0}$ and $C_{x, 1}$ are equal in size and equivalent in functionality because they both output $\bot$ if and only if there is no valid witness for $x$. Having said this, we can apply $\io$ security to show that:
+    \item Security: Proving security begins with fixing $x \not \in R$. Note that the circuits $C_{x, 0}$ and $C_{x, 1}$ are equal in size and equivalent in functionality because they both output $\bot$ if and only if there is no valid witness for $x$. Having said this, we can apply $\io$ security to show that:
         \begin{align*}
             \mathcal{O}(C_{x, 0}) \ci \mathcal{O}(C_{x, 1})
         \end{align*}
@@ -225,26 +211,26 @@ To show that this construction is a valid Witness Encryption $(E, D)$, we need t
             E(1^k, x, 0) = \mathcal{O}(C_{x, 0}) \ci \mathcal{O}(C_{x, 1}) = E(1^k, x, 1)
         \end{align*}
 \end{enumerate}
-\end{proof}
+
 \subsection{Public Key Encryption using Witness Encryption and OWF}
-\begin{lemma}
+
 $OWF + WE \Rightarrow PKE$
-\end{lemma}
+
 \noindent
 We first begin with a construction of a candidate Public Key Encryption scheme $(G, E, D)$. The construction relies on the following:
     \begin{align*}
         \hat{G}&: \{0,1\}^k \rightarrow \{0,1\}^{2k} \\
         WE &:= (\hat{E}, \hat{D})
     \end{align*}
-\begin{remark}
+
 $\hat{G}$ is a $PRG$ with expansion factor of $2$ that is implied from $OWF$.
-\end{remark}
+
 \noindent Now, recall that our Witness Encryption scheme requires a relation. To satisfy this requirement, we construct the following relation so that we can later invoke $WE$ security in our proof:
 \begin{align*}
     R_{\hat{G}}\{(z, s) : \hat{G}(s) = z, z \in \{0,1\}^{2k}, s \in \{0,1\}^k \}
 \end{align*}
 We now have all the neccessary primitives to construct our candidate Public Key Encryption scheme:
-\begin{mdframed}%[frametitle={Candidate Public Key Encryption using WE and OWF}]
+
     \begin{align*}
     G(1^k) &:= \begin{cases}
                     \text{1. sample $s \in\{0,1\}^k$} \\
@@ -254,13 +240,13 @@ We now have all the neccessary primitives to construct our candidate Public Key 
     E(1^k, pk, m) &:= \hat{E}(1^k, pk, m) \\ \\
     D(1^k, sk, c) &:= \hat{D}(1^k, c, sk)
     \end{align*}
-\end{mdframed}
-\begin{proof}
+
+
     To show that $(G, E, D)$ is a valid Public Key Encryption scheme, we want to argue for completeness and security.
     \begin{enumerate}
-        \item \underline{\textit{Completeness:}} Given that $E$ and $D$ use the witness encryption scheme under the hood, it suffices to claim that $(pk, sk) \in R$ is always true because of $G$. Thus, the underlying witness encryption scheme's correctness implies completeness for this PKE scheme.
+        \item \textit{Completeness:} Given that $E$ and $D$ use the witness encryption scheme under the hood, it suffices to claim that $(pk, sk) \in R$ is always true because of $G$. Thus, the underlying witness encryption scheme's correctness implies completeness for this PKE scheme.
 
-        \item \underline{\textit{Security:}} To prove that the PKE is secure, recall that it suffices to show that it is 1 message indistinguishable. Therefore, we want to show $E(1^k, pk, 0) \ci E(1^k, pk, 1)$. The proof for this is as follows:
+        \item \textit{Security:} To prove that the PKE is secure, recall that it suffices to show that it is 1 message indistinguishable. Therefore, we want to show $E(1^k, pk, 0) \ci E(1^k, pk, 1)$. The proof for this is as follows:
             \begin{align}
                 E(1^k, pk, 0) &= \hat{E}(1^k, \hat{G}(s), 0) \\
                 &\ci \hat{E}(1^k, U_{2k}, 0) \\
@@ -272,22 +258,22 @@ We now have all the neccessary primitives to construct our candidate Public Key 
         Equation $(26.2)$ follows from the security of the $PRG$, equation $(26.3)$ follows from $WE$ security, and equation $(23.4)$ follows from the security of the $PRG$ once again.
         \end{remark}
     \end{enumerate}
-\end{proof}
+
 \section{Best Possible Obfuscation[Goldwasser, Rothblum]}
 The road to obfuscation began with ruling out a definition for an obfuscator that was far too strong–VBB. From here, we lowered our expectations and played with indistinguishability obfuscation. However, this definition may feel too weak. The motivation behind Best Possible Obfuscation is to possibly achieve and obfuscator that feels stronger than $\io$. In the end, the two are equivalent.
 \subsection{Definition}
 The idea The idea behind a best possible obfuscator (BPO) is that there may be some information about a circuit which cannot possibly be hidden by any functionality-preserving obfuscation. We ask only that an obfuscator do the best that it can. Informally, we ask that the obfuscated program should leak as little information about the underlying circuit as any other program with the same functionality and size. More formally:
-\begin{definition}
+
     A BPObfuscator (for circuits) is a ppt $\mathcal{O}$ such that:
     \begin{enumerate}
-        \item \underline{Correctness:} $\forall{k}\in\mathbb{N}, \forall{C}, \mathcal{O}(1^k, C) \equiv C$
-        \item \underline{Efficiency:} $\forall{k}\in\mathbb{N}, \forall{C}, \lvert \mathcal{O}(1^k, C) \rvert = \text{poly}(k, \lvert C \rvert)$
-        \item \underline{BPO Security:} $\forall$ ppt $A$, $\exists$ ppt $S$ $\forall$ circuits $C_1, C_2$,
+        \item Correctness: $\forall{k}\in\mathbb{N}, \forall{C}, \mathcal{O}(1^k, C) \equiv C$
+        \item Efficiency: $\forall{k}\in\mathbb{N}, \forall{C}, \lvert \mathcal{O}(1^k, C) \rvert = \text{poly}(k, \lvert C \rvert)$
+        \item BPO Security: $\forall$ ppt $A$, $\exists$ ppt $S$ $\forall$ circuits $C_1, C_2$,
         \begin{align*}
             A(1^k, \mathcal{O}(1^k, C_1)) \ci S(1^k, C_2)
         \end{align*}
     \end{enumerate}
-\end{definition}
+
 
 
 \subsection{VBB Security and BPO Security}
