@@ -13,6 +13,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="/akazorian.github.io/style.css">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
@@ -55,6 +56,36 @@ code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Ann
 code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
   </style>
+  <style>
+
+  ul {
+      list-style-type: none;
+      margin: -250;
+      padding: 0;
+      width: 25%;
+      background-color: #f1f1f1;
+      position: fixed;
+      height: 100%;
+      overflow: auto;
+  }
+
+  li a {
+      display: block;
+      color: #000;
+      padding: 8px 16px;
+      text-decoration: none;
+  }
+
+  li a.active {
+      background-color: #4CAF50;
+      color: white;
+  }
+
+  li a:hover:not(.active) {
+      background-color: #555;
+      color: white;
+  }
+  </style>
   <script type="text/x-mathjax-config">
       MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
   </script>
@@ -62,10 +93,182 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
     src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
   </script>
 </head>
-
 <body>
-        <article class="markdown-body">
+<article class="markdown-body">
+<nav>
+<ul>
+<li><a href="#indistinguishability-obfuscation">Indistinguishability Obfuscation</a></li>
+<li><a href="#definitions">Definitions</a></li>
+<li><a href="#using-imathcalo-for-public-key-encryption">Using <span class="math inline">\(i\mathcal{O}\)</span> for Public-Key Encryption</a></li>
+<ul>
+<li><a href="#proof-overview">Proof Overview</a></li>
+<li><a href="#witness-encryption-using-imathcalo">Witness Encryption using <span class="math inline">\(i\mathcal{O}\)</span></a></li>
+<ul>
+<li><a href="#definitions-1">Definitions</a></li>
+</ul>
+<li><a href="#public-key-encryption-using-witness-encryption-and-owf">Public Key Encryption using Witness Encryption and OWF</a></li>
+</ul>
+<li><a href="#best-possible-obfuscationgoldwasser-rothblum">Best Possible Obfuscation[Goldwasser, Rothblum]</a></li>
+<ul>
+<li><a href="#definition">Definition</a></li>
+<li><a href="#vbb-security-and-bpo-security">VBB Security and BPO Security</a></li>
+<li><a href="#equivalence-of-bpo-and-imathcalo">Equivalence of BPO and <span class="math inline">\(i\mathcal{O}\)</span></a></li>
+</ul>
+<li><a href="#amplifying-imathcalo">Amplifying <span class="math inline">\(i\mathcal{O}\)</span></a></li>
+<ul>
+<li><a href="#definitions-2">Definitions</a></li>
+</ul>
+</nav>
+<h1 id="indistinguishability-obfuscation">Indistinguishability Obfuscation</h1>
+<p>To recap the previous lecture, we introduced the notion of program obfuscation and the definition of Virtual Black Box (VBB) security. Very informally, VBB security claims that an obfuscation of a program is, from the point of view of a user, only as good as having black box oracle access to the original program. This definition of security with regards to obfuscation is an impossible one to achieve as shown by Barak et. al. The paper that introduced this impossibility result also introduced, as a weaker alternative of security, indistinguishability obfuscation (<span class="math inline">\(i\mathcal{O}\)</span>).</p>
+<h1 id="definitions">Definitions</h1>
+<p>Recall that for VBB security, we had to specify the model of computation. In other words, our proofs and discussions were such that there was a difference between turing machines and circuits. In these notes, <span class="math inline">\(i\mathcal{O}\)</span> definitions will be provided for circuits; however, these definitions and proofs will port over to other models of computation nicely. Note, from here on, a circuit is represented simply with <span class="math inline">\(C\)</span>.</p>
+<p>An <span class="math inline">\(i\mathcal{O}\)</span> for circuits is a ppt algorithm <span class="math inline">\(\mathcal{O}\)</span> such that:</p>
+<ol>
+<li><p>Correctness: <span class="math inline">\(\forall{k}\in\mathbb{N}, \forall{C}, \mathcal{O}(1^k, C) \equiv C\)</span></p></li>
+<li><p>Efficiency: <span class="math inline">\(\forall{k}\in\mathbb{N}, \forall{C}, \lvert \mathcal{O}(1^k, C) \rvert = \text{poly}(k, \lvert C \rvert)\)</span></p></li>
+<li><p><span class="math inline">\(i\mathcal{O}\)</span> Security: <span class="math inline">\(\forall{C_1,C_2}\)</span> such that <span class="math inline">\(\lvert C_1 \rvert = \lvert C_2 \rvert, C_1 \equiv C_2\)</span>, <span class="math display">\[\begin{aligned}
+                    \mathcal{O}(1^k, C_1) &amp; \stackrel{c}{=}\mathcal{O}(1^k, C_2)
+                \end{aligned}\]</span></p></li>
+</ol>
+<p>Looking at the definiton of <span class="math inline">\(i\mathcal{O}\)</span> above, we can see that <span class="math inline">\(i\mathcal{O}\)</span> is to VBB what witness indistinguishability is to Zero-Knowledge. <span class="math inline">\(i\mathcal{O}\)</span> is a weaker notion of security when compared to VBB, but it is still useful. We will show that with just <span class="math inline">\(i\mathcal{O}\)</span> and one-way functions, we can achieve a public key encryption scheme.</p>
+<h1 id="using-imathcalo-for-public-key-encryption">Using <span class="math inline">\(i\mathcal{O}\)</span> for Public-Key Encryption</h1>
+<p><span class="math inline">\(i\mathcal{O}+ \text{OWF} \Rightarrow \text{PKE}\)</span></p>
+<h2 id="proof-overview">Proof Overview</h2>
+<p>The above is proved by proving the following two lemmas:</p>
+<ol>
+<li><p><span class="math inline">\(i\mathcal{O}\Rightarrow \text{Witness Encryption}\)</span></p></li>
+<li><p><span class="math inline">\(\text{Witness Encryption} + \text{OWF} \Rightarrow\text{PKE}\)</span></p></li>
+</ol>
+<p>Therefore, to continue on with the proof, we introduce the concept of Witness Encryption.</p>
+<h2 id="witness-encryption-using-imathcalo">Witness Encryption using <span class="math inline">\(i\mathcal{O}\)</span></h2>
+<h3 id="definitions-1">Definitions</h3>
+<p>A Witness Encryption scheme for a relation <span class="math inline">\(R = \{(x, w) | V_R(x, w) = 1\}\)</span>, where <span class="math inline">\(R \in NP\)</span>, is a tuple of algorithms <span class="math inline">\((E, D)\)</span> such that:</p>
+<ol>
+<li><p>Correctness: <span class="math inline">\(\forall k \in{\mathbf N}, \forall{m}\in\{0, 1\},\forall{(x, w)}\in R,\)</span> <span class="math display">\[\begin{aligned}
+                    \Pr[D(1^k, E(1^k, x, m), w) = m] = 1
+                \end{aligned}\]</span></p></li>
+<li><p>Security: <span class="math inline">\(\forall{x}\not\in R, E(1^k, x, 0) \stackrel{c}{=}E(1^k, x, 1)\)</span>.</p></li>
+</ol>
+<p><span class="math inline">\(i\mathcal{O}\Rightarrow \text{Witness Encryption}\)</span></p>
+<p>Let <span class="math inline">\(\mathcal{O}\)</span> be an <span class="math inline">\(i\mathcal{O}\)</span>. We construct a candidate witness encryption scheme <span class="math inline">\((E, D)\)</span>:</p>
+<p><span class="math display">\[\begin{aligned}
+    C_{x,m}(y) &amp;:= \left\{\begin{array}{cc}
+                                m&amp; \text{if $(x, y) \in R$} \\
+                                \bot&amp; \text{otherwise}
+                            \end{array}\right. \\
+    E(1^k, x, m) &amp;:= \mathcal{O}(C_{x, m}) \\
+    D(1^k, c, w) &amp;:= c(w)\end{aligned}\]</span></p>
+<p>To show that this construction is a valid Witness Encryption <span class="math inline">\((E, D)\)</span>, we need to show that correctness and security are satisfied:</p>
+<ol>
+<li><p>Correctness: This property is trivial to prove as the obfuscated circuit <span class="math inline">\(C_{x, m}\)</span> when given an input <span class="math inline">\(w\)</span> will output the message if and only if <span class="math inline">\((x, w)\)</span> is in the relation <span class="math inline">\(R\)</span>.</p></li>
+<li><p>Security: Proving security begins with fixing <span class="math inline">\(x \not \in R\)</span>. Note that the circuits <span class="math inline">\(C_{x, 0}\)</span> and <span class="math inline">\(C_{x, 1}\)</span> are equal in size and equivalent in functionality because they both output <span class="math inline">\(\bot\)</span> if and only if there is no valid witness for <span class="math inline">\(x\)</span>. Having said this, we can apply <span class="math inline">\(i\mathcal{O}\)</span> security to show that: <span class="math display">\[\begin{aligned}
+            \mathcal{O}(C_{x, 0}) \stackrel{c}{=}\mathcal{O}(C_{x, 1})
+        \end{aligned}\]</span> Recall that by construction, the following statements are true: <span class="math display">\[\begin{aligned}
+            E(1^k, x, 0) &amp;= \mathcal{O}(C_{x, 0}) \\
+            E(1^k, x, 1) &amp;= \mathcal{O}(C_{x, 1})
+        \end{aligned}\]</span> Therefore, we finally show: <span class="math display">\[\begin{aligned}
+            E(1^k, x, 0) = \mathcal{O}(C_{x, 0}) \stackrel{c}{=}\mathcal{O}(C_{x, 1}) = E(1^k, x, 1)
+        \end{aligned}\]</span></p></li>
+</ol>
+<h2 id="public-key-encryption-using-witness-encryption-and-owf">Public Key Encryption using Witness Encryption and OWF</h2>
+<p><span class="math inline">\(OWF + WE \Rightarrow PKE\)</span></p>
+<p>We first begin with a construction of a candidate Public Key Encryption scheme <span class="math inline">\((G, E, D)\)</span>. The construction relies on the following: <span class="math display">\[\begin{aligned}
+        \hat{G}&amp;: \{0,1\}^k \rightarrow \{0,1\}^{2k} \\
+        WE &amp;:= (\hat{E}, \hat{D})
+    \end{aligned}\]</span></p>
+<p><span class="math inline">\(\hat{G}\)</span> is a <span class="math inline">\(PRG\)</span> with expansion factor of <span class="math inline">\(2\)</span> that is implied from <span class="math inline">\(OWF\)</span>.</p>
+<p>Now, recall that our Witness Encryption scheme requires a relation. To satisfy this requirement, we construct the following relation so that we can later invoke <span class="math inline">\(WE\)</span> security in our proof: <span class="math display">\[\begin{aligned}
+    R_{\hat{G}}\{(z, s) : \hat{G}(s) = z, z \in \{0,1\}^{2k}, s \in \{0,1\}^k \}\end{aligned}\]</span> We now have all the neccessary primitives to construct our candidate Public Key Encryption scheme:</p>
+<p><span class="math display">\[\begin{aligned}
+    G(1^k) &amp;:= \begin{cases}
+                    \text{1. sample $s \in\{0,1\}^k$} \\
+                    \text{2. $z := \hat{G}(s)$} \\
+                    \text{3. output $pk := z$, $sk := s$}
+                \end{cases} \\ \\
+    E(1^k, pk, m) &amp;:= \hat{E}(1^k, pk, m) \\ \\
+    D(1^k, sk, c) &amp;:= \hat{D}(1^k, c, sk)
+    \end{aligned}\]</span></p>
+<p>To show that <span class="math inline">\((G, E, D)\)</span> is a valid Public Key Encryption scheme, we want to argue for completeness and security.</p>
+<ol>
+<li><p><em>Completeness:</em> Given that <span class="math inline">\(E\)</span> and <span class="math inline">\(D\)</span> use the witness encryption scheme under the hood, it suffices to claim that <span class="math inline">\((pk, sk) \in R\)</span> is always true because of <span class="math inline">\(G\)</span>. Thus, the underlying witness encryption scheme’s correctness implies completeness for this PKE scheme.</p></li>
+<li><p><em>Security:</em> To prove that the PKE is secure, recall that it suffices to show that it is 1 message indistinguishable. Therefore, we want to show <span class="math inline">\(E(1^k, pk, 0) \stackrel{c}{=}E(1^k, pk, 1)\)</span>. The proof for this is as follows: <span class="math display">\[\begin{aligned}
+                E(1^k, pk, 0) &amp;= \hat{E}(1^k, \hat{G}(s), 0) \\
+                &amp;\stackrel{c}{=}\hat{E}(1^k, U_{2k}, 0) \\
+                &amp;\stackrel{c}{=}\hat{E}(1^k, U_{2k}, 1) \\
+                &amp;\stackrel{c}{=}\hat{E}(1^k, \hat{G}(s), 1) \\
+                &amp;= E(1^k, pk, 1)
+            \end{aligned}\]</span></p>
+<p>Equation <span class="math inline">\((26.2)\)</span> follows from the security of the <span class="math inline">\(PRG\)</span>, equation <span class="math inline">\((26.3)\)</span> follows from <span class="math inline">\(WE\)</span> security, and equation <span class="math inline">\((23.4)\)</span> follows from the security of the <span class="math inline">\(PRG\)</span> once again.</p></li>
+</ol>
+<h1 id="best-possible-obfuscationgoldwasser-rothblum">Best Possible Obfuscation[Goldwasser, Rothblum]</h1>
+<p>The road to obfuscation began with ruling out a definition for an obfuscator that was far too strong–VBB. From here, we lowered our expectations and played with indistinguishability obfuscation. However, this definition may feel too weak. The motivation behind Best Possible Obfuscation is to possibly achieve and obfuscator that feels stronger than <span class="math inline">\(i\mathcal{O}\)</span>. In the end, the two are equivalent.</p>
+<h2 id="definition">Definition</h2>
+<p>The idea The idea behind a best possible obfuscator (BPO) is that there may be some information about a circuit which cannot possibly be hidden by any functionality-preserving obfuscation. We ask only that an obfuscator do the best that it can. Informally, we ask that the obfuscated program should leak as little information about the underlying circuit as any other program with the same functionality and size. More formally:</p>
+<p>A BPObfuscator (for circuits) is a ppt <span class="math inline">\(\mathcal{O}\)</span> such that:</p>
+<ol>
+<li><p>Correctness: <span class="math inline">\(\forall{k}\in\mathbb{N}, \forall{C}, \mathcal{O}(1^k, C) \equiv C\)</span></p></li>
+<li><p>Efficiency: <span class="math inline">\(\forall{k}\in\mathbb{N}, \forall{C}, \lvert \mathcal{O}(1^k, C) \rvert = \text{poly}(k, \lvert C \rvert)\)</span></p></li>
+<li><p>BPO Security: <span class="math inline">\(\forall\)</span> ppt <span class="math inline">\(A\)</span>, <span class="math inline">\(\exists\)</span> ppt <span class="math inline">\(S\)</span> <span class="math inline">\(\forall\)</span> circuits <span class="math inline">\(C_1, C_2\)</span>, <span class="math display">\[\begin{aligned}
+            A(1^k, \mathcal{O}(1^k, C_1)) \stackrel{c}{=}S(1^k, C_2)
+        \end{aligned}\]</span></p></li>
+</ol>
+<h2 id="vbb-security-and-bpo-security">VBB Security and BPO Security</h2>
+<p>VBB security <span class="math inline">\(\Rightarrow\)</span> BPO security</p>
+<p>Suppose for the sake of contradiction that BPO security does not exist. In other words, some obfuscator <span class="math inline">\(\mathcal{O}\)</span> is not a BPO. Therefore, we fix a bad ppt adversary <span class="math inline">\(A\)</span> and its simulator <span class="math inline">\(S:=A \circ \mathcal{O}\)</span>. Now, there exists a ppt <span class="math inline">\(D\)</span> and two circuits <span class="math inline">\(C_1\)</span>, <span class="math inline">\(C_2\)</span> such that: <span class="math display">\[\begin{aligned}
+            \biggr\lvert\Pr[D(1^k, A(1^k, \mathcal{O}(1^k, C_1))) = 1] - \Pr[D(1^k, S(1^k, C_2)) = 1] \biggr\rvert \geq \delta(k)
+        \end{aligned}\]</span> Above, <span class="math inline">\(\delta(\cdot)\)</span> is a negligible function of its input. We can rewrite the above as follows: <span class="math display">\[\begin{aligned}
+            \biggr\lvert\Pr[D(1^k, A(1^k, \mathcal{O}(1^k, C_1))) = 1] - \Pr[D(1^k, A(1^k, \mathcal{O}(1^k, C_2))) = 1] \biggr\rvert \geq \delta(k)
+        \end{aligned}\]</span> We want to show that there exists an adversary <span class="math inline">\(A^*\)</span> that breaks the notion of VBB security. To do so, we need to devise an <span class="math inline">\(A^*\)</span> for which there does not exist a black box simulator <span class="math inline">\(S^*\)</span>.</p>
+<p>The following is true for all ppt <span class="math inline">\(S^*\)</span>: <span class="math display">\[\begin{aligned}
+            \Pr[S^{*^{C_1}}(1^k) = 1] = \Pr[S^{*^{C_2}}(1^k) = 1]
+        \end{aligned}\]</span></p>
+<p>Now, we have to ask: what is <span class="math inline">\(A^*\)</span>? Consider <span class="math inline">\(A^* := D \circ A\)</span>. Using this construction, it follows that: <span class="math display">\[\begin{aligned}
+            \biggr\lvert\Pr[A^*(1^k, \mathcal{O}(1^k, C_1)) = 1] - \Pr[A^*(1^k, \mathcal{O}(1^k, C_2)) = 1] \biggr\rvert \geq \delta(k)
+        \end{aligned}\]</span> Here, <span class="math inline">\(A^*\)</span> is clearly an adversary for <span class="math inline">\(\mathcal{O}\)</span> when considering <span class="math inline">\(VBB\)</span> security. Consider the ppt simulator <span class="math inline">\(S^*\)</span> for <span class="math inline">\(A^*\)</span> with black box access to <span class="math inline">\(\mathcal{O}(1^k, C_2)\)</span>. Without loss of generality, we want VBB security for <span class="math inline">\(\mathcal{O}\)</span>; moreover, we want the following to be true: <span class="math display">\[\begin{aligned}
+            \biggr\lvert\Pr[A^*(1^k, \mathcal{O}(1^k, C_2)) = 1] - \Pr[S^{*^{C_2}}(1^k)\biggr\rvert = \text{ negl$(k)$}
+        \end{aligned}\]</span> Because of the aforementioned fact, we also require that the following be true for VBB security to hold: <span class="math display">\[\begin{aligned}
+            \biggr\lvert\Pr[A^*(1^k, \mathcal{O}(1^k, C_1)) = 1] - \Pr[S^{*^{C_2}}(1^k) = 1]\biggr\rvert = \text{ negl$(k)$}
+        \end{aligned}\]</span> However, this cannot be the case. Instead, the following is true: <span class="math display">\[\begin{aligned}
+            \biggr\lvert\Pr[A^*(1^k, \mathcal{O}(1^k, C_1)) = 1] - \Pr[A^*(1^k, \mathcal{O}(1^k, C_2)) = 1] \biggr\rvert &amp;\geq\\
+            \biggr\lvert\Pr[A^*(1^k, \mathcal{O}(1^k, C_1)) = 1] - \Pr[S^{*^{C_2}}(1^k) = 1]\biggr\rvert &amp;= \delta(k) + \text{negl$(k)$}
+        \end{aligned}\]</span> Contraditction. Thus, we have shown that VBB does not hold when BPO can be broken.</p>
+<h2 id="equivalence-of-bpo-and-imathcalo">Equivalence of BPO and <span class="math inline">\(i\mathcal{O}\)</span></h2>
+<p>We introduced BPO in hopes that it would give us a stronger notion of obfuscation to work with when compared to <span class="math inline">\(i\mathcal{O}\)</span>. However, the two have been shown to be equivalent.</p>
+<p>BPO <span class="math inline">\(\equiv\)</span> <span class="math inline">\(i\mathcal{O}\)</span></p>
+<p>We first prove the forward direction.</p>
+<p>BPO <span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(i\mathcal{O}\)</span></p>
+<p>Fix <span class="math inline">\(C_1, C_2\)</span> such that <span class="math inline">\(\lvert C_1 \rvert = \lvert C_2 \rvert\)</span> and <span class="math inline">\(C_1 \equiv C_2\)</span>. We want to show that <span class="math inline">\(\mathcal{O}(1^k, C_1) \stackrel{c}{=}\mathcal{O}(1^k, C_2)\)</span> for some BPO <span class="math inline">\(\mathcal{O}\)</span>. Now, consider <span class="math inline">\(A(\hat C) = \hat C\)</span> and its corresponding simulator <span class="math inline">\(S_A\)</span>. Given this selection of adversary, the following holds: <span class="math display">\[\begin{aligned}
+            \biggr\lvert \Pr[A(1^k, \mathcal{O}(1^k, C_1)) = 1] - \Pr[S(1^k, \mathcal{O}(1^k, C_2)) = 1] \biggr\rvert &amp;= \\
+            \biggr\lvert \Pr[\mathcal{O}(1^k, C_1) = 1] - \Pr[S(1^k, \mathcal{O}(1^k, C_2)) = 1] \biggr\rvert = &amp;\text{ negl(k)}
+        \end{aligned}\]</span> Using the BPO <span class="math inline">\(\mathcal{O}\)</span> for <span class="math inline">\(C_2, C_2\)</span> instead of <span class="math inline">\(C_1, C_2\)</span>, we can show: <span class="math display">\[\begin{aligned}
+            \biggr\lvert \Pr[A(1^k, \mathcal{O}(1^k, C_2)) = 1] - \Pr[S(1^k, \mathcal{O}(1^k, C_2)) = 1] \biggr\rvert &amp;= \\
+            \biggr\lvert \Pr[\mathcal{O}(1^k, C_2) = 1] - \Pr[S(1^k, \mathcal{O}(1^k, C_2)) = 1] \biggr\rvert = &amp;\text{ negl(k)}
+        \end{aligned}\]</span> Therefore, we have that: <span class="math display">\[\begin{aligned}
+            \mathcal{O}(1^k, C_1) \stackrel{c}{=}S(1^k, C_2) \stackrel{c}{=}\mathcal{O}(1^k, C_2)
+        \end{aligned}\]</span></p>
+<p>Now consider the backwards direction.</p>
+<p><span class="math inline">\(i\mathcal{O}\Rightarrow\)</span> BPO</p>
+<p>Say there is an <span class="math inline">\(i\mathcal{O}\)</span> <span class="math inline">\(\mathcal{O}\)</span> such that for all pairs of circuits <span class="math inline">\(C_1, C_2\)</span> equal in size and functionality, <span class="math inline">\(\mathcal{O}(1^k, C_1) \stackrel{c}{=}\mathcal{O}(1^k, C_2)\)</span>. We want to show that this implies <span class="math inline">\(\mathcal{O}\)</span> is also a BPO. We start by saying that for all ppt <span class="math inline">\(A\)</span>, is simulator <span class="math inline">\(S(1^k, C_2) = A(1^k, \mathcal{O}(1^K, C_2)\)</span>. Therefore, from the definition of <span class="math inline">\(i\mathcal{O}\)</span> security, we can show that the following holds: <span class="math display">\[\begin{aligned}
+            \biggr\lvert \Pr[A(1^k, \mathcal{O}(1^k, C_1)) = 1] - \Pr[A(1^k, \mathcal{O}(1^k, C_2)) = 1] \biggr\rvert &amp;=  \\
+            \biggr\lvert \Pr[A(1^k, \mathcal{O}(1^k, C_1)) = 1] - \Pr[S(1^k, C_2) = 1] \biggr\rvert &amp;= \text{ negl$(k)$}
+        \end{aligned}\]</span></p>
+<h1 id="amplifying-imathcalo">Amplifying <span class="math inline">\(i\mathcal{O}\)</span></h1>
+<p>There may be some classes of circuits that are easier or harder to obfuscate. For example, it could be that we know how to construct obfuscators that work on shallow circuits but not deep ones. We will show that using fully homomorphic encryption, we can bootstrap an IO obfuscator for such circuits to an <span class="math inline">\(i\mathcal{O}\)</span> obfuscator for circuits of size polynomial in the input. We will give the intuition for the proof here, but will not give the complete proof until next lecture.<br />
+<br />
+Consider a circuit class <span class="math inline">\(\mathcal{C}\)</span> where <span class="math inline">\(\forall{C_1, C_2} \in \mathcal{C}\)</span>, <span class="math inline">\(C_1\)</span> and <span class="math inline">\(C_2\)</span> are equal in size and functionality. An <span class="math inline">\(i\mathcal{O}\)</span> <span class="math inline">\(\mathcal{O}\)</span> for <span class="math inline">\(\mathcal{C}\)</span> is such that the properties of correctness, efficiency, and <span class="math inline">\(i\mathcal{O}\)</span> security holds for each pair of circuits in <span class="math inline">\(\mathcal{C}\)</span>. Prior to introducing another theorem on the implications related to the existence of <span class="math inline">\(i\mathcal{O}\)</span>, we introduce prerequisite definitions.</p>
+<h2 id="definitions-2">Definitions</h2>
+<p><span class="smallcaps"><span class="math inline">\(NC_1\)</span></span> is the class of decision problems that can be decided in polynomial time and in logarithmic depth.</p>
+<p>A Fully Homomorphic Encryption scheme (FHE) is a tuple of algorithms<br />
+<span class="math inline">\((Gen, Enc, Dec, Eval)\)</span> such that:</p>
+<ol>
+<li><p><span class="math inline">\((Gen, Enc, Dec, Eval)\)</span> is a CPA secure Public Key Encryption scheme.</p></li>
+<li><p><span class="math inline">\(Dec(sk, Eval(pk, C, Enc(pk, x))) = C(x)\)</span></p></li>
+</ol>
+<p>We show the following:</p>
+<p><span class="math inline">\(i\mathcal{O}\)</span> for <span class="smallcaps"><span class="math inline">\(NC_1\)</span></span> + Fully Homomorphic Encryption (FHE) <span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(i\mathcal{O}\)</span> for all polynomial size circuits.</p>
+<p>The main idea is that the data and the program are equivalent. We will need a fully-homomorphic encryption scheme, which allows us to apply a function to an encrypted message to get an encryption of the function applied to that message. Informally, instead of using our <span class="math inline">\(i\mathcal{O}\)</span> obfuscator to obfuscate the circuit itself, we will encrypt the circuit, and then obfuscate the decryption algorithm. Someone with the encrypted circuit, plus the obfuscated decryption algorithm, will be able to evaluate an input x by producing a function <span class="math inline">\(f\)</span> which, given a circuit <span class="math inline">\(C\)</span>, returns <span class="math inline">\(C(x)\)</span> (that is, it is a universal circuit evaluator with input hardcoded as x and then using FHE to apply <span class="math inline">\(f\)</span> on the encryption of <span class="math inline">\(C\)</span> to get an encrypted version of <span class="math inline">\(C(x)\)</span>; and then decrypting to get <span class="math inline">\(C(x)\)</span>. However, since <span class="math inline">\(C\)</span> is encrypted, they will not be able to discover anything about the circuit itself.</p>
 
-        </article>
-    </body>
+</article>
+</body>
 </html>
