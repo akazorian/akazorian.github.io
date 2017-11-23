@@ -55,7 +55,7 @@ def gen_nav(File, ids, headers, depth, lines):
         for line in lines:
             html.write(line)
             if pattern.match(line):
-                html.write('<nav>\n<ul>\n')
+                html.write('<aside>\n<nav id="TOC">\n<ul>\n')
                 curr_depth = depth[0]
                 for i in range(len(ids)):
                     temp_depth = depth[i]
@@ -66,7 +66,7 @@ def gen_nav(File, ids, headers, depth, lines):
                             html.write('</ul>\n')
                     curr_depth = temp_depth
                     html.write(nav.format(ids[i], headers[i]))
-                html.write('</ul>\n</nav>\n')
+                html.write('</ul>\n</nav>\n</aside>\n')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Generate a webpage for a LaTex file.")
