@@ -55,7 +55,7 @@ def gen_nav(File, ids, headers, depth, lines):
         for line in lines:
             html.write(line)
             if pattern.match(line):
-                html.write('<div id="mySidenav" class="sidenav">\n<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>\n<nav>\n<ul>\n')
+                html.write('<div id="mySidenav" class="sidenav">\n<nav>\n<ul>\n')
                 curr_depth = depth[0]
                 for i in range(len(ids)):
                     temp_depth = depth[i]
