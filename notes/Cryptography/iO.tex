@@ -1,0 +1,375 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+\usepackage{amssymb, amsmath, graphicx, enumerate, mathtools, listings, algorithm, algpseudocode}
+
+\setlength{\oddsidemargin}{.25in}
+\setlength{\evensidemargin}{.25in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{-0.4in}
+\setlength{\textheight}{8.5in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PACKAGES
+%
+\usepackage{fullpage}
+\usepackage[pdftex]{hyperref}
+\usepackage{amsthm}
+\usepackage[draft]{todonotes}
+\usepackage{times}
+\usepackage{comment}
+\usepackage{xspace}
+\usepackage{paralist}
+\usepackage{enumitem}
+  \setlist[itemize]{leftmargin=*}
+  \setlist[enumerate]{leftmargin=*}
+\usepackage{makecell}
+\usepackage{tikz}
+	\usetikzlibrary{matrix,shapes,arrows,positioning,chains,calc}
+\usepackage{hypcap}
+\usepackage{mleftright}
+\usepackage{bbm}
+\usepackage{colortbl}
+\usepackage{tabu}
+\usepackage{multirow}
+\usepackage{mathrsfs}
+\usepackage{adjustbox}
+\usepackage{microtype}
+\usepackage{etoolbox}
+\usepackage{breakcites}
+\usepackage{booktabs}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{soul}
+\usepackage[small,margin=2mm]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{iitem}
+\usepackage{scalerel}
+\usepackage{rotating}
+\usepackage{verbatimbox}
+\usepackage{complexity}
+\usepackage{mathtools}
+\usepackage{braket}
+\usepackage{relsize}
+\usepackage{extarrows}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THEOREM ENVIRONMENTS
+\newtheorem{theorem}{Theorem}%[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{proposition}[corollary]{Proposition}
+\newtheorem{definition}[corollary]{Definition}
+\newtheorem{lemma}[corollary]{Lemma}
+\newtheorem{claim}[corollary]{Claim}
+\newtheorem{observation}[corollary]{Observation}
+\newtheorem{notation}[corollary]{Notation}
+\newtheorem{fact}[corollary]{Fact}
+\newtheorem{assumption}[corollary]{Assumption}
+\newtheorem{conjecture}[corollary]{Conjecture}
+\newtheorem{goal}[corollary]{Goal}
+\newtheorem{remark}[corollary]{Remark}
+\newtheorem{question}[corollary]{Question}
+\newtheorem{problem}[corollary]{Problem}
+\newtheorem{challenge}[corollary]{Challenge}
+\newtheorem{example}[corollary]{Example}
+\newtheorem{exercise}[corollary]{Exercise}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MACROS
+
+%-----------------------------------------------------------------------------
+% Special-purpose color definitions (dark enough to print OK in black and white)
+\usepackage{color}
+
+% A few colors to replace the defaults for certain link types
+\definecolor{orange}{cmyk}{0,0.4,0.8,0.2}
+\definecolor{darkorange}{rgb}{.71,0.21,0.01}
+\definecolor{darkgreen}{rgb}{.12,.54,.11}
+
+%-----------------------------------------------------------------------------
+% The hyperref package gives us a pdf with properly built
+% internal navigation ('pdf bookmarks' for the table of contents,
+% internal cross-reference links, web links for URLs, etc.)
+
+\hypersetup{  % needed for pdflatex
+  breaklinks=true,  % so long urls are correctly broken across lines
+  colorlinks=true,
+  urlcolor=blue,
+  linkcolor=darkorange,
+  citecolor=darkgreen,
+}
+
+%-----------------------------------------------------------------------------
+\newcommand{\N}{{\mathbf N}}
+\newcommand{\Z}{{\mathbf Z}}
+\newcommand{\F}{{\mathbf F}}
+\newcommand{\Q}{{\mathbf Q}}
+\newcommand{\Time}{\operatorname{time}}
+\newcommand{\negl}{\mathsf{negl}}
+\newcommand{\ci}{\stackrel{c}{=}}
+\newcommand{\io}{i\mathcal{O}}
+
+\mdfsetup{
+    roundcorner=10pt,
+    frametitlebackgroundcolor=cyan!15!green!15,
+    backgroundcolor=cyan!15!green!15,
+    hidealllines=true,
+    skipabove=12pt,
+    skipbelow=6pt,
+    leftmargin=0pt
+    rightmargin=0pt,
+    innertopmargin=-4pt,
+    innerbottommargin=8pt,
+    innerleftmargin=12pt,
+    % innerrightmargin=12pt,
+    % frametitleaboveskip=6pt,
+    % frametitlebelowskip=4pt,
+    % frametitlerule=true,
+    % frametitlefont=\normalfont\itshape,
+    splittopskip=2\topsep
+}
+
+\pagenumbering{gobble}
+
+\begin{document}
+
+\section{Indistinguishability Obfuscation}
+
+To recap the previous lecture, we introduced the notion of program obfuscation and the definition of Virtual Black Box (VBB) security. Very informally, VBB security claims that an obfuscation of a program is, from the point of view of a user, only as good as having black box oracle access to the original program. This definition of security with regards to obfuscation is an impossible one to achieve as shown by Barak et. al. The paper that introduced this impossibility result also introduced, as a weaker alternative of security, indistinguishability obfuscation ($\io$).
+
+\section{Definitions}
+Recall that for VBB security, we had to specify the model of computation. In other words, our proofs and discussions were such that there was a difference between turing machines and circuits. In these notes, $\io$ definitions will be provided for circuits; however, these definitions and proofs will port over to other models of computation nicely. Note, from here on, a circuit is represented simply with $C$.
+
+    An $\io$ for circuits is a ppt algorithm $\mathcal{O}$ such that:
+        \begin{enumerate}
+            \item Correctness: $\forall{k}\in\mathbb{N}, \forall{C}, \mathcal{O}(1^k, C) \equiv C$
+            \item Efficiency: $\forall{k}\in\mathbb{N}, \forall{C}, \lvert \mathcal{O}(1^k, C) \rvert = \text{poly}(k, \lvert C \rvert)$
+            \item $\io$ Security: $\forall{C_1,C_2}$ such that $\lvert C_1 \rvert = \lvert C_2 \rvert, C_1 \equiv C_2$,
+                \begin{align*}
+                    \mathcal{O}(1^k, C_1) & \ci \mathcal{O}(1^k, C_2)
+                \end{align*}
+        \end{enumerate}
+
+\noindent
+Looking at the definiton of $\io$ above, we can see that $\io$ is to VBB what witness indistinguishability is to Zero-Knowledge. $\io$ is a weaker notion of security when compared to VBB, but it is still useful. We will show that with just $\io$ and one-way functions, we can achieve a public key encryption scheme.
+
+
+\section{Using $\io$ for Public-Key Encryption}
+
+    $\io + \text{OWF} \Rightarrow \text{PKE}$
+
+\subsection{Proof Overview}
+The above is proved by proving the following two lemmas:
+    \begin{enumerate}
+        \item $\io \Rightarrow \text{Witness Encryption}$
+        \item $\text{Witness Encryption} + \text{OWF} \Rightarrow\text{PKE}$
+    \end{enumerate}
+Therefore, to continue on with the proof, we introduce the concept of Witness Encryption.
+\subsection{Witness Encryption using $\io$}
+    \subsubsection{Definitions}
+    A Witness Encryption scheme for a relation $R = \{(x, w) | V_R(x, w) = 1\}$, where $R \in NP$, is a tuple of algorithms $(E, D)$ such that:
+        \begin{enumerate}
+            \item Correctness: $\forall k \in\N, \forall{m}\in\{0, 1\},\forall{(x, w)}\in R,$
+                \begin{align*}
+                    \Pr[D(1^k, E(1^k, x, m), w) = m] = 1
+                \end{align*}
+            \item Security: $\forall{x}\not\in R, E(1^k, x, 0) \ci E(1^k, x, 1)$.
+        \end{enumerate}
+
+$\io \Rightarrow \text{Witness Encryption}$
+
+Let $\mathcal{O}$ be an $\io$. We construct a candidate witness encryption scheme $(E, D)$:
+
+\begin{align*}
+    C_{x,m}(y) &:= \left\{\begin{array}{cc}
+                                m& \text{if $(x, y) \in R$} \\
+                                \bot& \text{otherwise}
+                            \end{array}\right. \\
+    E(1^k, x, m) &:= \mathcal{O}(C_{x, m}) \\
+    D(1^k, c, w) &:= c(w)
+\end{align*}
+
+
+To show that this construction is a valid Witness Encryption $(E, D)$, we need to show that correctness and security are satisfied:
+\begin{enumerate}
+    \item Correctness: This property is trivial to prove as the obfuscated circuit $C_{x, m}$ when given an input $w$ will output the message if and only if $(x, w)$ is in the relation $R$.
+
+    \item Security: Proving security begins with fixing $x \not \in R$. Note that the circuits $C_{x, 0}$ and $C_{x, 1}$ are equal in size and equivalent in functionality because they both output $\bot$ if and only if there is no valid witness for $x$. Having said this, we can apply $\io$ security to show that:
+        \begin{align*}
+            \mathcal{O}(C_{x, 0}) \ci \mathcal{O}(C_{x, 1})
+        \end{align*}
+    Recall that by construction, the following statements are true:
+        \begin{align*}
+            E(1^k, x, 0) &= \mathcal{O}(C_{x, 0}) \\
+            E(1^k, x, 1) &= \mathcal{O}(C_{x, 1})
+        \end{align*}
+    Therefore, we finally show:
+        \begin{align*}
+            E(1^k, x, 0) = \mathcal{O}(C_{x, 0}) \ci \mathcal{O}(C_{x, 1}) = E(1^k, x, 1)
+        \end{align*}
+\end{enumerate}
+
+\subsection{Public Key Encryption using Witness Encryption and OWF}
+
+$OWF + WE \Rightarrow PKE$
+
+\noindent
+We first begin with a construction of a candidate Public Key Encryption scheme $(G, E, D)$. The construction relies on the following:
+    \begin{align*}
+        \hat{G}&: \{0,1\}^k \rightarrow \{0,1\}^{2k} \\
+        WE &:= (\hat{E}, \hat{D})
+    \end{align*}
+
+$\hat{G}$ is a $PRG$ with expansion factor of $2$ that is implied from $OWF$.
+
+\noindent Now, recall that our Witness Encryption scheme requires a relation. To satisfy this requirement, we construct the following relation so that we can later invoke $WE$ security in our proof:
+\begin{align*}
+    R_{\hat{G}}\{(z, s) : \hat{G}(s) = z, z \in \{0,1\}^{2k}, s \in \{0,1\}^k \}
+\end{align*}
+We now have all the neccessary primitives to construct our candidate Public Key Encryption scheme:
+
+    \begin{align*}
+    G(1^k) &:= \begin{cases}
+                    \text{1. sample $s \in\{0,1\}^k$} \\
+                    \text{2. $z := \hat{G}(s)$} \\
+                    \text{3. output $pk := z$, $sk := s$}
+                \end{cases} \\ \\
+    E(1^k, pk, m) &:= \hat{E}(1^k, pk, m) \\ \\
+    D(1^k, sk, c) &:= \hat{D}(1^k, c, sk)
+    \end{align*}
+
+
+    To show that $(G, E, D)$ is a valid Public Key Encryption scheme, we want to argue for completeness and security.
+    \begin{enumerate}
+        \item \textit{Completeness:} Given that $E$ and $D$ use the witness encryption scheme under the hood, it suffices to claim that $(pk, sk) \in R$ is always true because of $G$. Thus, the underlying witness encryption scheme's correctness implies completeness for this PKE scheme.
+
+        \item \textit{Security:} To prove that the PKE is secure, recall that it suffices to show that it is 1 message indistinguishable. Therefore, we want to show $E(1^k, pk, 0) \ci E(1^k, pk, 1)$. The proof for this is as follows:
+            \begin{align}
+                E(1^k, pk, 0) &= \hat{E}(1^k, \hat{G}(s), 0) \\
+                &\ci \hat{E}(1^k, U_{2k}, 0) \\
+                &\ci \hat{E}(1^k, U_{2k}, 1) \\
+                &\ci \hat{E}(1^k, \hat{G}(s), 1) \\
+                &= E(1^k, pk, 1)
+            \end{align}
+        \begin{remark}
+        Equation $(26.2)$ follows from the security of the $PRG$, equation $(26.3)$ follows from $WE$ security, and equation $(23.4)$ follows from the security of the $PRG$ once again.
+        \end{remark}
+    \end{enumerate}
+
+\section{Best Possible Obfuscation[Goldwasser, Rothblum]}
+The road to obfuscation began with ruling out a definition for an obfuscator that was far too strong–VBB. From here, we lowered our expectations and played with indistinguishability obfuscation. However, this definition may feel too weak. The motivation behind Best Possible Obfuscation is to possibly achieve and obfuscator that feels stronger than $\io$. In the end, the two are equivalent.
+\subsection{Definition}
+The idea The idea behind a best possible obfuscator (BPO) is that there may be some information about a circuit which cannot possibly be hidden by any functionality-preserving obfuscation. We ask only that an obfuscator do the best that it can. Informally, we ask that the obfuscated program should leak as little information about the underlying circuit as any other program with the same functionality and size. More formally:
+
+    A BPObfuscator (for circuits) is a ppt $\mathcal{O}$ such that:
+    \begin{enumerate}
+        \item Correctness: $\forall{k}\in\mathbb{N}, \forall{C}, \mathcal{O}(1^k, C) \equiv C$
+        \item Efficiency: $\forall{k}\in\mathbb{N}, \forall{C}, \lvert \mathcal{O}(1^k, C) \rvert = \text{poly}(k, \lvert C \rvert)$
+        \item BPO Security: $\forall$ ppt $A$, $\exists$ ppt $S$ $\forall$ circuits $C_1, C_2$,
+        \begin{align*}
+            A(1^k, \mathcal{O}(1^k, C_1)) \ci S(1^k, C_2)
+        \end{align*}
+    \end{enumerate}
+
+
+
+\subsection{VBB Security and BPO Security}
+\begin{lemma}
+    VBB security $\Rightarrow$ BPO security
+\end{lemma}
+\begin{proof}
+    Suppose for the sake of contradiction that BPO security does not exist. In other words, some obfuscator $\mathcal{O}$ is not a BPO. Therefore, we fix a bad ppt adversary $A$ and its simulator $S:=A \circ \mathcal{O}$. Now, there exists a ppt $D$ and two circuits $C_1$, $C_2$ such that:
+        \begin{align*}
+            \biggr\lvert\Pr[D(1^k, A(1^k, \mathcal{O}(1^k, C_1))) = 1] - \Pr[D(1^k, S(1^k, C_2)) = 1] \biggr\rvert \geq \delta(k)
+        \end{align*}
+    Above, $\delta(\cdot)$ is a negligible function of its input. We can rewrite the above as follows:
+        \begin{align*}
+            \biggr\lvert\Pr[D(1^k, A(1^k, \mathcal{O}(1^k, C_1))) = 1] - \Pr[D(1^k, A(1^k, \mathcal{O}(1^k, C_2))) = 1] \biggr\rvert \geq \delta(k)
+        \end{align*}
+    We want to show that there exists an adversary $A^*$ that breaks the notion of VBB security. To do so, we need to devise an $A^*$ for which there does not exist a black box simulator $S^*$.
+    \begin{fact} The following is true for all ppt $S^*$:
+        \begin{align*}
+            \Pr[S^{*^{C_1}}(1^k) = 1] = \Pr[S^{*^{C_2}}(1^k) = 1]
+        \end{align*}
+    \end{fact}
+    \noindent Now, we have to ask: what is $A^*$? Consider $A^* := D \circ A$. Using this construction, it follows that:
+        \begin{align*}
+            \biggr\lvert\Pr[A^*(1^k, \mathcal{O}(1^k, C_1)) = 1] - \Pr[A^*(1^k, \mathcal{O}(1^k, C_2)) = 1] \biggr\rvert \geq \delta(k)
+        \end{align*}
+    Here, $A^*$ is clearly an adversary for $\mathcal{O}$ when considering $VBB$ security. Consider the ppt simulator $S^*$ for $A^*$ with black box access to $\mathcal{O}(1^k, C_2)$. Without loss of generality, we want VBB security for $\mathcal{O}$; moreover, we want the following to be true:
+        \begin{align*}
+            \biggr\lvert\Pr[A^*(1^k, \mathcal{O}(1^k, C_2)) = 1] - \Pr[S^{*^{C_2}}(1^k)\biggr\rvert = \text{ negl$(k)$}
+        \end{align*}
+    Because of the aforementioned fact, we also require that the following be true for VBB security to hold:
+        \begin{align*}
+            \biggr\lvert\Pr[A^*(1^k, \mathcal{O}(1^k, C_1)) = 1] - \Pr[S^{*^{C_2}}(1^k) = 1]\biggr\rvert = \text{ negl$(k)$}
+        \end{align*}
+    However, this cannot be the case. Instead, the following is true:
+        \begin{align*}
+            \biggr\lvert\Pr[A^*(1^k, \mathcal{O}(1^k, C_1)) = 1] - \Pr[A^*(1^k, \mathcal{O}(1^k, C_2)) = 1] \biggr\rvert &\geq\\
+            \biggr\lvert\Pr[A^*(1^k, \mathcal{O}(1^k, C_1)) = 1] - \Pr[S^{*^{C_2}}(1^k) = 1]\biggr\rvert &= \delta(k) + \text{negl$(k)$}
+        \end{align*}
+    Contraditction. Thus, we have shown that VBB does not hold when BPO can be broken.
+\end{proof}
+
+\subsection{Equivalence of BPO and $\io$}
+We introduced BPO in hopes that it would give us a stronger notion of obfuscation to work with when compared to $\io$. However, the two have been shown to be equivalent.
+\begin{theorem}
+BPO $\equiv$ $\io$
+\end{theorem}
+\noindent We first prove the forward direction.
+\begin{lemma}
+BPO $\Rightarrow$ $\io$
+\end{lemma}
+\begin{proof}
+    Fix $C_1, C_2$ such that $\lvert C_1 \rvert = \lvert C_2 \rvert$ and $C_1 \equiv C_2$. We want to show that $\mathcal{O}(1^k, C_1) \ci \mathcal{O}(1^k, C_2)$ for some BPO $\mathcal{O}$. Now, consider $A(\hat C) = \hat C$ and its corresponding simulator $S_A$. Given this selection of adversary, the following holds:
+        \begin{align*}
+            \biggr\lvert \Pr[A(1^k, \mathcal{O}(1^k, C_1)) = 1] - \Pr[S(1^k, \mathcal{O}(1^k, C_2)) = 1] \biggr\rvert &= \\
+            \biggr\lvert \Pr[\mathcal{O}(1^k, C_1) = 1] - \Pr[S(1^k, \mathcal{O}(1^k, C_2)) = 1] \biggr\rvert = &\text{ negl(k)}
+        \end{align*}
+    Using the BPO $\mathcal{O}$ for $C_2, C_2$ instead of $C_1, C_2$, we can show:
+        \begin{align*}
+            \biggr\lvert \Pr[A(1^k, \mathcal{O}(1^k, C_2)) = 1] - \Pr[S(1^k, \mathcal{O}(1^k, C_2)) = 1] \biggr\rvert &= \\
+            \biggr\lvert \Pr[\mathcal{O}(1^k, C_2) = 1] - \Pr[S(1^k, \mathcal{O}(1^k, C_2)) = 1] \biggr\rvert = &\text{ negl(k)}
+        \end{align*}
+    Therefore, we have that:
+        \begin{align*}
+            \mathcal{O}(1^k, C_1) \ci S(1^k, C_2) \ci \mathcal{O}(1^k, C_2)
+        \end{align*}
+\end{proof}
+\noindent Now consider the backwards direction.
+\begin{lemma}
+$\io \Rightarrow$ BPO
+\end{lemma}
+\begin{proof}
+    Say there is an $\io$ $\mathcal{O}$ such that for all pairs of circuits $C_1, C_2$ equal in size and functionality, $\mathcal{O}(1^k, C_1) \ci \mathcal{O}(1^k, C_2)$. We want to show that this implies $\mathcal{O}$ is also a BPO. We start by saying that for all ppt $A$, is simulator $S(1^k, C_2) = A(1^k, \mathcal{O}(1^K, C_2)$. Therefore, from the definition of $\io$ security, we can show that the following holds:
+        \begin{align*}
+            \biggr\lvert \Pr[A(1^k, \mathcal{O}(1^k, C_1)) = 1] - \Pr[A(1^k, \mathcal{O}(1^k, C_2)) = 1] \biggr\rvert &=  \\
+            \biggr\lvert \Pr[A(1^k, \mathcal{O}(1^k, C_1)) = 1] - \Pr[S(1^k, C_2) = 1] \biggr\rvert &= \text{ negl$(k)$}
+        \end{align*}
+\end{proof}
+\section{Amplifying $\io$}
+    There may be some classes of circuits that are easier or harder to obfuscate. For example, it could be that we know how to construct obfuscators that work on shallow circuits but not deep ones. We will show that using fully homomorphic encryption, we can bootstrap an IO obfuscator for such circuits to an $\io$ obfuscator for circuits of size polynomial in the input. We will give the intuition for the proof here, but will not give the complete proof until next lecture. \\ \\
+    \noindent Consider a circuit class $\mathcal{C}$ where $\forall{C_1, C_2} \in \mathcal{C}$, $C_1$ and $C_2$ are equal in size and functionality. An $\io$ $\mathcal{O}$ for $\mathcal{C}$ is such that the properties of correctness, efficiency, and $\io$ security holds for each pair of circuits in $\mathcal{C}$. Prior to introducing another theorem on the implications related to the existence of $\io$, we introduce prerequisite definitions.
+    \subsection{Definitions}
+    \begin{definition}
+        \textsc{$NC_1$} is the class of decision problems that can be decided in polynomial time and in logarithmic depth.
+    \end{definition}
+    \begin{definition}
+        A Fully Homomorphic Encryption scheme (FHE) is a tuple of algorithms \\ $(Gen, Enc, Dec, Eval)$ such that:
+        \begin{enumerate}
+            \item $(Gen, Enc, Dec, Eval)$ is a CPA secure Public Key Encryption scheme.
+
+            \item $Dec(sk, Eval(pk, C, Enc(pk, x))) = C(x)$
+        \end{enumerate}
+    \end{definition}
+    \noindent We show the following:
+    \begin{theorem}
+        $\io$ for \textsc{$NC_1$} + Fully Homomorphic Encryption (FHE) $\Rightarrow$ $\io$ for all polynomial size circuits.
+    \end{theorem}
+    \noindent The main idea is that the data and the program are equivalent. We will need a fully-homomorphic encryption scheme, which allows us to apply a function to an encrypted message to get an encryption of the function applied to that message. Informally, instead of using our $\io$ obfuscator to obfuscate the circuit itself, we will encrypt the circuit, and then obfuscate the decryption algorithm. Someone with the encrypted circuit, plus the obfuscated decryption algorithm, will be able to evaluate an input x by producing a function $f$ which, given a circuit $C$, returns $C(x)$ (that is, it is a universal circuit evaluator with input hardcoded as x and then using FHE to apply $f$ on the encryption of $C$ to get an encrypted version of $C(x)$; and then decrypting to get $C(x)$. However, since $C$ is encrypted, they will not be able to discover anything about the circuit itself.
+
+\end{document}

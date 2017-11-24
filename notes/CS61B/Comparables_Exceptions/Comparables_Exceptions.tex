@@ -1,0 +1,188 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb, amsmath, graphicx, subfigure, multicol, algorithm, algpseudocode, listings, hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+
+\setlength{\oddsidemargin}{.25in}
+\setlength{\evensidemargin}{.25in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{-0.4in}
+\setlength{\textheight}{8.5in}
+
+\newcommand{\heading}[6]{
+  \renewcommand{\thepage}{#1-\arabic{page}}
+  \noindent
+  \begin{center}
+  \framebox{
+    \vbox{
+      \hbox to 5.78in { \textbf{#2} \hfill #3 }
+      \vspace{4mm}
+      \hbox to 5.78in { {\Large \hfill #6  \hfill} }
+      \vspace{2mm}
+      \hbox to 5.78in { \textit{Notes By: #4 \hfill #5} }
+    }
+  }
+  \end{center}
+  \vspace*{4mm}
+}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{assumption}[theorem]{Assumption}
+
+\newenvironment{proof}{\noindent{\bf Proof:} \hspace*{1mm}}{
+	\hspace*{\fill} $\Box$ }
+\newenvironment{proof_of}[1]{\noindent {\bf Proof of #1:}
+	\hspace*{1mm}}{\hspace*{\fill} $\Box$ }
+\newenvironment{proof_claim}{\begin{quotation} \noindent}{
+	\hspace*{\fill} $\diamond$ \end{quotation}}
+
+\newcommand{\problemset}[3]{\heading{#1}{CS61B: Data Structures}{#2}{Alex Kazorian}{#3}{Section 3: Comparable and Exceptions}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PLEASE MODIFY THESE FIELDS AS APPROPRIATE
+\newcommand{\problemsetnum}{1}          % problem set number
+\newcommand{\duedate}{\today}
+\newcommand{\studentname}{} % problem set deadline
+% PUT HERE ANY PACKAGES, MACROS, etc., ADDED BY YOU
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{color}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codered}{RGB}{204,0,0}
+\definecolor{codeblue}{RGB}{0,128,255}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{codeblue},
+  stringstyle=\color{codegreen},
+  basicstyle=\ttfamily,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=false,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2
+}
+
+\lstset{style=mystyle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\problemset{\problemsetnum}{\duedate}{\studentname}
+
+\section*{Overview}
+Today's notes will discuss a few Java topics which include Comparables and Exceptions. Exceptions and exception handling are not unique to Java; however, there are a few edge cases which we will discuss and list out clearly. On the other hand, Comparables are an integral part of the Java Object Oriented Programming approach. We will work with comparables many times throughout the course.
+
+\section{Comparables}
+Comparing numbers in Java is simple and all we have to do is use the built in comparison operators like $>, <, ==, ...$ What do we do if we want to compare players in the NBA? Well, there is more to them than just numbers so we cannot do the following:
+    \begin{lstlisting}[language=Java]
+        NBAPlayer MJ = new NBAPlayer("Michael Jordan", Mstats);
+        NBAPlayer LaVar = new NBAPlayer("LaVar Ball", Lstats);
+        System.out.println(LaVar > MJ); // Does this work?
+    \end{lstlisting}
+This does not work and the error in specific is "bad operand types for binary operator". We cannot compare the two players. The fix is to have the \texttt{NBAPlayer} class implement the \texttt{Comparable} interface. This interface requires that a class implementing it also provide an implementation for the following method:
+    \begin{lstlisting}[language=Java]
+        int compareTo(T o); // Don't worry about the T yet. If you want to get ahead, then read up on Java Generics!
+    \end{lstlisting}
+The \texttt{compareTo(T o)} method compares the object with the object given as argument to the method for an order. It returns a negative integer, zero, or positive integer if the object is less than, equal to, or greater than the input. By doing so, we can provide an ordering for any class! Why is this useful? We can use this to sort object and not just integers, and we can use this to show that LaVar Ball is better than Michael Jordan!
+\newpage
+    \begin{lstlisting}[language=Java]
+    import java.util.*;
+
+    public class NBAPlayer implements Comparable<NBAPlayer> {
+        String name;
+        Map<String, Integer> stats;
+
+        NBAPlayer(String name, Map stats) {
+            this.name = name;
+            this.stats = stats;
+        }
+
+        @Override
+        public int compareTo(NBAPlayer o) {
+            if (name.equals("LaVar Ball")) {
+                return Integer.MAX_VALUE;
+            }
+            return stats.get("Championships").compareTo(o.stats.get("Championships"));
+        }
+
+
+        public static void main(String[] args) {
+            NBAPlayer MJ = new NBAPlayer("Michael Jordan", Mstats);
+            NBAPlayer LaVar = new NBAPlayer("LaVar Ball", Lstats);
+            if (LaVar.compareTo(MJ) > 0) {
+                System.out.println("Big Baller Brand");
+            } else {
+                System.out.println("The GOAT");
+            }
+        }
+    }
+    \end{lstlisting}
+What does this print? If you guessed "Big Baller Brand", then you are correct! We will build on \texttt{Comparable} and ordering later on in the course.
+
+\section{Exceptions}
+You may have noticed that sometimes your program will crash during runtime and output a message like "ArrayIndexOutOfBoundsException" or "NullPointerException". These are built in Java exceptions that the runtime machine will \texttt{throw} when things go wrong. In the case that a program tries to write outside the bounds of an array, an "ArrayIndexOutOfBoundsException" will be thrown to prevent the user from doing malicious things! How smart of Java. This may be annoying and frustrating at times, but trust in that this is a life saving exception. If you are interested about why writing outside the bounds of an array is bad, read up on "Buffer Overflow" attacks. Now Java may be doing us a favor with throwing exceptions, but it just crashes our program! What if we don't want that?
+
+    \subsection{Exception Handling}
+    A program crashing is often not a good thing. Say we have a program running on a new NASA project. We are testing a new rover and we have a Java program running the system. Assume the programmers working on the project never took 61B and do not know how to test their programs or handle exceptions. Oh no! During the rovers launch into space, there was a "NullPointerException" thrown. The program crashed and so did the rover. Tragic. \\ \\
+    How can this be prevented? An exception is \texttt{thrown}, but what can we do? Let's \texttt{try catching} it! We can use \texttt{try-catch} to execute some code we fear may throw an exception. If the exception we specify in our catch block is thrown, then we can catch it and handle it. \\ \\
+    Here are a couple rules to exception handling:
+    \begin{itemize}
+        \item An exception not caught by its parent function will propegate up the stack. If never caught, then the program crashes.
+        \item The \texttt{finally} block is always executed before exiting the \texttt{try-catch} block. This is true even when a \texttt{try-catch} block cannot catch the exception thrown.
+        \item Java requires that all catch blocks are reachable. In effect, the following is not possible because the catch block for the \texttt{Kanye} exception is not reachable:
+        \begin{lstlisting}[language=Java]
+            public class Kanye extends Exception {
+                public Kanye(String song) {
+                    super(song);
+                }
+
+                public static void main(String[] args) {
+                    try {
+                        throw new Kanye();
+                    } catch (Exception err) {
+                        System.out.println("Hold up Imma let you finish but...");
+                    } catch (Kanye west) {
+                        return;
+                    }
+                }
+            }
+        \end{lstlisting}
+        \item Java only allows for one catch per \texttt{try-catch} block.
+    \end{itemize}
+    For some practice, check out these \href{https://docs.google.com/presentation/d/1OZWm1p1TR8jsB2yGuj2cMGHY-ADyuyJLGc0K6o5C-uc/edit?usp=sharing}{slides}.
+
+% Put bibliography here (if any).
+% Example:
+%
+%\begin{thebibliography}{99}
+%
+% \bibitem[CLRS]{CLRS}
+% Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein,
+% \emph{Introduction to Algorithms}, Second Edition.
+% MIT Press and McGraw-Hill, 2001.
+%
+%\end{thebibliography}
+
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

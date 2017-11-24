@@ -1,0 +1,173 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb, amsmath, graphicx, subfigure, multicol, algorithm, algpseudocode, listings}
+
+\setlength{\oddsidemargin}{.25in}
+\setlength{\evensidemargin}{.25in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{-0.4in}
+\setlength{\textheight}{8.5in}
+
+\newcommand{\heading}[6]{
+  \renewcommand{\thepage}{#1-\arabic{page}}
+  \noindent
+  \begin{center}
+  \framebox{
+    \vbox{
+      \hbox to 5.78in { \textbf{#2} \hfill #3 }
+      \vspace{4mm}
+      \hbox to 5.78in { {\Large \hfill #6  \hfill} }
+      \vspace{2mm}
+      \hbox to 5.78in { \textit{Notes By: #4 \hfill #5} }
+    }
+  }
+  \end{center}
+  \vspace*{4mm}
+}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{assumption}[theorem]{Assumption}
+
+\newenvironment{proof}{\noindent{\bf Proof:} \hspace*{1mm}}{
+	\hspace*{\fill} $\Box$ }
+\newenvironment{proof_of}[1]{\noindent {\bf Proof of #1:}
+	\hspace*{1mm}}{\hspace*{\fill} $\Box$ }
+\newenvironment{proof_claim}{\begin{quotation} \noindent}{
+	\hspace*{\fill} $\diamond$ \end{quotation}}
+
+\newcommand{\problemset}[3]{\heading{#1}{CS61B: Data Structures}{#2}{Alex Kazorian}{#3}{Section 1: Pointers and Arrays}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PLEASE MODIFY THESE FIELDS AS APPROPRIATE
+\newcommand{\problemsetnum}{1}          % problem set number
+\newcommand{\duedate}{\today}
+\newcommand{\studentname}{} % problem set deadline
+% PUT HERE ANY PACKAGES, MACROS, etc., ADDED BY YOU
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{color}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codered}{RGB}{204,0,0}
+\definecolor{codeblue}{RGB}{0,128,255}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{codeblue},
+  stringstyle=\color{codegreen},
+  basicstyle=\ttfamily,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=false,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2
+}
+
+\lstset{style=mystyle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\problemset{\problemsetnum}{\duedate}{\studentname}
+
+\section*{Overview}
+
+In these notes, we will be covering pointers, arrays, and the relationship between the two. To fully understand the topics of these notes, we will discuss Java  primitives versus reference types and build up from here the notion of arrays and linked lists. Once we have these concepts down, we will discuss how to work with these data structures.
+
+\section{Java Primitives versus Reference Types}
+Java, like Python, has types. Everything we work with is of some type; however, unlike Python, the typing system in Java is static and is not hidden from us programmers. We must therefore become familiar with these types. In general there are two "umbrella" types, and you might have guessed that they are primitive types and reference types. Let's dive right in.
+
+    \subsection{Primitive Types}
+    Java primitives are the most basic types in that they are built into the language. These types include:
+    \begin{multicols}{2}
+        \begin{itemize}
+            \item \textit{boolean}: Truthy and falsey values.
+            \item \textit{char}: 16-bit Unicode characters.
+            \item \textit{byte}: Java's 8-bit integers.
+            \item \textit{short}: Java's 16-bit integers.
+            \item \textit{int}: Java's 32-bit integers. Note that this is different from \textit{Integer} objects!
+            \item \textit{long}: Java's 64-bit integers.
+            \item \textit{float}: Java's 32-bit floating point number. A floating point number is based on a format that is meant to represent some range of decimal numbers. More on this in 61C!
+            \item \textit{double}: Java's 64-bit floating point number.
+        \end{itemize}
+    \end{multicols}
+    These are the basic building blocks that we work with regularly.
+
+    \subsection{Reference Types}
+    Now, we have reference types which are essential for working with and understanding Java's Object Oriented Programming designs. We introduce the idea of reference types by discussing how they work in the context of the "String" object. Consider the following block of code:
+        \begin{lstlisting}[language=Java]
+            String a = new String("");
+            String b = a;
+        \end{lstlisting}
+    What is going on under the hood? First, we have \texttt{a}, but what is it? It is a \textit{reference} to the \texttt{String} object. We have to ask now, what does it mean for a variable to be a reference to an object? Well without going into the nitty gritty details of memory, we wil say that \texttt{a} contains the address in memory for which the \texttt{String} object is stored. In terms of an environment diagram, this would look something like:
+        $$Insert environment diagram graphic here$$
+    So what happens when execute the second line? We want and expect that \texttt{b} will have the same value as \texttt{a}, and what is the value of \texttt{a}? It is the address of a location in memory storing a \texttt{String} object! Therefore, we copy that address into \texttt{b} in our environment diagram as follows:
+        $$Insert environment diagram graphic here$$
+    Now, this is a really clunky and not very useful diagram. Why? Because who wants to be copying memory addresses from variable to variable? This is work that is best left for the last class in the 61 series. So what we do instead is represent these memory addresses using \textit{pointers}. In effect, instead of using an address in memory, we draw an arrow to the object a variable references. So after the first line of code above, our environment diagram will be:
+        $$Insert environment diagram graphic here$$
+    After the second step, we again copy the value of \texttt{a} into \texttt{b}. What is the value of \texttt{a}? It is the pointer because a pointer is simply just an address in memory. Therefore, we copy the pointer into \texttt{b}. This looks like:
+        $$Insert environment diagram graphic here$$
+    To summarize:
+        \begin{multicols}{2}
+            \begin{enumerate}
+                \item When we declare a variable to be of some object, we are really saying it is a reference to an object of some type in memory.
+                \item The value of a reference type is the address in memory of the object it was assigned.
+                \item We represent these addresses with pointers in diagrams
+                \item When assigning a variable to another variable of the same type, we copy of the pointer over.
+            \end{enumerate}
+        \end{multicols}
+
+\section{Case Study: IntLists}
+This course is on data structures. It seems appropriate to make our own data structure!
+    \begin{lstlisting}[language=Java]
+        public class IntList {
+            public int _val;
+            public IntList _next;
+
+            public IntList(int val, IntList next) {
+                int _val = val;
+                IntList _next = next;
+            }
+
+            public static void main(String[] args) {
+                IntList a = new IntList(1, new IntList(2, null));
+            }
+        }
+    \end{lstlisting}
+Based on the above class declaration, we know the following about any \texttt{IntList} object \texttt{L}:
+    \begin{enumerate}
+        \item \texttt{L} has a \texttt{\_val} field attribute that is an \textit{int}.
+        \item \texttt{L} has a \texttt{\_next} field attribute that is a \textit{reference} to another \texttt{IntList} object
+    \end{enumerate}
+After executing the \texttt{main} method of the \texttt{IntList} class, we have the following environment diagram:
+        $$Insert environment diagram graph here$$
+This is a very bare bones \texttt{IntList} class, but it can still store multiple items. It does so by using the knowledge of pointers to chain together multiple instances of the \texttt{IntList} class!
+
+% Put bibliography here (if any).
+% Example:
+%
+%\begin{thebibliography}{99}
+%
+% \bibitem[CLRS]{CLRS}
+% Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein,
+% \emph{Introduction to Algorithms}, Second Edition.
+% MIT Press and McGraw-Hill, 2001.
+%
+%\end{thebibliography}
+
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

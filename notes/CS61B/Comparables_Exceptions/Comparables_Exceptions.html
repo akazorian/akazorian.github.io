@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!--==============================================================================
+	           "GitHub HTML5 Pandoc Template" v1.2 — by Tristano Ajmone
+	==============================================================================
+	(c) Tristano Ajmone, 2017, MIT License (MIT). Project's home repository:
+	- https://github.com/tajmone/pandoc-goodies
+	This template reuses source code taken from the following projects:
+	- GitHub Markdown CSS: © Sindre Sorhus, MIT License (MIT):
+	  https://github.com/sindresorhus/github-markdown-css
+	- Primer CSS: © 2016 GitHub Inc., MIT License (MIT):
+	  http://primercss.io/
+	==============================================================================-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="/akazorian.github.io/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">@font-face{font-family:octicons-link;src:url(data:font/woff;charset=utf-8;base64,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) format('woff')}.markdown-body{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;color:#24292e;font-family:-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";font-size:16px;line-height:1.5;word-wrap:break-word;box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}.markdown-body .octicon{display:inline-block;fill:currentColor;vertical-align:text-bottom}.markdown-body a{background-color:transparent;-webkit-text-decoration-skip:objects;color:#0366d6;text-decoration:none}.markdown-body a:active,.markdown-body a:hover{outline-width:0}.markdown-body h1{margin:.67em 0}.markdown-body img{border-style:none}.markdown-body svg:not(:root){overflow:hidden}.markdown-body code,.markdown-body kbd,.markdown-body pre{font-family:monospace,monospace}.markdown-body input{font:inherit;margin:0;overflow:visible;font-family:inherit;font-size:inherit;line-height:inherit}.markdown-body [type=checkbox]{box-sizing:border-box;padding:0}.markdown-body *{box-sizing:border-box}.markdown-body a:hover{text-decoration:underline}.markdown-body strong{font-weight:600}.markdown-body hr{box-sizing:content-box;overflow:hidden;background:0 0;border-bottom:1px solid #dfe2e5}.markdown-body hr::before{display:table;content:""}.markdown-body hr::after{display:table;clear:both;content:""}.markdown-body table{border-spacing:0;border-collapse:collapse;display:block;width:100%;overflow:auto}.markdown-body td,.markdown-body th{padding:0}.markdown-body blockquote{margin:0}.markdown-body ol ol,.markdown-body ul ol{list-style-type:lower-roman}.markdown-body ol ol ol,.markdown-body ol ul ol,.markdown-body ul ol ol,.markdown-body ul ul ol{list-style-type:lower-alpha}.markdown-body dd{margin-left:0}.markdown-body code{font-family:SFMono-Regular,Consolas,"Liberation Mono",Menlo,Courier,monospace}.markdown-body pre{font:12px SFMono-Regular,Consolas,"Liberation Mono",Menlo,Courier,monospace;word-wrap:normal}.markdown-body .pl-0{padding-left:0!important}.markdown-body .pl-1{padding-left:4px!important}.markdown-body .pl-2{padding-left:8px!important}.markdown-body .pl-3{padding-left:16px!important}.markdown-body .pl-4{padding-left:24px!important}.markdown-body .pl-5{padding-left:32px!important}.markdown-body .pl-6{padding-left:40px!important}.markdown-body::before{display:table;content:""}.markdown-body::after{display:table;clear:both;content:""}.markdown-body>:first-child{margin-top:0!important}.markdown-body>:last-child{margin-bottom:0!important}.markdown-body a:not([href]){color:inherit;text-decoration:none}.markdown-body .anchor{float:left;padding-right:4px;margin-left:-20px;line-height:1}.markdown-body .anchor:focus{outline:0}.markdown-body blockquote,.markdown-body dl,.markdown-body ol,.markdown-body p,.markdown-body pre,.markdown-body table,.markdown-body ul{margin-top:0;margin-bottom:16px}.markdown-body hr{height:.25em;padding:0;margin:24px 0;background-color:#e1e4e8;border:0}.markdown-body blockquote{padding:0 1em;color:#6a737d;border-left:.25em solid #dfe2e5}.markdown-body blockquote>:first-child{margin-top:0}.markdown-body blockquote>:last-child{margin-bottom:0}.markdown-body kbd{font-size:11px;box-shadow:inset 0 -1px 0 #959da5}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{color:#1b1f23;vertical-align:middle;visibility:hidden}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{text-decoration:none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{visibility:visible}.markdown-body h1{padding-bottom:.3em;font-size:2em;border-bottom:1px solid #eaecef}.markdown-body h2{padding-bottom:.3em;font-size:1.5em;border-bottom:1px solid #eaecef}.markdown-body h3{font-size:1.25em}.markdown-body h4{font-size:1em}.markdown-body h5{font-size:.875em}.markdown-body h6{font-size:.85em;color:#6a737d}.markdown-body ol,.markdown-body ul{padding-left:2em}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:0;margin-bottom:0}.markdown-body li>p{margin-top:16px}.markdown-body li+li{margin-top:.25em}.markdown-body dl{padding:0}.markdown-body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:600}.markdown-body dl dd{padding:0 16px;margin-bottom:16px}.markdown-body table th{font-weight:600}.markdown-body table td,.markdown-body table th{padding:6px 13px;border:1px solid #dfe2e5}.markdown-body table tr{background-color:#fff;border-top:1px solid #c6cbd1}.markdown-body table tr:nth-child(2n){background-color:#f6f8fa}.markdown-body img{max-width:100%;box-sizing:content-box;background-color:#fff}.markdown-body code{padding:.2em 0;margin:0;font-size:85%;background-color:rgba(27,31,35,.05);border-radius:3px}.markdown-body code::after,.markdown-body code::before{letter-spacing:-.2em;content:"\00a0"}.markdown-body pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:0 0;border:0}.markdown-body .highlight{margin-bottom:16px}.markdown-body .highlight pre{margin-bottom:0;word-break:normal}.markdown-body .highlight pre,.markdown-body pre{padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:#f6f8fa;border-radius:3px}.markdown-body pre code{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}.markdown-body pre code::after,.markdown-body pre code::before{content:normal}.markdown-body .full-commit .btn-outline:not(:disabled):hover{color:#005cc5;border-color:#005cc5}.markdown-body kbd{display:inline-block;padding:3px 5px;font:11px SFMono-Regular,Consolas,"Liberation Mono",Menlo,Courier,monospace;line-height:10px;color:#444d56;vertical-align:middle;background-color:#fcfcfc;border:1px solid #c6cbd1;border-bottom-color:#959da5;border-radius:3px;box-shadow:inset 0 -1px 0 #959da5}.markdown-body :checked+.radio-label{position:relative;z-index:1;border-color:#0366d6}.markdown-body .task-list-item{list-style-type:none}.markdown-body .task-list-item+.task-list-item{margin-top:3px}.markdown-body .task-list-item input{margin:0 .2em .25em -1.6em;vertical-align:middle}.markdown-body hr{border-bottom-color:#eee}.flash{position:relative;padding:16px;color:#246;background-color:#e2eef9;border:1px solid #bac6d3;border-radius:3px}.flash p:last-child{margin-bottom:0}.flash-messages{margin-bottom:24px}.flash-warn{color:#4c4a42;background-color:#fff9ea;border-color:#dfd8c2}.flash-error{color:#911;background-color:#fcdede;border-color:#d2b2b2}.flash-success{color:#22662c;background-color:#e2f9e5;border-color:#bad3be}.flash-plain{color:#4c4a42;background-color:#f5f5f5;border-color:#c1c1c1}</style>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script>
+function nav() {
+   if (document.getElementById("mySidenav").style.width == "0px" || !document.getElementById("mySidenav").style.width) {
+       document.getElementById("mySidenav").style.width = "25%";
+       document.getElementById("main").style.marginLeft = "25%";
+   } else {
+       document.getElementById("mySidenav").style.width = "0";
+       document.getElementById("main").style.marginLeft = "0";
+   }
+}
+</script>
+<script>
+$(document).ready(function(){
+    $(".openbutton").click(function(){
+    if (  $( this ).css( "transform" ) == 'none' ){
+        $(this).css("transform","rotate(90deg)");
+    } else {
+        $(this).css("transform","" );
+    }
+    });
+})
+</script>
+<script>
+//FIXME
+$(window).on('load', function() {
+    var url = window.location.href;
+    $('.sidenav a').each(function() {
+        if (url == $(this).href){
+            $(this).addClass("active");
+        } else {
+            $(this).removeClass("active");
+        }
+    })
+
+})
+</script>
+<script>
+$(document).ready(function() {
+    $('.sidenav a').click(function() {
+        $('.sidenav a').each(function() {
+            $(this).removeClass("active");
+        })
+        $(this).addClass("active");
+    })
+})
+</script>
+</head>
+<body>
+<div id="mySidenav" class="sidenav">
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#comparables">Comparables</a></li>
+<li><a href="#exceptions">Exceptions</a></li>
+<ul>
+<li><a href="#exception-handling">Exception Handling</a></li>
+</ul>
+</div>
+<div id="main">
+<span style="font-size:200%;cursor:pointer" onclick="nav()" class="openbutton">&#9776;</span>
+<article class="markdown-body">
+
+
+<h1 id="overview" class="unnumbered unnumbered">Overview</h1>
+<p>Today’s notes will discuss a few Java topics which include Comparables and Exceptions. Exceptions and exception handling are not unique to Java; however, there are a few edge cases which we will discuss and list out clearly. On the other hand, Comparables are an integral part of the Java Object Oriented Programming approach. We will work with comparables many times throughout the course.</p>
+<h1 id="comparables">Comparables</h1>
+<p>Comparing numbers in Java is simple and all we have to do is use the built in comparison operators like <span class="math inline">\(&gt;, &lt;, ==, ...\)</span> What do we do if we want to compare players in the NBA? Well, there is more to them than just numbers so we cannot do the following:</p>
+<pre class="sourceCode java" id="cb1" data-language="Java"><code class="sourceCode java"><div class="sourceLine" id="cb1-1" data-line-number="1">        NBAPlayer MJ = <span class="kw">new</span> <span class="fu">NBAPlayer</span>(<span class="st">&quot;Michael Jordan&quot;</span>, Mstats);</div>
+<div class="sourceLine" id="cb1-2" data-line-number="2">        NBAPlayer LaVar = <span class="kw">new</span> <span class="fu">NBAPlayer</span>(<span class="st">&quot;LaVar Ball&quot;</span>, Lstats);</div>
+<div class="sourceLine" id="cb1-3" data-line-number="3">        <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(LaVar &gt; MJ); <span class="co">// Does this work?</span></div>
+<div class="sourceLine" id="cb1-4" data-line-number="4">    </div></code></pre>
+<p>This does not work and the error in specific is &quot;bad operand types for binary operator&quot;. We cannot compare the two players. The fix is to have the <code>NBAPlayer</code> class implement the <code>Comparable</code> interface. This interface requires that a class implementing it also provide an implementation for the following method:</p>
+<pre class="sourceCode java" id="cb2" data-language="Java"><code class="sourceCode java"><div class="sourceLine" id="cb2-1" data-line-number="1">        <span class="dt">int</span> <span class="fu">compareTo</span>(T o); <span class="co">// Don&#39;t worry about the T yet. If you want to get ahead, then read up on Java Generics!</span></div>
+<div class="sourceLine" id="cb2-2" data-line-number="2">    </div></code></pre>
+<p>The <code>compareTo(T o)</code> method compares the object with the object given as argument to the method for an order. It returns a negative integer, zero, or positive integer if the object is less than, equal to, or greater than the input. By doing so, we can provide an ordering for any class! Why is this useful? We can use this to sort object and not just integers, and we can use this to show that LaVar Ball is better than Michael Jordan!</p>
+<pre class="sourceCode java" id="cb3" data-language="Java"><code class="sourceCode java"><div class="sourceLine" id="cb3-1" data-line-number="1">    <span class="kw">import</span><span class="im"> java.util.*;</span></div>
+<div class="sourceLine" id="cb3-2" data-line-number="2"></div>
+<div class="sourceLine" id="cb3-3" data-line-number="3">    <span class="kw">public</span> <span class="kw">class</span> NBAPlayer <span class="kw">implements</span> <span class="bu">Comparable</span>&lt;NBAPlayer&gt; {</div>
+<div class="sourceLine" id="cb3-4" data-line-number="4">        <span class="bu">String</span> name;</div>
+<div class="sourceLine" id="cb3-5" data-line-number="5">        <span class="bu">Map</span>&lt;<span class="bu">String</span>, <span class="bu">Integer</span>&gt; stats;</div>
+<div class="sourceLine" id="cb3-6" data-line-number="6"></div>
+<div class="sourceLine" id="cb3-7" data-line-number="7">        <span class="fu">NBAPlayer</span>(<span class="bu">String</span> name, <span class="bu">Map</span> stats) {</div>
+<div class="sourceLine" id="cb3-8" data-line-number="8">            <span class="kw">this</span>.<span class="fu">name</span> = name;</div>
+<div class="sourceLine" id="cb3-9" data-line-number="9">            <span class="kw">this</span>.<span class="fu">stats</span> = stats;</div>
+<div class="sourceLine" id="cb3-10" data-line-number="10">        }</div>
+<div class="sourceLine" id="cb3-11" data-line-number="11"></div>
+<div class="sourceLine" id="cb3-12" data-line-number="12">        <span class="at">@Override</span></div>
+<div class="sourceLine" id="cb3-13" data-line-number="13">        <span class="kw">public</span> <span class="dt">int</span> <span class="fu">compareTo</span>(NBAPlayer o) {</div>
+<div class="sourceLine" id="cb3-14" data-line-number="14">            <span class="kw">if</span> (name.<span class="fu">equals</span>(<span class="st">&quot;LaVar Ball&quot;</span>)) {</div>
+<div class="sourceLine" id="cb3-15" data-line-number="15">                <span class="kw">return</span> <span class="bu">Integer</span>.<span class="fu">MAX_VALUE</span>;</div>
+<div class="sourceLine" id="cb3-16" data-line-number="16">            }</div>
+<div class="sourceLine" id="cb3-17" data-line-number="17">            <span class="kw">return</span> stats.<span class="fu">get</span>(<span class="st">&quot;Championships&quot;</span>).<span class="fu">compareTo</span>(o.<span class="fu">stats</span>.<span class="fu">get</span>(<span class="st">&quot;Championships&quot;</span>));</div>
+<div class="sourceLine" id="cb3-18" data-line-number="18">        }</div>
+<div class="sourceLine" id="cb3-19" data-line-number="19"></div>
+<div class="sourceLine" id="cb3-20" data-line-number="20"></div>
+<div class="sourceLine" id="cb3-21" data-line-number="21">        <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) {</div>
+<div class="sourceLine" id="cb3-22" data-line-number="22">            NBAPlayer MJ = <span class="kw">new</span> <span class="fu">NBAPlayer</span>(<span class="st">&quot;Michael Jordan&quot;</span>, Mstats);</div>
+<div class="sourceLine" id="cb3-23" data-line-number="23">            NBAPlayer LaVar = <span class="kw">new</span> <span class="fu">NBAPlayer</span>(<span class="st">&quot;LaVar Ball&quot;</span>, Lstats);</div>
+<div class="sourceLine" id="cb3-24" data-line-number="24">            <span class="kw">if</span> (LaVar.<span class="fu">compareTo</span>(MJ) &gt; <span class="dv">0</span>) {</div>
+<div class="sourceLine" id="cb3-25" data-line-number="25">                <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Big Baller Brand&quot;</span>);</div>
+<div class="sourceLine" id="cb3-26" data-line-number="26">            } <span class="kw">else</span> {</div>
+<div class="sourceLine" id="cb3-27" data-line-number="27">                <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;The GOAT&quot;</span>);</div>
+<div class="sourceLine" id="cb3-28" data-line-number="28">            }</div>
+<div class="sourceLine" id="cb3-29" data-line-number="29">        }</div>
+<div class="sourceLine" id="cb3-30" data-line-number="30">    }</div>
+<div class="sourceLine" id="cb3-31" data-line-number="31">    </div></code></pre>
+<p>What does this print? If you guessed &quot;Big Baller Brand&quot;, then you are correct! We will build on <code>Comparable</code> and ordering later on in the course.</p>
+<h1 id="exceptions">Exceptions</h1>
+<p>You may have noticed that sometimes your program will crash during runtime and output a message like &quot;ArrayIndexOutOfBoundsException&quot; or &quot;NullPointerException&quot;. These are built in Java exceptions that the runtime machine will <code>throw</code> when things go wrong. In the case that a program tries to write outside the bounds of an array, an &quot;ArrayIndexOutOfBoundsException&quot; will be thrown to prevent the user from doing malicious things! How smart of Java. This may be annoying and frustrating at times, but trust in that this is a life saving exception. If you are interested about why writing outside the bounds of an array is bad, read up on &quot;Buffer Overflow&quot; attacks. Now Java may be doing us a favor with throwing exceptions, but it just crashes our program! What if we don’t want that?</p>
+<h2 id="exception-handling">Exception Handling</h2>
+<p>A program crashing is often not a good thing. Say we have a program running on a new NASA project. We are testing a new rover and we have a Java program running the system. Assume the programmers working on the project never took 61B and do not know how to test their programs or handle exceptions. Oh no! During the rovers launch into space, there was a &quot;NullPointerException&quot; thrown. The program crashed and so did the rover. Tragic.<br />
+<br />
+How can this be prevented? An exception is <code>thrown</code>, but what can we do? Let’s <code>try catching</code> it! We can use <code>try-catch</code> to execute some code we fear may throw an exception. If the exception we specify in our catch block is thrown, then we can catch it and handle it.<br />
+<br />
+Here are a couple rules to exception handling:</p>
+<ul>
+<li><p>An exception not caught by its parent function will propegate up the stack. If never caught, then the program crashes.</p></li>
+<li><p>The <code>finally</code> block is always executed before exiting the <code>try-catch</code> block. This is true even when a <code>try-catch</code> block cannot catch the exception thrown.</p></li>
+<li><p>Java requires that all catch blocks are reachable. In effect, the following is not possible because the catch block for the <code>Kanye</code> exception is not reachable:</p>
+<pre class="sourceCode java" id="cb4" data-language="Java"><code class="sourceCode java"><div class="sourceLine" id="cb4-1" data-line-number="1">            <span class="kw">public</span> <span class="kw">class</span> Kanye <span class="kw">extends</span> <span class="bu">Exception</span> {</div>
+<div class="sourceLine" id="cb4-2" data-line-number="2">                <span class="kw">public</span> <span class="fu">Kanye</span>(<span class="bu">String</span> song) {</div>
+<div class="sourceLine" id="cb4-3" data-line-number="3">                    <span class="kw">super</span>(song);</div>
+<div class="sourceLine" id="cb4-4" data-line-number="4">                }</div>
+<div class="sourceLine" id="cb4-5" data-line-number="5"></div>
+<div class="sourceLine" id="cb4-6" data-line-number="6">                <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) {</div>
+<div class="sourceLine" id="cb4-7" data-line-number="7">                    <span class="kw">try</span> {</div>
+<div class="sourceLine" id="cb4-8" data-line-number="8">                        <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">Kanye</span>();</div>
+<div class="sourceLine" id="cb4-9" data-line-number="9">                    } <span class="kw">catch</span> (<span class="bu">Exception</span> err) {</div>
+<div class="sourceLine" id="cb4-10" data-line-number="10">                        <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Hold up Imma let you finish but...&quot;</span>);</div>
+<div class="sourceLine" id="cb4-11" data-line-number="11">                    } <span class="kw">catch</span> (Kanye west) {</div>
+<div class="sourceLine" id="cb4-12" data-line-number="12">                        <span class="kw">return</span>;</div>
+<div class="sourceLine" id="cb4-13" data-line-number="13">                    }</div>
+<div class="sourceLine" id="cb4-14" data-line-number="14">                }</div>
+<div class="sourceLine" id="cb4-15" data-line-number="15">            }</div>
+<div class="sourceLine" id="cb4-16" data-line-number="16">        </div></code></pre></li>
+<li><p>Java only allows for one catch per <code>try-catch</code> block.</p></li>
+</ul>
+<p>For some practice, check out these <a href="https://docs.google.com/presentation/d/1OZWm1p1TR8jsB2yGuj2cMGHY-ADyuyJLGc0K6o5C-uc/edit?usp=sharing">slides</a>.</p>
+
+</article>
+</div>
+</body>
+</html>
