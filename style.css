@@ -1,31 +1,128 @@
-/*body {
-    margin: 0;
+body {
+    margin:0;
 }
 
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 25%;
-    background-color: #f1f1f1;
+h1 {
+    color:#2F86EB;
+}
+
+h2 {
+    color:#2F86EB;
+}
+
+h3 {
+    color:#2F86EB;
+}
+
+h4 {
+    color:#2F86EB;
+}
+
+h5 {
+    color:#2F86EB;
+}
+
+h6 {
+    color:#2F86EB;
+}
+
+.openbutton {
+    color: #2F86EB;
     position: fixed;
-    height: 100%;
-    overflow: auto;
 }
 
-li a {
-    display: block;
-    color: #000;
-    padding: 8px 16px;
+/* The side navigation menu */
+.sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0;
+    left: 0;
+    background-color: #24292e;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 2%; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+.sidenav ul {
+    list-style: none;
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 2% 2% 2% 0%;
     text-decoration: none;
+    color: white;
+    display: block;
+    transition: 0.3s;
+    font-family: 'Nunito Sans', sans-serif;
 }
 
-li a.active {
-    background-color: #4CAF50;
-    color: white;
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
 }
 
-li a:hover:not(.active) {
-    background-color: #555;
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+    transition: margin-left .5s;
+    padding: 1%;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+/*nav.nestedsidemenu {
+    width: 25%;
+    float: left;
+    display: block;
+    height: 100%;
+    position: fixed;
+    background-color: #30332f;
+    box-shadow: 2% 2% 5% grey;
+}
+
+nav.nestedsidemenu ul {
+    list-style-type: none;
+    list-style-position: inside;
+    margin: auto;
+    padding-left: 0;
+}
+
+nav.nestedsidemenu ul li {
+    margin: auto;
+}
+
+nav.nestedsidemenu ul li a {
+    font-family: 'Nunito Sans', sans-serif;
+    margin: auto;
+    display: block;
     color: white;
+    padding: 2% 4%;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+nav.nestedsidemenu ul li a:hover{
+    background-color: #2F86EB;
+}
+
+nav.nestedsidemenu ul li a:active {
+    background-color: #215fa8;
+    color:gray;
+}
+
+
+article.markdown-body {
+    float:right;
+    width: 75%;
+    color: #555;
 }*/

@@ -14,6 +14,8 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="/akazorian.github.io/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
@@ -55,48 +57,30 @@ code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
 code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-  <style>
-
-  ul {
-      list-style-type: none;
-      margin: -250;
-      padding: 0;
-      width: 25%;
-      background-color: #f1f1f1;
-      position: fixed;
-      height: 100%;
-      overflow: auto;
+</style>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script>
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "25%";
+    document.getElementById("main").style.marginLeft = "25%";
   }
-
-  li a {
-      display: block;
-      color: #000;
-      padding: 8px 16px;
-      text-decoration: none;
+</script>
+<script>
+  function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
   }
-
-  li a.active {
-      background-color: #4CAF50;
-      color: white;
-  }
-
-  li a:hover:not(.active) {
-      background-color: #555;
-      color: white;
-  }
-  </style>
-  <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-  </script>
-  <script type="text/javascript" async
-    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
-  </script>
+</script>
 </head>
 <body>
-<article class="markdown-body">
-<aside>
-<nav id="TOC">
+<div id="mySidenav" class="sidenav">
+<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+<nav>
 <ul>
 <li><a href="#indistinguishability-obfuscation">Indistinguishability Obfuscation</a></li>
 <li><a href="#definitions">Definitions</a></li>
@@ -120,7 +104,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#definitions-2">Definitions</a></li>
 </ul>
 </nav>
-</aside>
+</div>
+<div id="main">
+<span style="font-size:200%;cursor:pointer" onclick="openNav()" class="openbutton">&#9776;</span>
+<article class="markdown-body">
 <h1 id="indistinguishability-obfuscation">Indistinguishability Obfuscation</h1>
 <p>To recap the previous lecture, we introduced the notion of program obfuscation and the definition of Virtual Black Box (VBB) security. Very informally, VBB security claims that an obfuscation of a program is, from the point of view of a user, only as good as having black box oracle access to the original program. This definition of security with regards to obfuscation is an impossible one to achieve as shown by Barak et. al. The paper that introduced this impossibility result also introduced, as a weaker alternative of security, indistinguishability obfuscation (<span class="math inline">\(i\mathcal{O}\)</span>).</p>
 <h1 id="definitions">Definitions</h1>
@@ -272,5 +259,6 @@ Consider a circuit class <span class="math inline">\(\mathcal{C}\)</span> where 
 <p>The main idea is that the data and the program are equivalent. We will need a fully-homomorphic encryption scheme, which allows us to apply a function to an encrypted message to get an encryption of the function applied to that message. Informally, instead of using our <span class="math inline">\(i\mathcal{O}\)</span> obfuscator to obfuscate the circuit itself, we will encrypt the circuit, and then obfuscate the decryption algorithm. Someone with the encrypted circuit, plus the obfuscated decryption algorithm, will be able to evaluate an input x by producing a function <span class="math inline">\(f\)</span> which, given a circuit <span class="math inline">\(C\)</span>, returns <span class="math inline">\(C(x)\)</span> (that is, it is a universal circuit evaluator with input hardcoded as x and then using FHE to apply <span class="math inline">\(f\)</span> on the encryption of <span class="math inline">\(C\)</span> to get an encrypted version of <span class="math inline">\(C(x)\)</span>; and then decrypting to get <span class="math inline">\(C(x)\)</span>. However, since <span class="math inline">\(C\)</span> is encrypted, they will not be able to discover anything about the circuit itself.</p>
 
 </article>
+</div>
 </body>
 </html>

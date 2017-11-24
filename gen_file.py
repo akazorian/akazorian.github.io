@@ -50,12 +50,12 @@ def set_up_nav_bar(File):
     return ids, headers, depth, lines
 
 def gen_nav(File, ids, headers, depth, lines):
-    pattern = re.compile("<article class=\"markdown-body\">")
+    pattern = re.compile("<body>")
     with open(File.replace(".tex", ".html"), 'w+') as html:
         for line in lines:
             html.write(line)
             if pattern.match(line):
-                html.write('<aside>\n<nav id="TOC">\n<ul>\n')
+                html.write('<div id="mySidenav" class="sidenav">\n<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>\n<nav>\n<ul>\n')
                 curr_depth = depth[0]
                 for i in range(len(ids)):
                     temp_depth = depth[i]
@@ -66,7 +66,7 @@ def gen_nav(File, ids, headers, depth, lines):
                             html.write('</ul>\n')
                     curr_depth = temp_depth
                     html.write(nav.format(ids[i], headers[i]))
-                html.write('</ul>\n</nav>\n</aside>\n')
+                html.write('</ul>\n</nav>\n</div>\n')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Generate a webpage for a LaTex file.")
