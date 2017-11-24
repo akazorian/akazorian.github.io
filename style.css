@@ -27,6 +27,7 @@ h6 {
 }
 
 .openbutton {
+    top: 0;
     color: #2F86EB;
     position: fixed;
 }

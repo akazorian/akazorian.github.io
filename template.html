@@ -65,16 +65,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 <script>
-  function openNav() {
-    document.getElementById("mySidenav").style.width = "25%";
-    document.getElementById("main").style.marginLeft = "25%";
-  }
-</script>
-<script>
-  function closeNav() {
-      document.getElementById("mySidenav").style.width = "0";
-      document.getElementById("main").style.marginLeft = "0";
-  }
+function nav() {
+   if (document.getElementById("mySidenav").style.width == "0px" || !document.getElementById("mySidenav").style.width) {
+       document.getElementById("mySidenav").style.width = "25%";
+       document.getElementById("main").style.marginLeft = "25%";
+   } else {
+       document.getElementById("mySidenav").style.width = "0";
+       document.getElementById("main").style.marginLeft = "0";
+   }
+}
 </script>
 </head>
 <body>
