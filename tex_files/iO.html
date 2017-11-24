@@ -15,7 +15,6 @@
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="/akazorian.github.io/style.css">
   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
@@ -105,7 +104,7 @@ function nav() {
 </nav>
 </div>
 <div id="main">
-<span style="font-size:200%;cursor:pointer" onclick="openNav()" class="openbutton">&#9776;</span>
+<span style="font-size:200%;cursor:pointer" onclick="nav()" class="openbutton">&#9776;</span>
 <article class="markdown-body">
 <h1 id="indistinguishability-obfuscation">Indistinguishability Obfuscation</h1>
 <p>To recap the previous lecture, we introduced the notion of program obfuscation and the definition of Virtual Black Box (VBB) security. Very informally, VBB security claims that an obfuscation of a program is, from the point of view of a user, only as good as having black box oracle access to the original program. This definition of security with regards to obfuscation is an impossible one to achieve as shown by Barak et. al. The paper that introduced this impossibility result also introduced, as a weaker alternative of security, indistinguishability obfuscation (<span class="math inline">\(i\mathcal{O}\)</span>).</p>
