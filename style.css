@@ -32,6 +32,17 @@ h6 {
     position: fixed;
 }
 
+.openbutton {
+    -webkit-transition-duration: .25s;
+    -moz-transition-duration: .25s;
+    -o-transition-duration: .25s;
+    transition-duration: .25s;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    -o-transition-property: -o-transform;
+    transition-property: transform;
+}
+
 /* The side navigation menu */
 .sidenav {
     height: 100%; /* 100% Full-height */
@@ -48,6 +59,9 @@ h6 {
 
 .sidenav ul {
     list-style: none;
+    margin-left: 2em;
+    margin-right: 2em;
+    padding-left: 0;
 }
 
 /* The navigation menu links */
@@ -56,17 +70,22 @@ h6 {
     text-decoration: none;
     color: white;
     display: block;
-    transition: 0.3s;
+    transition: 0.2s;
     font-family: 'Nunito Sans', sans-serif;
+    position: relative;
 }
 
-/* Position and style the close button (top right corner) */
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
+
+.sidenav a.active {
+    color: #2F86EB;
+}
+
+.sidenav a:hover {
+    color: #2F86EB;
+}
+
+.sidenav a:active {
+    color: #215fa8;
 }
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */

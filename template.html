@@ -57,6 +57,7 @@ code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Ann
 code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
 code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
 </script>
@@ -73,6 +74,41 @@ function nav() {
        document.getElementById("main").style.marginLeft = "0";
    }
 }
+</script>
+<script>
+$(document).ready(function(){
+    $(".openbutton").click(function(){
+    if (  $( this ).css( "transform" ) == 'none' ){
+        $(this).css("transform","rotate(90deg)");
+    } else {
+        $(this).css("transform","" );
+    }
+    });
+})
+</script>
+<script>
+//FIXME
+$(window).on('load', function() {
+    var url = window.location.href;
+    $('.sidenav a').each(function() {
+        if (url == $(this).href){
+            $(this).addClass("active");
+        } else {
+            $(this).removeClass("active");
+        }
+    })
+
+})
+</script>
+<script>
+$(document).ready(function() {
+    $('.sidenav a').click(function() {
+        $('.sidenav a').each(function() {
+            $(this).removeClass("active");
+        })
+        $(this).addClass("active");
+    })
+})
 </script>
 </head>
 <body>
