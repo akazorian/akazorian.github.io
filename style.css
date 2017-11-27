@@ -1,9 +1,9 @@
-#homepage {
+body {
     font-family: 'Nunito Sans', sans-serif;
     color: #b3b3b3;
 }
 
-#homepage-content {
+body {
     padding-top: 64px;
 }
 
@@ -15,6 +15,12 @@
 .jumbotron p {
     font-size: 24px;
     font-weight: 400;
+}
+
+#notes-list li {
+    font-size: 16px;
+    display: block;
+    text-align: left;
 }
 
 h1 {
