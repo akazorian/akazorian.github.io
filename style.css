@@ -1,6 +1,6 @@
 #homepage {
     font-family: 'Nunito Sans', sans-serif;
-    color: #2F86EB;
+    color: #b3b3b3;
 }
 
 #homepage-content {
@@ -14,6 +14,7 @@
 
 .jumbotron p {
     font-size: 24px;
+    font-weight: 400;
 }
 
 h1 {
