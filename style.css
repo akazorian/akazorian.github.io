@@ -1,10 +1,18 @@
 body {
     font-family: 'Nunito Sans', sans-serif;
-    color: #b3b3b3;
+    color: #a3a3a3;
 }
 
 body {
     padding-top: 64px;
+}
+
+.jumbotron h1,
+#notes-list h1 {
+    box-sizing:content-box;
+    overflow:hidden;
+    background:0 0;
+    border-bottom:1px solid #dfe2e5;
 }
 
 /*#welcome {
