@@ -39,6 +39,7 @@ with open("notes/notes.html", 'w+') as note:
                     note.write(topic_header.format(key))
                     for pair in value:
                         file_name, link = pair
+                        file_name = file_name[6:]
                         link = link.replace("_", " ").rstrip(".html")
                         note.write(link_template.format(file_name, link))
                     note.write(topic_close)
