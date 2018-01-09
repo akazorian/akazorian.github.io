@@ -148,9 +148,9 @@ $(document).ready(function() {
 <p>These are the basic building blocks that we work with regularly.</p>
 <h2 id="reference-types">Reference Types</h2>
 <p>Now, we have reference types which are essential for working with and understanding Java’s Object Oriented Programming designs. We introduce the idea of reference types by discussing how they work in the context of the &quot;String&quot; object. Consider the following block of code:</p>
-<pre class="sourceCode java" id="cb1" data-language="Java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1">            <span class="bu">String</span> a = <span class="kw">new</span> <span class="bu">String</span>(<span class="st">&quot;&quot;</span>);</a>
+<div class="sourceCode" id="cb1" data-language="Java"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1">            <span class="bu">String</span> a = <span class="kw">new</span> <span class="bu">String</span>(<span class="st">&quot;&quot;</span>);</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">            <span class="bu">String</span> b = a;</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">        </a></code></pre>
+<a class="sourceLine" id="cb1-3" data-line-number="3">        </a></code></pre></div>
 <p>What is going on under the hood? First, we have <code>a</code>, but what is it? It is a <em>reference</em> to the <code>String</code> object. We have to ask now, what does it mean for a variable to be a reference to an object? Well without going into the nitty gritty details of memory, we wil say that <code>a</code> contains the address in memory for which the <code>String</code> object is stored. In terms of an environment diagram, this would look something like: <span class="math display">\[Insert environment diagram graphic here\]</span> So what happens when execute the second line? We want and expect that <code>b</code> will have the same value as <code>a</code>, and what is the value of <code>a</code>? It is the address of a location in memory storing a <code>String</code> object! Therefore, we copy that address into <code>b</code> in our environment diagram as follows: <span class="math display">\[Insert environment diagram graphic here\]</span> Now, this is a really clunky and not very useful diagram. Why? Because who wants to be copying memory addresses from variable to variable? This is work that is best left for the last class in the 61 series. So what we do instead is represent these memory addresses using <em>pointers</em>. In effect, instead of using an address in memory, we draw an arrow to the object a variable references. So after the first line of code above, our environment diagram will be: <span class="math display">\[Insert environment diagram graphic here\]</span> After the second step, we again copy the value of <code>a</code> into <code>b</code>. What is the value of <code>a</code>? It is the pointer because a pointer is simply just an address in memory. Therefore, we copy the pointer into <code>b</code>. This looks like: <span class="math display">\[Insert environment diagram graphic here\]</span> To summarize:</p>
 <p><span>2</span></p>
 <ol>
@@ -161,7 +161,7 @@ $(document).ready(function() {
 </ol>
 <h1 id="case-study-intlists">Case Study: IntLists</h1>
 <p>This course is on data structures. It seems appropriate to make our own data structure!</p>
-<pre class="sourceCode java" id="cb2" data-language="Java"><code class="sourceCode java"><a class="sourceLine" id="cb2-1" data-line-number="1">        <span class="kw">public</span> <span class="kw">class</span> IntList {</a>
+<div class="sourceCode" id="cb2" data-language="Java"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb2-1" data-line-number="1">        <span class="kw">public</span> <span class="kw">class</span> IntList {</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">            <span class="kw">public</span> <span class="dt">int</span> _val;</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">            <span class="kw">public</span> IntList _next;</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"></a>
@@ -174,7 +174,7 @@ $(document).ready(function() {
 <a class="sourceLine" id="cb2-11" data-line-number="11">                IntList a = <span class="kw">new</span> <span class="fu">IntList</span>(<span class="dv">1</span>, <span class="kw">new</span> <span class="fu">IntList</span>(<span class="dv">2</span>, <span class="kw">null</span>));</a>
 <a class="sourceLine" id="cb2-12" data-line-number="12">            }</a>
 <a class="sourceLine" id="cb2-13" data-line-number="13">        }</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">    </a></code></pre>
+<a class="sourceLine" id="cb2-14" data-line-number="14">    </a></code></pre></div>
 <p>Based on the above class declaration, we know the following about any <code>IntList</code> object <code>L</code>:</p>
 <ol>
 <li><p><code>L</code> has a <code>_val</code> field attribute that is an <em>int</em>.</p></li>

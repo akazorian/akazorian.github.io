@@ -130,15 +130,15 @@ $(document).ready(function() {
 <p>Today’s notes will discuss a few Java topics which include Comparables and Exceptions. Exceptions and exception handling are not unique to Java; however, there are a few edge cases which we will discuss and list out clearly. On the other hand, Comparables are an integral part of the Java Object Oriented Programming approach. We will work with comparables many times throughout the course.</p>
 <h1 id="comparables">Comparables</h1>
 <p>Comparing numbers in Java is simple and all we have to do is use the built in comparison operators like <span class="math inline">\(&gt;, &lt;, ==, ...\)</span> What do we do if we want to compare players in the NBA? Well, there is more to them than just numbers so we cannot do the following:</p>
-<pre class="sourceCode java" id="cb1" data-language="Java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1">        NBAPlayer MJ = <span class="kw">new</span> <span class="fu">NBAPlayer</span>(<span class="st">&quot;Michael Jordan&quot;</span>, Mstats);</a>
+<div class="sourceCode" id="cb1" data-language="Java"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1">        NBAPlayer MJ = <span class="kw">new</span> <span class="fu">NBAPlayer</span>(<span class="st">&quot;Michael Jordan&quot;</span>, Mstats);</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">        NBAPlayer LaVar = <span class="kw">new</span> <span class="fu">NBAPlayer</span>(<span class="st">&quot;LaVar Ball&quot;</span>, Lstats);</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">        <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(LaVar &gt; MJ); <span class="co">// Does this work?</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">    </a></code></pre>
+<a class="sourceLine" id="cb1-4" data-line-number="4">    </a></code></pre></div>
 <p>This does not work and the error in specific is &quot;bad operand types for binary operator&quot;. We cannot compare the two players. The fix is to have the <code>NBAPlayer</code> class implement the <code>Comparable</code> interface. This interface requires that a class implementing it also provide an implementation for the following method:</p>
-<pre class="sourceCode java" id="cb2" data-language="Java"><code class="sourceCode java"><a class="sourceLine" id="cb2-1" data-line-number="1">        <span class="dt">int</span> <span class="fu">compareTo</span>(T o); <span class="co">// Don&#39;t worry about the T yet. If you want to get ahead, then read up on Java Generics!</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">    </a></code></pre>
+<div class="sourceCode" id="cb2" data-language="Java"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb2-1" data-line-number="1">        <span class="dt">int</span> <span class="fu">compareTo</span>(T o); <span class="co">// Don&#39;t worry about the T yet. If you want to get ahead, then read up on Java Generics!</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">    </a></code></pre></div>
 <p>The <code>compareTo(T o)</code> method compares the object with the object given as argument to the method for an order. It returns a negative integer, zero, or positive integer if the object is less than, equal to, or greater than the input. By doing so, we can provide an ordering for any class! Why is this useful? We can use this to sort object and not just integers, and we can use this to show that LaVar Ball is better than Michael Jordan!</p>
-<pre class="sourceCode java" id="cb3" data-language="Java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1">    <span class="kw">import</span><span class="im"> java.util.*;</span></a>
+<div class="sourceCode" id="cb3" data-language="Java"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1">    <span class="kw">import</span><span class="im"> java.util.*;</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">    <span class="kw">public</span> <span class="kw">class</span> NBAPlayer <span class="kw">implements</span> <span class="bu">Comparable</span>&lt;NBAPlayer&gt; {</a>
 <a class="sourceLine" id="cb3-4" data-line-number="4">        <span class="bu">String</span> name;</a>
@@ -168,7 +168,7 @@ $(document).ready(function() {
 <a class="sourceLine" id="cb3-28" data-line-number="28">            }</a>
 <a class="sourceLine" id="cb3-29" data-line-number="29">        }</a>
 <a class="sourceLine" id="cb3-30" data-line-number="30">    }</a>
-<a class="sourceLine" id="cb3-31" data-line-number="31">    </a></code></pre>
+<a class="sourceLine" id="cb3-31" data-line-number="31">    </a></code></pre></div>
 <p>What does this print? If you guessed &quot;Big Baller Brand&quot;, then you are correct! We will build on <code>Comparable</code> and ordering later on in the course.</p>
 <h1 id="exceptions">Exceptions</h1>
 <p>You may have noticed that sometimes your program will crash during runtime and output a message like &quot;ArrayIndexOutOfBoundsException&quot; or &quot;NullPointerException&quot;. These are built in Java exceptions that the runtime machine will <code>throw</code> when things go wrong. In the case that a program tries to write outside the bounds of an array, an &quot;ArrayIndexOutOfBoundsException&quot; will be thrown to prevent the user from doing malicious things! How smart of Java. This may be annoying and frustrating at times, but trust in that this is a life saving exception. If you are interested about why writing outside the bounds of an array is bad, read up on &quot;Buffer Overflow&quot; attacks. Now Java may be doing us a favor with throwing exceptions, but it just crashes our program! What if we don’t want that?</p>
@@ -182,7 +182,7 @@ Here are a couple rules to exception handling:</p>
 <li><p>An exception not caught by its parent function will propegate up the stack. If never caught, then the program crashes.</p></li>
 <li><p>The <code>finally</code> block is always executed before exiting the <code>try-catch</code> block. This is true even when a <code>try-catch</code> block cannot catch the exception thrown.</p></li>
 <li><p>Java requires that all catch blocks are reachable. In effect, the following is not possible because the catch block for the <code>Kanye</code> exception is not reachable:</p>
-<pre class="sourceCode java" id="cb4" data-language="Java"><code class="sourceCode java"><a class="sourceLine" id="cb4-1" data-line-number="1">            <span class="kw">public</span> <span class="kw">class</span> Kanye <span class="kw">extends</span> <span class="bu">Exception</span> {</a>
+<div class="sourceCode" id="cb4" data-language="Java"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb4-1" data-line-number="1">            <span class="kw">public</span> <span class="kw">class</span> Kanye <span class="kw">extends</span> <span class="bu">Exception</span> {</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">                <span class="kw">public</span> <span class="fu">Kanye</span>(<span class="bu">String</span> song) {</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">                    <span class="kw">super</span>(song);</a>
 <a class="sourceLine" id="cb4-4" data-line-number="4">                }</a>
@@ -197,7 +197,7 @@ Here are a couple rules to exception handling:</p>
 <a class="sourceLine" id="cb4-13" data-line-number="13">                    }</a>
 <a class="sourceLine" id="cb4-14" data-line-number="14">                }</a>
 <a class="sourceLine" id="cb4-15" data-line-number="15">            }</a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">        </a></code></pre></li>
+<a class="sourceLine" id="cb4-16" data-line-number="16">        </a></code></pre></div></li>
 <li><p>Java only allows for one catch per <code>try-catch</code> block.</p></li>
 </ul>
 <p>For some practice, check out these <a href="https://docs.google.com/presentation/d/1OZWm1p1TR8jsB2yGuj2cMGHY-ADyuyJLGc0K6o5C-uc/edit?usp=sharing">slides</a>.</p>
