@@ -16,7 +16,7 @@ def gen_file(File=None, FULLPATH=None, O=None, link=None):
 def gen_helper(File):
     with open("temp.html", 'w+') as html:
         with open("template.html", 'r+') as temp:
-            output = subprocess.check_output(["pandoc", "--from", "latex", "--to", "html5", "--mathjax", File, "--bibliography", "notes/Cryptography/iO.bib"])
+            output = subprocess.check_output(["pandoc", "--from", "latex", "--to", "html5", "--mathjax", File])
             pattern = re.compile("<article class=\"markdown-body\">")
             for line in temp:
                 html.write(line)
