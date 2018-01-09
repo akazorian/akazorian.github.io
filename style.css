@@ -5,6 +5,7 @@ body {
 
 body {
     padding-top: 64px;
+    position:relative;
 }
 
 .jumbotron h1,

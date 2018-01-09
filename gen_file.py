@@ -12,12 +12,11 @@ def gen_file(File=None, FULLPATH=None, O=None, link=None):
         gen_helper(FULLPATH)
     else:
         gen_helper(File)
-        gen_link(File, link)
 
 def gen_helper(File):
     with open("temp.html", 'w+') as html:
         with open("template.html", 'r+') as temp:
-            output = subprocess.check_output(["pandoc", "--from", "latex", "--to", "html5", "--mathjax", File])
+            output = subprocess.check_output(["pandoc", "--from", "latex", "--to", "html5", "--mathjax", File, "--bibliography", "notes/Cryptography/iO.bib"])
             pattern = re.compile("<article class=\"markdown-body\">")
             for line in temp:
                 html.write(line)
@@ -68,11 +67,6 @@ def gen_nav(File, ids, headers, depth, lines):
                     curr_depth = temp_depth
                     html.write(nav.format(ids[i], headers[i]))
                 html.write('</ul>\n</div>\n')
-
-def gen_link(File, link):
-    print(File, link)
-    with open("index.html", 'a') as home:
-        home.write("<a href={}> {}</a>\n".format(File.replace(".tex", ".html"), link))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Generate a webpage for a LaTex file.")

@@ -13,7 +13,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" type="text/css" href="/akazorian.github.io/style.css">
+  <link rel="stylesheet" type="text/css" href="/Users/Alex_Kazorian/Documents/akazorian.github.io/style.css">
   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
@@ -134,9 +134,9 @@ $(document).ready(function() {
 <h1 id="overview" class="unnumbered unnumbered">Overview</h1>
 <p>Today’s notes will cover various OOP paradigms built into Java. These include inheritance, static and dynamic typing, abstract classes, and interfaces. Instead of just going a deep conversation about the details of each of these concepts, I feel that it is sufficient to discuss how each of them works. A discussion on why each of these concepts exists and is used will take ages. Everyone has their own opinion in the programming community and we will be here longer than one wants to. Lets get started.</p>
 <h1 id="inheritance">Inheritance</h1>
-<pre class="sourceCode java" id="cb1" data-language="Java"><code class="sourceCode java"><div class="sourceLine" id="cb1-1" data-line-number="1">    <span class="kw">public</span> <span class="kw">class</span> &lt;SubClass&gt; <span class="kw">extends</span> &lt;SuperClass&gt; {</div>
-<div class="sourceLine" id="cb1-2" data-line-number="2">        ...</div>
-<div class="sourceLine" id="cb1-3" data-line-number="3">    }</div></code></pre>
+<pre class="sourceCode java" id="cb1" data-language="Java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1">    <span class="kw">public</span> <span class="kw">class</span> &lt;SubClass&gt; <span class="kw">extends</span> &lt;SuperClass&gt; {</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">        ...</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">    }</a></code></pre>
 <p>With this block of code, we introduce three new terms. The description of the terms are as follows:</p>
 <ul>
 <li><p><strong><em>extends</em></strong>: A keyword that indicates a relationship between two classes.</p></li>
@@ -153,15 +153,15 @@ $(document).ready(function() {
 </ul>
 
 <h2 id="access-modifiers">Access Modifiers</h2>
-<p><img src="access" alt="image" /></p>
+<p><img src="images/access.png" height="400px"/></p>
 <p>Taking a look at the figure above, we have some clarification on the notion of access modifiers and the role they play in inheritance. The idea here is that sometimes, we want to hide data and information from people that do not <em>need</em> to use it. Hiding data does not imply that making a field attribute <em>private</em> is secure. If only computer security was as simple as making a field attribute <em>private</em>!</p>
 <h1 id="polymorphism">Polymorphism</h1>
 <p><em>Polymorphism</em> is a term that is thrown around a lot right around this time in the course. Simply, it means that an object can be an instance of its respective class, an instance of its superclass, its superclasses superclass, etc... There seems to be some recursive nature to polymorphism, but let us not complicate things. We will keep it simple and consider polymorphism as an &quot;is-a&quot; relationship. In effect, a <em>subclass</em> is a <em>superclass</em>. More concretely, every <em>dog</em> is an <em>animal</em>. But, consider the converse of this statement. Is every <em>animal</em> a <em>dog</em>?</p>
 <h2 id="case-study-dogs-and-animals">Case Study: Dogs and Animals</h2>
 <p>Assume the existence of some Animal class and a Dog class that extends from the Animal class. Now consider the following lines of code:</p>
-<pre class="sourceCode java" id="cb2" data-language="Java"><code class="sourceCode java"><div class="sourceLine" id="cb2-1" data-line-number="1">    Dog doggo = <span class="kw">new</span> <span class="fu">Dog</span>();</div>
-<div class="sourceLine" id="cb2-2" data-line-number="2">    Animal doggo = <span class="kw">new</span> <span class="fu">Dog</span>();</div>
-<div class="sourceLine" id="cb2-3" data-line-number="3">    Dog doggo = <span class="kw">new</span> <span class="fu">Animal</span>();</div></code></pre>
+<pre class="sourceCode java" id="cb2" data-language="Java"><code class="sourceCode java"><a class="sourceLine" id="cb2-1" data-line-number="1">    Dog doggo = <span class="kw">new</span> <span class="fu">Dog</span>();</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">    Animal doggo = <span class="kw">new</span> <span class="fu">Dog</span>();</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">    Dog doggo = <span class="kw">new</span> <span class="fu">Animal</span>();</a></code></pre>
 <p>Which of these lines are legal?</p>
 <ul>
 <li><p>Is every <em>Dog</em> a <em>Dog</em>? Yes.</p></li>
@@ -171,7 +171,7 @@ $(document).ready(function() {
 <p>Why did I ask these questions? We were trying to declare a new variable in each line. For each of these lines, we tried instantiate an object and claim it <em>is-an</em> instance of the variable.</p>
 <h2 id="static-and-dynamic-types">Static and Dynamic Types</h2>
 <p>Now consider the following line once more:</p>
-<pre class="sourceCode java" id="cb3" data-language="Java"><code class="sourceCode java"><div class="sourceLine" id="cb3-1" data-line-number="1">    Dog doggo = <span class="kw">new</span> <span class="fu">Animal</span>();</div></code></pre>
+<pre class="sourceCode java" id="cb3" data-language="Java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1">    Dog doggo = <span class="kw">new</span> <span class="fu">Animal</span>();</a></code></pre>
 <p>Here the <em>static</em> type is <em>Animal</em> and the <em>dynamic</em> type is <em>Dog</em>. We can generalize this statement and say that the <em>static</em> type is on the left of the equals sign and the <em>dynamic</em> type is on the right. The rule here is that <em>dynamic</em> type cannot be a superclass of the <em>static</em> type and it must be of the same type or a subclass. <em>Animal</em> is a superclass of <em>Dog</em> and therefore this is a compilation error.<br />
 <br />
 There is an analogy often used to descire the notion of static and dynamic types. We have a box that we try to put dogs in. Any breed of dog can be placed into the box. But if we do not know the type of animal, we cannot confidently say it is a dog; therefore, we are not allowed to place it into the box for dogs. The label on the box is the static type. The type of the animal we are placing into the box is the dynamic type.</p>
