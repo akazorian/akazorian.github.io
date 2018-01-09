@@ -1,0 +1,143 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+\usepackage{amssymb, amsmath, graphicx, enumerate, mathtools, listings, algorithm, algpseudocode}
+
+\setlength{\oddsidemargin}{.25in}
+\setlength{\evensidemargin}{.25in}
+\setlength{\textwidth}{6in}
+\setlength{\topmargin}{-0.4in}
+\setlength{\textheight}{8.5in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PACKAGES
+%
+\usepackage{fullpage}
+\usepackage[pdftex]{hyperref}
+\usepackage{amsthm}
+\usepackage[draft]{todonotes}
+\usepackage{times}
+\usepackage{comment}
+\usepackage{xspace}
+\usepackage{paralist}
+\usepackage{enumitem}
+  \setlist[itemize]{leftmargin=*}
+  \setlist[enumerate]{leftmargin=*}
+\usepackage{makecell}
+\usepackage{tikz}
+	\usetikzlibrary{matrix,shapes,arrows,positioning,chains,calc}
+\usepackage{hypcap}
+\usepackage{mleftright}
+\usepackage{bbm}
+\usepackage{colortbl}
+\usepackage{tabu}
+\usepackage{multirow}
+\usepackage{mathrsfs}
+\usepackage{adjustbox}
+\usepackage{microtype}
+\usepackage{etoolbox}
+\usepackage{breakcites}
+\usepackage{booktabs}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{soul}
+\usepackage[small,margin=2mm]{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{iitem}
+\usepackage{scalerel}
+\usepackage{rotating}
+\usepackage{verbatimbox}
+\usepackage{complexity}
+\usepackage{mathtools}
+\usepackage{braket}
+\usepackage{relsize}
+\usepackage{extarrows}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THEOREM ENVIRONMENTS
+\newtheorem{theorem}{Theorem}%[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{proposition}[corollary]{Proposition}
+\newtheorem{definition}[corollary]{Definition}
+\newtheorem{lemma}[corollary]{Lemma}
+\newtheorem{claim}[corollary]{Claim}
+\newtheorem{observation}[corollary]{Observation}
+\newtheorem{notation}[corollary]{Notation}
+\newtheorem{fact}[corollary]{Fact}
+\newtheorem{assumption}[corollary]{Assumption}
+\newtheorem{conjecture}[corollary]{Conjecture}
+\newtheorem{goal}[corollary]{Goal}
+\newtheorem{remark}[corollary]{Remark}
+\newtheorem{question}[corollary]{Question}
+\newtheorem{problem}[corollary]{Problem}
+\newtheorem{challenge}[corollary]{Challenge}
+\newtheorem{example}[corollary]{Example}
+\newtheorem{exercise}[corollary]{Exercise}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MACROS
+
+%-----------------------------------------------------------------------------
+% Special-purpose color definitions (dark enough to print OK in black and white)
+\usepackage{color}
+
+% A few colors to replace the defaults for certain link types
+\definecolor{orange}{cmyk}{0,0.4,0.8,0.2}
+\definecolor{darkorange}{rgb}{.71,0.21,0.01}
+\definecolor{darkgreen}{rgb}{.12,.54,.11}
+
+%-----------------------------------------------------------------------------
+% The hyperref package gives us a pdf with properly built
+% internal navigation ('pdf bookmarks' for the table of contents,
+% internal cross-reference links, web links for URLs, etc.)
+
+\hypersetup{  % needed for pdflatex
+  breaklinks=true,  % so long urls are correctly broken across lines
+  colorlinks=true,
+  urlcolor=blue,
+  linkcolor=darkorange,
+  citecolor=darkgreen,
+}
+
+%-----------------------------------------------------------------------------
+\newcommand{\N}{{\mathbf N}}
+\newcommand{\Z}{{\mathbf Z}}
+\newcommand{\F}{{\mathbf F}}
+\newcommand{\Q}{{\mathbf Q}}
+\newcommand{\Time}{\operatorname{time}}
+\newcommand{\negl}{\mathsf{negl}}
+\newcommand{\ci}{\stackrel{c}{=}}
+\newcommand{\io}{i\mathcal{O}}
+
+\mdfsetup{
+    roundcorner=10pt,
+    frametitlebackgroundcolor=cyan!15!green!15,
+    backgroundcolor=cyan!15!green!15,
+    hidealllines=true,
+    skipabove=12pt,
+    skipbelow=6pt,
+    leftmargin=0pt
+    rightmargin=0pt,
+    innertopmargin=-4pt,
+    innerbottommargin=8pt,
+    innerleftmargin=12pt,
+    % innerrightmargin=12pt,
+    % frametitleaboveskip=6pt,
+    % frametitlebelowskip=4pt,
+    % frametitlerule=true,
+    % frametitlefont=\normalfont\itshape,
+    splittopskip=2\topsep
+}
+
+\pagenumbering{gobble}
+\title{zk-SNARKs}
+\author{Alex Kazorian}
+\date{\today}
+\begin{document}
+\maketitle
+\section{Introduction}
+kajsndfkjbkjbakjsdfkjb
+\end{document}
