@@ -7,7 +7,7 @@ from gen_file import *
 
 topic_header = "<div class=\"col-sm-6\">\n<h1>{}:</h1>\n<ul class=\"nav flex-column\">\n"
 topic_close = "</ul>\n</div>\n"
-link_template = "<li class=\"nav-item\"><a href={}>{}</a></li>"
+link_template = "<li class=\"nav-item\"><a href={}>{}</a></li>\n"
 
 def extract_topic(File):
     topic = ""
@@ -39,5 +39,6 @@ with open("notes/notes.html", 'w+') as note:
                     note.write(topic_header.format(key))
                     for pair in value:
                         file_name, link = pair
+                        link = link.replace("_", " ").rstrip(".html")
                         note.write(link_template.format(file_name, link))
                     note.write(topic_close)
