@@ -9,12 +9,6 @@ topic_header = "<div class=\"col-sm-6\">\n<h1>{}:</h1>\n<ul class=\"nav flex-col
 topic_close = "</ul>\n</div>\n"
 link_template = "<li class=\"nav-item\"><a href={}>{}</a></li>"
 
-def gen_link(File, link):
-    topic = extract_topic(File)
-    print(topic)
-    with open("notes/notes.html", 'w+') as home:
-         home.write("<a href={}> {}</a>\n".format(File.replace(".tex", ".html"), link))
-
 def extract_topic(File):
     topic = ""
     for c in File[6:]:
@@ -22,9 +16,6 @@ def extract_topic(File):
             break
         topic += c
     return topic
-
-def gen_notes():
-    pass
 
 topic_map = {}
 pattern = re.compile(".tex")
