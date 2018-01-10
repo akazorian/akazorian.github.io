@@ -128,7 +128,13 @@ $(document).ready(function() {
 <li><a href="#prerequisites">Prerequisites</a></li>
 <ul>
 <li><a href="#p-and-np"><span class="smallcaps">P</span> and <span class="smallcaps">NP</span></a></li>
-<li><a href="#non-interactive-proof-systems">Non-Interactive Proof Systems</a></li>
+<li><a href="#proof-systems">Proof Systems</a></li>
+</ul>
+<li><a href="#adding-some-formalities">Adding Some Formalities</a></li>
+<ul>
+<li><a href="#non-interactive-proof-systems">Non-interactive Proof Systems</a></li>
+<li><a href="#from-proof-systems-to-argument-systems">From Proof Systems to ARgument Systems</a></li>
+<li><a href="#succinctness">Succinctness</a></li>
 </ul>
 </div>
 <div id="main">
@@ -178,7 +184,7 @@ This article will be broken up into three parts, each meant to explain the topic
 <strong>Definition:</strong> <em>The complexity class <span class="smallcaps">NP</span> is the set of all problems <span class="math inline">\(\mathcal{L}\)</span> that can be verified in polynomial time when given a potential solution <span class="math inline">\(\pi\)</span> to an instance of the problem <span class="math inline">\(x\)</span>. Here <span class="math inline">\(\pi\)</span> acts as a proof of sorts for the membership of <span class="math inline">\(x\)</span> in the set of inputs with a solution for <span class="math inline">\(\mathcal{L}\)</span>.</em><br />
 <br />
 <em>Remark:</em> Given these defintions, we know that <span class="smallcaps">P</span> <span class="math inline">\(\subseteq\)</span> <span class="smallcaps">NP</span>. Why is this the case? If we could find the solution to a problem, then of course we could verify the validity of any solution to said problem!</p>
-<h3 id="non-interactive-proof-systems">Non-Interactive Proof Systems</h3>
+<h3 id="proof-systems">Proof Systems</h3>
 <p>Recall that a proof involves a prover and a verifier. Therefore, we have the following definition of a a proof system:<br />
 <br />
 <strong>Definition:</strong> <em>A proof system is a pair of algorithms <span class="math inline">\((P, V)\)</span> for a problem <span class="math inline">\(\mathcal{L}\)</span> such that below properties are satisfied:</em></p>
@@ -187,7 +193,21 @@ This article will be broken up into three parts, each meant to explain the topic
 <li><p><em>Completeness: If the prover has a correct proof for the validity of a statement related to an instance of the problem <span class="math inline">\(\mathcal{L}\)</span>, then the verifier must be convinced:</em> <span class="math display">\[\Pr\biggr[V(x, \pi) = 1 \biggr\vert \pi = P(x)\biggr] \geq \frac{2}{3}\]</span></p></li>
 <li><p><em>Soundness: The verifier cannot be tricked by any prover <span class="math inline">\(P^*\)</span> into believing statements about instances to the problem with no valid solution:</em> <span class="math display">\[\Pr\biggr[V(x, \pi) = 1 \biggr\vert \pi = P^*(x)\biggr] \leq \frac{1}{3}\]</span></p></li>
 </ol>
-<p><em>Remark:</em> We allow the verifier to fail with a probability of a third for completeness because we repeat the protocol for any proof system to drive down the probability of failure. A similar argument can be made for the error probability of the soundness property.</p>
+<p><em>Remark:</em> We allow the verifier to fail with a probability of a third for completeness because we repeat the protocol for any proof system to drive down the probability of failure. A similar argument can be made for the error probability of the soundness property.<br />
+<br />
+</p>
+<h2 id="adding-some-formalities">Adding Some Formalities</h2>
+<p>We are not too far from being able to have some formality when discussing the definition of a zk-SNARK. At this point, we only know of the complexity classes <span class="smallcaps">P</span> and <span class="smallcaps">NP</span>, as well as a basic proof system. What are we missing from our glorious acronym?</p>
+<h3 id="non-interactive-proof-systems">Non-interactive Proof Systems</h3>
+<p>Because I don’t expect everyone to know what an Interactive proof system is, the above definition for a proof system suffices for the level of understanding we are going for with zk-SNARKs in this section. Do note that the above definition is missing a detail.</p>
+<h3 id="from-proof-systems-to-argument-systems">From Proof Systems to ARgument Systems</h3>
+<p>Looking back at our property for efficiency of a proof system, note that I did not specify any requirements for the prover. This is because in many proof systems, we do not care about how long it takes for the prover to come up with the a proof. Instead, we want efficient verification; therefore, the majority of the work falls on the shoulders of the prover in a proof system. A prover is computationally unbounded often times for this very reason. Now, this is interesting. There is a clear discrepancy between the amount of work expected of the prover and the amount of expected of the verifier, but this imbalance in power or efficiency should remind us of something––<span class="smallcaps">NP</span>! The complexity class <span class="smallcaps">NP</span> can be thought of a class for problems with a proof system.<br />
+<br />
+This is all great, but we can relax our definition of a proof system by requiring that the prover is computaitonally bounded as well. One might ask: &quot;how is this a relaxation of the problem?&quot; Well our definition will now account for a set of provers that is less powerful. Therefore, possibly malicious provers are also less powerful and the above properties are easier to satisfy as a consequence. We refer to this &quot;relaxed&quot; definition as a Computationally Sound Non-interactive Proof or a Non-interactive ARgument. Woohoo, we have NAR!</p>
+<h3 id="succinctness">Succinctness</h3>
+<p>The proofs the verifier receives should ideally be small. Why? A smaller proof that satisfies the above conditions for a NAR can only improve the efficiency of the verifier. So the question to ask is more along the lines of why wouldn’t we want this? More formally, we add the following property to our NAR:<br />
+<br />
+<em>Succinctness: The size of the proof is polynomial in the size of the problem instance. In other words, for an instance <span class="math inline">\(x\)</span> of problem <span class="math inline">\(\mathcal{L}\)</span>, <span class="math inline">\(\pi = p(\lvert x \rvert)\)</span> for some polynomial <span class="math inline">\(p\)</span> where <span class="math inline">\(\pi\)</span> is the output of <span class="math inline">\(P(x)\)</span>.</em> The scoreboard is SNAR. What’s left?</p>
 
 </article>
 </div>
