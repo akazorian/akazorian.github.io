@@ -115,7 +115,13 @@ $(document).ready(function() {
 <div id="mySidenav" class="sidenav">
 <ul>
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#eli5-a-primer-for-the-average-person">ELI5: A Primer for the Average Person</a></li>
+<li><a href="#motivation">Motivation</a></li>
+<li><a href="#eli5-a-primer-for-the-average-person">ELI5: A Primer For The Average Person</a></li>
+<ul>
+<li><a href="#what-is-a-proof">What Is A Proof?</a></li>
+<li><a href="#what-is-knowledge">What Is Knowledge?</a></li>
+<li><a href="#what-does-it-mean-to-gain-knowledge">What Does It Mean To Gain Knowledge?</a></li>
+<li><a href="#bringing-it-all-together">Bringing It All Together</a></li>
 </ul>
 </div>
 <div id="main">
@@ -124,9 +130,37 @@ $(document).ready(function() {
 
 <h1 id="introduction">Introduction</h1>
 <p>Whether or not we are in a cryptocurrency bubble is not what drives the discussion of zk-SNARKs. Yes, zcash is the currency that introduced many people to the topic of this write up; however, the effect of zk-SNARKs could be wider reaching than a cryptocurrency.<br />
+<br />
 This article will be broken up into three parts, each meant to explain the topic to a seperate audience. These audiences are: the average adult, an undergraduate focusing on computer science or math, and a graduate student interested in cryptography or some complexity theoritic topic or another. For all three audiences, it will be benefitial to know what zk-SNARK is an acronym of. Yeah it’s a catchy thing to say, but it is quite descriptive of an acronym. A zk-SNARK is a zero-knowledge, Succinct, Non-interactive, ARgument of Knowledge and that really is a mouthfull.</p>
-<h1 id="eli5-a-primer-for-the-average-person">ELI5: A Primer for the Average Person</h1>
-<p>This primer will also introduce the motivation behind zk-SNARKs and so let us begin with a real life application. I know</p>
+<h1 id="motivation">Motivation</h1>
+<p>When trying to understand a cryptographic primitive it always helps to understand why it exists. In other words, what problem does it solve? In doing so, we will have the necessary motivation to drive future research and curiosity! Let’s get to it by first introducing our main characters Alice and Bob. Picture this: our protaganists reside in a dystopian society in the near future where government surveillance runs rampant. Alice and Bob are attempting to orchestrate a rebellion right under the nose of the black suits in office. They have found a hide out to base their operation from, but need a method of proving that a member knows the secret word for getting in. Moreover, no one should be able to learn the secret word or how to find it even if a third party person was listening in.</p>
+<h1 id="eli5-a-primer-for-the-average-person">ELI5: A Primer For The Average Person</h1>
+<p>The above scenario is admittedly very contrived; however, the above can be reworded into the following problem: how can we prove the integrity of encrypted data? zk-SNARKS are the solution to this problem. To answer why, we first delve into understanding the notion of a proof and knowledge.</p>
+<h2 id="what-is-a-proof">What Is A Proof?</h2>
+<p>As humans, we prove statements every day. We do so without even considering what the definition of a proof is and so let us slow down to consider a proof of a mathematical statement. Such proofs have the following properties:</p>
+<ol>
+<li><p>They consist of a static sequence of statements that follow in some logical order. These statements are therefore either axioms of mathematics or are derivational rules.</p></li>
+<li><p>The proof itself is at least as important as the theorem it is proving.</p></li>
+</ol>
+<p>Now, this type of proof would not help us in answering our question of proving integrity over encrypted data. Why? Once the proof is read out loud, it is trivially replicable and recitable. Therefore, a third party can trick us of say their identity as a fellow rebel. Looking ahead at the solution, one aspect of mathematical proofs remains. There are two parties present in such a proof system: the Prover and the Verifier.</p>
+<h2 id="what-is-knowledge">What Is Knowledge?</h2>
+<p>I’m no philosopher. Pass!</p>
+<h2 id="what-does-it-mean-to-gain-knowledge">What Does It Mean To Gain Knowledge?</h2>
+<p>Informally, one gains no knowledge from an interaction if and only if said person does not receive the proof for something that was otherwise infeasible for them to find themselves. For example, if someone told me that <span class="math inline">\(1 + 1 = 2\)</span>, then I have gained no knowledge because I can at least that much arithmetic. If, however, someone were to show me a proof of extraterrestial life forms, then I have certainly gained some knowledge.</p>
+<h2 id="bringing-it-all-together">Bringing It All Together</h2>
+<p>We now possess the necessary intuition to derive an informal definition of a zk-SNARK. Recall that we have and know the following:</p>
+<ul>
+<li><p>We want to derive a protocol that can allow for proving knowledge of a secret without anyone learning of the proof.</p></li>
+<li><p>A proof requires a prover and a verifier.</p></li>
+<li><p>Without receiving the proof of something I otherwise could not have proved, I have learned nothing.</p></li>
+</ul>
+<p>With this information, we outline the following properties necessary a protocol that solves our problem:</p>
+<ul>
+<li><p><em>Zero-knowledge:</em> The verifier gains no knowledge from the prover. In effect, the verifier does not learn the prover’s proof and cannot use it later. This falls in line with our discussion regarding gaining knowledge.</p></li>
+<li><p><em>Succinct:</em> The verifier does not have listen to the prover for too long of a time. This does not mean that the prover cannot think for themselves before speaking to the verifier. It simply means the prover’s response must be &quot;small&quot;.</p></li>
+<li><p><em>Non-interactive:</em> The verifier and prover are not engaged in a &quot;back-and-forth&quot; conversation.</p></li>
+<li><p><em>ARgument of Knowledge:</em> The prover is able to show that they have knowledge of something. In our case, it would be the secret word.</p></li>
+</ul>
 
 </article>
 </div>
