@@ -127,6 +127,8 @@ $(document).ready(function() {
 <ul>
 <li><a href="#prerequisites">Prerequisites</a></li>
 <ul>
+<li><a href="#negligible-functions">Negligible Functions</a></li>
+<li><a href="#indistinguishability">Indistinguishability</a></li>
 <li><a href="#p-and-np"><span class="smallcaps">P</span> and <span class="smallcaps">NP</span></a></li>
 <li><a href="#proof-systems">Proof Systems</a></li>
 </ul>
@@ -135,6 +137,7 @@ $(document).ready(function() {
 <li><a href="#non-interactive-proof-systems">Non-interactive Proof Systems</a></li>
 <li><a href="#from-proof-systems-to-argument-systems">From Proof Systems to ARgument Systems</a></li>
 <li><a href="#succinctness">Succinctness</a></li>
+<li><a href="#zero-knowledge">Zero-knowledge</a></li>
 </ul>
 </div>
 <div id="main">
@@ -178,6 +181,24 @@ This article will be broken up into three parts, each meant to explain the topic
 <p>We all ideally understand zk-SNARKs at the level of an average person, but we’ll be formalizing the above notions for those of us who remain curious. First, we have to make sure we are all brush up on some necessary background material!</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <p><strong>Note:</strong> I will be assuming knowledge of <a href="https://en.wikipedia.org/wiki/Asymptotic_analysis">asymptotic analysis</a> and the level of mathematical maturity after having taken a discrete mathematics course.</p>
+<h3 id="negligible-functions">Negligible Functions</h3>
+<p>A negligible function is something that is thrown around <em>all the time</em> in the cryptographic literature. It is absolutely essential to know what functions are negligible. We should all be asking why are negligible functions used so often? The answer lies in the necessity to capture the notion of certain events being so unlikely that we need not consider them. Such events include breaking the security of algorithms which we discuss in the section regarding indistinguishability.<br />
+<br />
+An intuitive explanation of an event being unlikely is something like a function being exponentially small. In other words a function is small if it grows slower than <em>every</em> polynomial function. This is a definition that we decided on because it satisfies our needs.<br />
+<br />
+<strong>Definition:</strong> <em>A function <span class="math inline">\(\mu\)</span> is negligible if and only if <span class="math inline">\(\forall{c} \in {\mathbf N}\)</span>, <span class="math inline">\(\exists n_0 \in {\mathbf N}\)</span> such that <span class="math inline">\(\forall n \geq n_0\)</span> <span class="math inline">\(\mu(n) &lt; n^{-c}\)</span>.</em></p>
+<h3 id="indistinguishability">Indistinguishability</h3>
+<p>Cryptography would be useless if we cannot guarantee the security of our primitives when under attack by adversaries. Most cryptographic primitives (if not all) are randomized algorithms. In effect, they are allowed to flip some number of coins during their execution. Because our primitives are randomized algorithms, they output a random variable with some distribution. Ideally, this random variable would distributed uniformally.<br />
+<br />
+<strong><em><span style="color: red">Sanity Check:</span></em></strong>Why would we want the distribution of the random variable outputted by some cryptographic primitive to be distributed uniformally?<br />
+<br />
+There are three notions of indistinguishability and they are in order of decreasing strength: perfect, statistical, and computational.<br />
+<br />
+<strong>Definition:</strong> <em>A random variable <span class="math inline">\(X\)</span> is perfectly indistinguishable from the uniform distribution <span class="math inline">\(U\)</span> if the distribution of <span class="math inline">\(X\)</span> is equivalent to <span class="math inline">\(U\)</span>. The notation used for this is <span class="math inline">\(X \equiv U\)</span>.</em><br />
+<br />
+<strong>Definition:</strong> <em>A random variable <span class="math inline">\(X\)</span> is statistically indistinguishable from the uniform distribution <span class="math inline">\(U\)</span> if the <a href="https://en.wikipedia.org/wiki/Total_variation_distance_of_probability_measures">total variation distance between</a> <span class="math inline">\(X\)</span> and <span class="math inline">\(U\)</span> is negligible. Intuitivally, this is an information theoretic argument saying that there does not exist a function or algorithm that can pull these two distributions any further apart.</em><br />
+<br />
+<strong>Definition:</strong> <em>A random variable <span class="math inline">\(X\)</span> is computationally indistinguishable from the uniform distribution <span class="math inline">\(U\)</span> if for every probabilistic polynomial time algorithm <span class="math inline">\(A\)</span> and for all security parameter <span class="math inline">\(k \in {\mathbf N}\)</span>:</em> <span class="math display">\[\biggr\lvert \Pr\biggr[D(X) = 1\biggr] - \Pr\biggr[D(U) = 1\biggr]\biggr\rvert = \text{ negl}(k)\]</span></p>
 <h3 id="p-and-np"><span class="smallcaps">P</span> and <span class="smallcaps">NP</span></h3>
 <p><strong>Definition:</strong> <em>The complexity class <span class="smallcaps">P</span> is the set of all problems <span class="math inline">\(\mathcal{L}\)</span> that can be solved in polynomial time.</em><br />
 <br />
@@ -209,6 +230,10 @@ This is all great, but we can relax our definition of a proof system by requirin
 <br />
 <em>Succinctness: The size of the proof is polynomial in the size of the problem instance. In other words, for an instance <span class="math inline">\(x\)</span> of problem <span class="math inline">\(\mathcal{L}\)</span>, <span class="math inline">\(\pi = p(\lvert x \rvert)\)</span> for some polynomial <span class="math inline">\(p\)</span> where <span class="math inline">\(\pi\)</span> is the output of <span class="math inline">\(P(x)\)</span>.</em><br />
 The scoreboard has us at SNAR. What’s left?</p>
+<h3 id="zero-knowledge">Zero-knowledge</h3>
+<p>Previously, we defined the property of zero-knowledge to be such that &quot;the verifier does not learn the prover’s proof and cannot use it later&quot;. We have some new tools in our tool belt and we will use them to formulate a definition that satisfies <em>our</em> needs. First, what does it mean to &quot;learn&quot; a proof? I argue that this means the verifier can replicate the proof for any input with a satisfying solution to the problem our proof system is defined under. How can we guarantee this cannot happen?<br />
+<br />
+In a non-interactive proof system, the verifier sees only the proof <span class="math inline">\(\pi\)</span> and the input <span class="math inline">\(x\)</span>. If the verifier learns nothing outside of these two from the protocol, then there is no way the verifier could have learned the proof. To formalize this notion, we introduce the idea of a simulator. A simulator <span class="math inline">\(S\)</span> is an algorithm that outputs a random variable. Because the output of the protocol between the prover and verifier is a random variable as well, we want the distribution of these random variables to be indistinguishable. We will later see that there is more to the construction than this, but this suffices for our desired level of understanding.</p>
 
 </article>
 </div>
