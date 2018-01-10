@@ -113,7 +113,7 @@
 \newcommand{\Time}{\operatorname{time}}
 \newcommand{\negl}{\mathsf{negl}}
 \newcommand{\ci}{\stackrel{c}{=}}
-\newcommand{\si}{\stackrel{\delta}{=}}
+\newcommand{\si}{\stackrel{\Delta}{=}}
 \newcommand{\io}{i\mathcal{O}}
 \newcommand{\scheck}{\textbf{\textit{\textcolor{red}{Sanity Check:}}}}
 
@@ -229,7 +229,7 @@ The proofs the verifier receives should ideally be small. Why? A smaller proof t
 Previously, we defined the property of zero-knowledge to be such that "the verifier does not learn the prover's proof and cannot use it later". We have some new tools in our tool belt and we will use them to formulate a definition that satisfies \textit{our} needs. First, what does it mean to "learn" a proof? I argue that this means the verifier is able to replicate the proof for any input with a satisfying solution to the problem our proof system is defined under. How can we guarantee this cannot happen? \\ \\
 \noindent In a non-interactive proof system, the verifier sees only the proof $\pi$ and the input $x$. If the verifier learns nothing outside of these two from the protocol, then there is no way the verifier could have learned the proof. To formalize this notion, we introduce the idea of a simulator. A simulator $S$ is an algorithm that outputs a random variable. Because the output of the protocol between the prover and verifier is a random variable as well, we want the distribution of these random variables to be indistinguishable. The level of indistinguishability can vary meaning that our proof system can have perfect, statistical, or computational zero-knowledge. More formally, \\ \\
 \noindent \textbf{Definition: } \textit{A proof system $(P, V)$ for a problem $\mathcal{P}$ is zero-knowledge if there exists a probabilistic polynomial time simulator $S$ such that for all $x$ with solutions to $\mathcal{P}$,}
-$$\{x, P(x)\} \stackrel{p/\delta/c}{=} S(x)$$
+$$\{x, P(x)\} \stackrel{p/\Delta/c}{=} S(x)$$
 \\
 \noindent \scheck I heavily relied on notational macros to shorten the definition. Rewrite the definition for the three different notions of zero-knowledge more explicitly. Once you have done this, we now have zk-SNARs. One more letter...
 \end{document}
