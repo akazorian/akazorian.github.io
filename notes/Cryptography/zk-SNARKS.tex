@@ -181,11 +181,11 @@ With this information, we outline the following properties necessary for a proto
 We all ideally understand zk-SNARKs at the level of an average person, but we'll be formalizing the above notions for those of us who remain curious. First, we have to make sure we are all brush up on some necessary background material!
 \subsection{Prerequisites}
 \textbf{Note:} I will be assuming knowledge of \href{https://en.wikipedia.org/wiki/Asymptotic_analysis}{asymptotic analysis} and the level of mathematical maturity after having taken a discrete mathematics course.
-\subsection{\textsc{P} and \textsc{NP}}
+\subsubsection{\textsc{P} and \textsc{NP}}
 \textbf{Definition:} \textit{The complexity class \textsc{P} is the set of all problems $\mathcal{L}$ that can be solved in polynomial time.} \\ \\
 \textbf{Definition:} \textit{The complexity class \textsc{NP} is the set of all problems $\mathcal{L}$ that can be verified in polynomial time when given a potential solution $\pi$ to an instance of the problem $x$. Here $\pi$ acts as a proof of sorts for the membership of $x$ in the set of inputs with a solution for $\mathcal{L}$.} \\ \\
 \noindent \textit{Remark:} Given these defintions, we know that \textsc{P} $\subseteq$ \textsc{NP}. Why is this the case? If we could find the solution to a problem, then of course we could verify the validity of any solution to said problem!
-\subsection{Non-Interactive Proof Systems}
+\subsubsection{Non-Interactive Proof Systems}
 Recall that a proof involves a prover and a verifier. Therefore, we have the following definition of a a proof system: \\ \\
 \textbf{Definition:} \textit{A proof system is a pair of algorithms $(P, V)$ for a problem $\mathcal{L}$ such that below properties are satisfied:}
     \begin{enumerate}

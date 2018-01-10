@@ -126,6 +126,7 @@ $(document).ready(function() {
 <li><a href="#diving-deeper-zk-snarks-for">Diving Deeper: zk-SNARKS for </a></li>
 <ul>
 <li><a href="#prerequisites">Prerequisites</a></li>
+<ul>
 <li><a href="#p-and-np"><span class="smallcaps">P</span> and <span class="smallcaps">NP</span></a></li>
 <li><a href="#non-interactive-proof-systems">Non-Interactive Proof Systems</a></li>
 </ul>
@@ -171,13 +172,13 @@ This article will be broken up into three parts, each meant to explain the topic
 <p>We all ideally understand zk-SNARKs at the level of an average person, but we’ll be formalizing the above notions for those of us who remain curious. First, we have to make sure we are all brush up on some necessary background material!</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <p><strong>Note:</strong> I will be assuming knowledge of <a href="https://en.wikipedia.org/wiki/Asymptotic_analysis">asymptotic analysis</a> and the level of mathematical maturity after having taken a discrete mathematics course.</p>
-<h2 id="p-and-np"><span class="smallcaps">P</span> and <span class="smallcaps">NP</span></h2>
+<h3 id="p-and-np"><span class="smallcaps">P</span> and <span class="smallcaps">NP</span></h3>
 <p><strong>Definition:</strong> <em>The complexity class <span class="smallcaps">P</span> is the set of all problems <span class="math inline">\(\mathcal{L}\)</span> that can be solved in polynomial time.</em><br />
 <br />
 <strong>Definition:</strong> <em>The complexity class <span class="smallcaps">NP</span> is the set of all problems <span class="math inline">\(\mathcal{L}\)</span> that can be verified in polynomial time when given a potential solution <span class="math inline">\(\pi\)</span> to an instance of the problem <span class="math inline">\(x\)</span>. Here <span class="math inline">\(\pi\)</span> acts as a proof of sorts for the membership of <span class="math inline">\(x\)</span> in the set of inputs with a solution for <span class="math inline">\(\mathcal{L}\)</span>.</em><br />
 <br />
 <em>Remark:</em> Given these defintions, we know that <span class="smallcaps">P</span> <span class="math inline">\(\subseteq\)</span> <span class="smallcaps">NP</span>. Why is this the case? If we could find the solution to a problem, then of course we could verify the validity of any solution to said problem!</p>
-<h2 id="non-interactive-proof-systems">Non-Interactive Proof Systems</h2>
+<h3 id="non-interactive-proof-systems">Non-Interactive Proof Systems</h3>
 <p>Recall that a proof involves a prover and a verifier. Therefore, we have the following definition of a a proof system:<br />
 <br />
 <strong>Definition:</strong> <em>A proof system is a pair of algorithms <span class="math inline">\((P, V)\)</span> for a problem <span class="math inline">\(\mathcal{L}\)</span> such that below properties are satisfied:</em></p>
