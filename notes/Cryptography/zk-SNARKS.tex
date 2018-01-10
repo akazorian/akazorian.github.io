@@ -205,6 +205,6 @@ Looking back at our property for efficiency of a proof system, note that I did n
 \noindent This is all great, but we can relax our definition of a proof system by requiring that the prover is computaitonally bounded as well. One might ask: "how is this a relaxation of the problem?" Well our definition will now account for a set of provers that is less powerful. Therefore, possibly malicious provers are also less powerful and the above properties are easier to satisfy as a consequence. We refer to this "relaxed" definition as a Computationally Sound Non-interactive Proof or a Non-interactive ARgument. Woohoo, we have NAR!
 \subsubsection{Succinctness}
 The proofs the verifier receives should ideally be small. Why? A smaller proof that satisfies the above conditions for a NAR can only improve the efficiency of the verifier. So the question to ask is more along the lines of why wouldn't we want this? More formally, we add the following property to our NAR: \\ \\
-\noindent \textit{Succinctness: The size of the proof is polynomial in the size of the problem instance. In other words, for an instance $x$ of problem $\mathcal{L}$, $\pi = p(\lvert x \rvert)$ for some polynomial $p$ where $\pi$ is the output of $P(x)$.}
-The scoreboard is SNAR. What's left?
+\noindent \textit{Succinctness: The size of the proof is polynomial in the size of the problem instance. In other words, for an instance $x$ of problem $\mathcal{L}$, $\pi = p(\lvert x \rvert)$ for some polynomial $p$ where $\pi$ is the output of $P(x)$.} \\
+The scoreboard has us at SNAR. What's left?
 \end{document}
