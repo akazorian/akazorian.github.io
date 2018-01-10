@@ -139,6 +139,7 @@ $(document).ready(function() {
 <li><a href="#from-proof-systems-to-argument-systems">From Proof Systems to ARgument Systems</a></li>
 <li><a href="#succinctness">Succinctness</a></li>
 <li><a href="#zero-knowledge-and-the-simulation-paradigm">Zero-knowledge and the Simulation Paradigm</a></li>
+<li><a href="#zk-snar-of-knowledge">zk-SNAR of Knowledge</a></li>
 </ul>
 </div>
 <div id="main">
@@ -231,9 +232,8 @@ There are three notions of indistinguishability and they are in order of decreas
 <br />
 This is all great, but do we really have unlimited time for provers. Say you are able to verify something quickly. If the prover cannot supply me with a proof to verify before life on Earth ends, then what good is our proof system. There are reasons to consider proof systems for which the prover is computationally unbounded; however, we can relax our definition of a proof system by requiring that the prover is computationally bounded. One might ask: &quot;how is this a relaxation of the problem?&quot; Well our definition will now account for a set of provers that is less powerful. Therefore, possibly malicious provers are also less powerful and the above properties are easier to satisfy. We refer to this &quot;relaxed&quot; definition as a Computationally Sound Non-interactive Proof or a Non-interactive ARgument. Woohoo, we have NAR!</p>
 <h3 id="succinctness">Succinctness</h3>
-<p>The proofs the verifier receives should ideally be small. Why? A smaller proof that satisfies the above conditions for a NAR can only improve the efficiency of the verifier. So the question to ask is more along the lines of why wouldn’t we want this? More formally, we add the following property to our NAR:<br />
-<br />
-5. <em>Succinctness: The size of the proof is polynomial in the size of the problem instance. In other words, for an instance <span class="math inline">\(x\)</span> of problem <span class="math inline">\(\mathcal{P}\)</span>, <span class="math inline">\(\pi = p(\lvert x \rvert)\)</span> for some polynomial <span class="math inline">\(p\)</span> where <span class="math inline">\(\pi\)</span> is the output of <span class="math inline">\(P(x)\)</span>.</em><br />
+<p>The proofs the verifier receives should ideally be small. Why? A smaller proof that satisfies the above conditions for a NAR can only improve the efficiency of the verifier. So the question to ask is more along the lines of why wouldn’t we want this? More formally, we add the following property to our NAR:</p>
+<p>5. <em>Succinctness: The size of the proof is polynomial in the size of the problem instance. In other words, for an instance <span class="math inline">\(x\)</span> of problem <span class="math inline">\(\mathcal{P}\)</span>, <span class="math inline">\(\pi = p(\lvert x \rvert)\)</span> for some polynomial <span class="math inline">\(p\)</span> where <span class="math inline">\(\pi\)</span> is the output of <span class="math inline">\(P(x)\)</span>.</em><br />
 <br />
 The scoreboard has us at SNAR. What’s left?</p>
 <h3 id="zero-knowledge-and-the-simulation-paradigm">Zero-knowledge and the Simulation Paradigm</h3>
@@ -243,6 +243,15 @@ In a non-interactive proof system, the verifier sees only the proof <span class=
 <br />
 <strong>Definition:</strong> <em>A proof system <span class="math inline">\((P, V)\)</span> for a problem <span class="math inline">\(\mathcal{P}\)</span> is zero-knowledge if there exists a probabilistic polynomial time simulator <span class="math inline">\(S\)</span> such that for all <span class="math inline">\(x\)</span> with solutions to <span class="math inline">\(\mathcal{P}\)</span>,</em> <span class="math display">\[\{x, P(x)\} \stackrel{p/\Delta/c}{=} S(x)\]</span><br />
 <strong><em><span style="color: red">Sanity Check: </span></em></strong>I heavily relied on notational macros to shorten the definition. Rewrite the definition for the three different notions of zero-knowledge more explicitly. Once you have done this, we now have zk-SNARs. One more letter...</p>
+<h3 id="zk-snar-of-knowledge">zk-SNAR of Knowledge</h3>
+<p>Thus far, we have discussed proof systems for which a prover can prove whether or not a statement is true. Just as a reminder, the statements are asked by the verifier and are of the form &quot;does <span class="math inline">\(x\)</span> have a solution to the problem <span class="math inline">\(\mathcal{P}\)</span>&quot;. Therefore, with our current definitions, we can answer the question &quot;is <span class="math inline">\(x\)</span> the secret word for entrance?&quot; Really we want someone to prove why <span class="math inline">\(x\)</span> is the secret word for entrance. This is the idea behind a proof of knowledge.<br />
+<br />
+Now, we need to formulaize this notion of the prover &quot;knowing a secret&quot;. Recall that the zero-knowledge property of the proof system we are working with is such that the prover is not going to just reveal their proofs of <em>anything</em>. However, if a prover knows something, then we should be able to extract it. More formally,<br />
+<br />
+<strong>Definition:</strong> <em>A proof system <span class="math inline">\((P, V)\)</span> is a proof of knowledge if there exists a probabistic polynomial time extractor E such that for all provers <span class="math inline">\(P^*\)</span> and for all <span class="math inline">\(k \in {\mathbf N}\)</span> the following property of Extractability holds,</em> <span class="math display">\[\Pr\bigr[\begin{array}{c} (x, \pi) \leftarrow P^*(z) \\ V(x, \pi) = 1\end{array} \wedge \begin{array}{c} (x, w) \leftarrow E^{P^*}(z) \\ w \text{ is not a solution for } x \text{ under problem} \mathcal{P}\end{array}\bigl]\]</span><br />
+<em>Remark:</em> Here the proof <span class="math inline">\(\pi\)</span> is a proof of the statement &quot;<span class="math inline">\(w\)</span> is a solution to <span class="math inline">\(x\)</span> for problem <span class="math inline">\(\mathcal{P}\)</span>. Moreover, the funky notation for <span class="math inline">\(E^{P^*}\)</span> is saying that <span class="math inline">\(E\)</span> has &quot;oracle&quot; access to <span class="math inline">\(P^*\)</span>. This means that <span class="math inline">\(E\)</span> can makes function calls to <span class="math inline">\(P^*\)</span>.<br />
+<br />
+<span class="math inline">\(&lt;\)</span>Wipes sweat from forehead<span class="math inline">\(&gt;\)</span> There. zk-SNARKs. Done.</p>
 
 </article>
 </div>
