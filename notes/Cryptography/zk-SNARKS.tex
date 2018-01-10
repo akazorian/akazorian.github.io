@@ -196,7 +196,7 @@ Cryptography would be useless if we cannot guarantee the security of our primiti
 \noindent \textbf{Definition:} \textit{A random variable $X$ is perfectly indistinguishable from the uniform distribution $U$ if the distribution of $X$ is equivalent to $U$. The notation used for this is $X \equiv U$ or $X \stackrel{p}{=} U$.} \\ \\
 \noindent \textbf{Definition:} \textit{A random variable $X$ is statistically indistinguishable from the uniform distribution $U$ if the \href{https://en.wikipedia.org/wiki/Total_variation_distance_of_probability_measures}{total variation distance between} $X$ and $U$ is negligible. Intuitivally, this is an information theoretic argument saying that there does not exist a function or algorithm that can pull these two distributions any further apart. The notation used for this is $X \si U$.} \\ \\
 \noindent \textbf{Definition:} \textit{A random variable $X$ is computationally indistinguishable from the uniform distribution $U$ if for every probabilistic polynomial time algorithm $A$ and for all security parameter $k \in \N$:}
-$$\biggl\lvert \Pr[D(X) = 1] - \Pr[D(U) = 1]\biggr\rvert = \text{ negl}(k)$$
+$$\bigg\lvert \Pr[D(X) = 1] - \Pr[D(U) = 1]\bigg\rvert = \text{ negl}(k)$$
 \textit{The notation used for this is $X \ci U$.}
 \subsubsection{\textsc{P} and \textsc{NP}}
 \textbf{Definition:} \textit{The complexity class \textsc{P} is the set of all problems $\mathcal{P}$ that can be solved in polynomial time.} \\ \\
@@ -208,9 +208,9 @@ Recall that a proof involves a prover and a verifier. Therefore, we have the fol
     \begin{enumerate}
         \item \textit{Efficiency: The verifier must run in polynomial time and is allowed access to some randomness.}
         \item \textit{Completeness: If the prover has a correct proof for the validity of a statement related to an instance of the problem $\mathcal{P}$, then the verifier must be convinced:}
-        $$\Pr\biggl[V(x, \pi) = 1 \bigg\vert \pi = P(x)\biggr] \geq \frac{2}{3}$$
+        $$\Pr\bigg[V(x, \pi) = 1 \bigg\vert \pi = P(x)\bigg] \geq \frac{2}{3}$$
         \item \textit{Soundness: The verifier cannot be tricked by any prover $P^*$ into believing statements about instances to the problem with no valid solution:}
-        $$\Pr\biggl[V(x, \pi) = 1 \bigg\vert \pi = P^*(x)\biggr] \leq \frac{1}{3}$$
+        $$\Pr\bigg[V(x, \pi) = 1 \bigg\vert \pi = P^*(x)\bigg] \leq \frac{1}{3}$$
     \end{enumerate}
 \noindent \textit{Remark:} We allow the verifier to fail with a probability of a third for completeness because we repeat the protocol for any proof system to drive down the probability of failure. A similar argument can be made for the error probability of the soundness property. \\ \\
 \subsection{Adding Some Formalities}
@@ -239,7 +239,7 @@ $$\{x, P(x)\} \stackrel{p/\Delta/c}{=} S(x)$$
 Thus far, we have discussed proof systems for which a prover can prove whether or not a statement is true. Just as a reminder, the statements are asked by the verifier and are of the form "does $x$ have a solution to the problem $\mathcal{P}$". Therefore, with our current definitions, we can answer the question "is $x$ the secret word for entrance?" Really we want someone to prove why $x$ is the secret word for entrance. This is the idea behind a proof of knowledge. \\ \\
 \noindent Now, we need to formulaize this notion of the prover "knowing a secret". Recall that the zero-knowledge property of the proof system we are working with is such that the prover is not going to just reveal their proofs of \textit{anything}. However, if a prover knows something, then we should be able to extract it. More formally, \\ \\
 \noindent \textbf{Definition: } \textit{A proof system $(P, V)$ is a proof of knowledge if there exists a probabistic polynomial time extractor E such that for all provers $P^*$ and for all $k \in \N$ the following property of Extractability holds,}
-$$\Pr\biggr[\begin{array}{c} (x, \pi) \leftarrow P^*(z) \\ V(x, \pi) = 1\end{array} \wedge \begin{array}{c} (x, w) \leftarrow E^{P^*}(z) \\ w \text{ is not a solution for } x \text{ under problem } \mathcal{P}\end{array}\biggl]$$
+$$\Pr\bigg[\begin{array}{c} (x, \pi) \leftarrow P^*(z) \\ V(x, \pi) = 1\end{array} \wedge \begin{array}{c} (x, w) \leftarrow E^{P^*}(z) \\ w \text{ is not a solution for } x \text{ under problem } \mathcal{P}\end{array}\bigg]$$
 \\
 \noindent \textit{Remark: } Here the proof $\pi$ is a proof of the statement "$w$ is a solution to $x$ for problem $\mathcal{P}$. Moreover, the funky notation for $E^{P^*}$ is saying that $E$ has "oracle" access to $P^*$. This means that $E$ can makes function calls to $P^*$.\\ \\
 \noindent $<$Wipes sweat from forehead$>$ There. zk-SNARKs. Done.
