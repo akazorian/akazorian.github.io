@@ -54,6 +54,7 @@
 \usepackage{extarrows}
 \usepackage{graphicx}
 \usepackage{csquotes}
+\usepackage{hyperref}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -160,19 +161,39 @@ Now, this type of proof would not help us in answering our question of proving i
 \subsection{What Is Knowledge?}
 I'm no philosopher. Pass!
 \subsection{What Does It Mean To Gain Knowledge?}
-Informally, one gains no knowledge from an interaction if and only if said person does not receive the proof for something that was otherwise infeasible for them to find themselves. For example, if someone told me that $1 + 1 = 2$, then I have gained no knowledge because I can at least that much arithmetic. If, however, someone were to show me a proof of extraterrestial life forms, then I have certainly gained some knowledge.
+Informally, one gains no knowledge from an interaction if and only if said person does not receive the proof for something that was otherwise infeasible for them to find themselves. For example, if someone told me that $1 + 1 = 2$, then I have gained no knowledge because I can do at least that much arithmetic. If, however, someone were to show me a proof of extraterrestial life forms, then I have certainly gained some knowledge.
 \subsection{Bringing It All Together}
-We now possess the necessary intuition to derive an informal definition of a zk-SNARK. Recall that we have and know the following:
+We now possess the necessary intuition to derive an informal definition of a zk-SNARK. Recall that we know the following:
 \begin{itemize}
-    \item We want to derive a protocol that can allow for proving knowledge of a secret without anyone learning of the proof.
+    \item We want to derive a protocol that can allow for proving knowledge of a secret without anyone learning the proof itself.
     \item A proof requires a prover and a verifier.
     \item Without receiving the proof of something I otherwise could not have proved, I have learned nothing.
 \end{itemize}
-With this information, we outline the following properties necessary a protocol that solves our problem:
+With this information, we outline the following properties necessary for a protocol that solves our problem:
 \begin{itemize}
     \item \textit{Zero-knowledge:} The verifier gains no knowledge from the prover. In effect, the verifier does not learn the prover's proof and cannot use it later. This falls in line with our discussion regarding gaining knowledge.
     \item \textit{Succinct:} The verifier does not have listen to the prover for too long of a time. This does not mean that the prover cannot think for themselves before speaking to the verifier. It simply means the prover's response must be "small".
     \item \textit{Non-interactive:} The verifier and prover are not engaged in a "back-and-forth" conversation.
     \item \textit{ARgument of Knowledge:} The prover is able to show that they have knowledge of something. In our case, it would be the secret word.
 \end{itemize}
+
+\section{Diving Deeper: zk-SNARKS for }
+We all ideally understand zk-SNARKs at the level of an average person, but we'll be formalizing the above notions for those of us who remain curious. First, we have to make sure we are all brush up on some necessary background material!
+\subsection{Prerequisites}
+\textbf{Note:} I will be assuming knowledge of \href{https://en.wikipedia.org/wiki/Asymptotic_analysis}{asymptotic analysis} and the level of mathematical maturity after having taken a discrete mathematics course.
+\subsection{\textsc{P} and \textsc{NP}}
+\textbf{Definition:} \textit{The complexity class \textsc{P} is the set of all problems $\mathcal{L}$ that can be solved in polynomial time.} \\ \\
+\textbf{Definition:} \textit{The complexity class \textsc{NP} is the set of all problems $\mathcal{L}$ that can be verified in polynomial time when given a potential solution $\pi$ to an instance of the problem $x$. Here $\pi$ acts as a proof of sorts for the membership of $x$ in the set of inputs with a solution for $\mathcal{L}$.} \\ \\
+\noindent \textit{Remark:} Given these defintions, we know that $\textsc{P} \subseteq \textsc{NP}$. Why is this the case? If we could find the solution to a problem, then of course we could verify the validity of any solution to said problem!
+\subsection{Non-Interactive Proof Systems}
+Recall that a proof involves a prover and a verifier. Therefore, we have the following definition of a a proof system: \\ \\
+\textbf{Definition:} \textit{A proof system is a pair of algorithms $(P, V)$ for a problem $\mathcal{L}$ such that below properties are satisfied:}
+    \begin{enumerate}
+        \item \textit{Efficiency: The verifier must run in polynomial time and is allowed access to some randomness.}
+        \item \textit{Completeness: If the prover has a correct proof for the validity of a statement related to an instance of the problem $\mathcal{L}$, then the verifier must be convinced:}
+        $$\Pr\biggr[V(x, \pi) = 1 \biggr\vert \pi = P(x)\biggr] \geq \frac{2}{3}$$
+        \item \textit{Soundness: The verifier cannot be tricked by any prover $P^*$ into believing statements about instances to the problem with no valid solution:}
+        $$\Pr\biggr[V(x, \pi) = 1 \biggr\vert \pi = P^*(x)\biggr] \leq \frac{1}{3}$$
+    \end{enumerate}
+\noindent \textit{Remark:} We allow the verifier to fail with a probability of a third for completeness because we repeat the protocol for any proof system to drive down the probability of failure. A similar argument can be made for the error probability of the soundness property.
 \end{document}
