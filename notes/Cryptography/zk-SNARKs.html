@@ -128,10 +128,10 @@ $(document).ready(function() {
 <ul>
 <li><a href="#prerequisites">Prerequisites</a></li>
 <ul>
-<li><a href="#notation-regarding-algorithms">Notation Regarding Algorithms</a></li>
+<li><a href="#p-and-np"><span class="smallcaps">P</span> and <span class="smallcaps">NP</span></a></li>
+<li><a href="#algorithms-and-randomness">Algorithms and Randomness</a></li>
 <li><a href="#negligible-functions">Negligible Functions</a></li>
 <li><a href="#indistinguishability">Indistinguishability</a></li>
-<li><a href="#p-and-np"><span class="smallcaps">P</span> and <span class="smallcaps">NP</span></a></li>
 <li><a href="#proof-systems">Proof Systems</a></li>
 </ul>
 <li><a href="#adding-some-formalities">Adding Some Formalities</a></li>
@@ -184,8 +184,14 @@ This article will be broken up into three parts, each meant to explain the topic
 <p>We all ideally understand zk-SNARKs at the level of an average person, but we’ll be formalizing the above notions for those of us who remain curious. I want to be very clear that the definition outlined in this section is <strong>not</strong> complete and is ignoring some very small technical details that are integral to the study of zk-SNARKs. The decision to omit these details is, in my opinion, necessary to able to discuss this primitive at the level of an undergraduate in Computer Science or mathematics without explaining everything taught in a graduate cryptography course. With that out of the way, let’s brush up on some necessary background material!</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <p><strong>Note:</strong> I will be assuming knowledge of <a href="https://en.wikipedia.org/wiki/Asymptotic_analysis">asymptotic analysis</a> and the level of mathematical maturity after having taken a discrete mathematics course.</p>
-<h3 id="notation-regarding-algorithms">Notation Regarding Algorithms</h3>
-<p>We later define our prover and verifier in terms of an algorithm and so we need to introduce some notation. An algorithm is said to accept its input if it outputs one after halting. On the other hand, if an algorithm outputs 0, then we say it rejected its input.</p>
+<h3 id="p-and-np"><span class="smallcaps">P</span> and <span class="smallcaps">NP</span></h3>
+<p><strong>Definition:</strong> <em>The complexity class <span class="smallcaps">P</span> is the set of all problems <span class="math inline">\(\mathcal{P}\)</span> that can be solved in polynomial time.</em><br />
+<br />
+<strong>Definition:</strong> <em>The complexity class <span class="smallcaps">NP</span> is the set of all problems <span class="math inline">\(\mathcal{P}\)</span> that can be verified in polynomial time when given a potential solution <span class="math inline">\(\pi\)</span> to an instance of the problem <span class="math inline">\(x\)</span>. Here <span class="math inline">\(\pi\)</span> acts as a proof of sorts for the membership of <span class="math inline">\(x\)</span> in the set of inputs with a solution for <span class="math inline">\(\mathcal{P}\)</span>.</em><br />
+<br />
+<em>Remark:</em> Given these defintions, we know that <span class="smallcaps">P</span> <span class="math inline">\(\subseteq\)</span> <span class="smallcaps">NP</span>. Why is this the case? If we could find the solution to a problem, then of course we could verify the validity of any solution to said problem! However, the literal million dollar question is does <a href="https://en.wikipedia.org/wiki/P_versus_NP_problem"><span class="smallcaps">P</span> <span class="math inline">\(=\)</span> <span class="smallcaps">NP</span>?</a></p>
+<h3 id="algorithms-and-randomness">Algorithms and Randomness</h3>
+<p>We later define our prover and verifier in terms of an algorithm and so we need to introduce some notation. An algorithm is said to accept its input if it outputs one after halting. On the other hand, if an algorithm outputs 0, then we say it rejected its input. Lastly, an important class of algorithms to consider are probabilistic polynomial time algorithms. These are algorithms that terminate in a polynomial number of steps but are allowed some randomness. This randomness is expressed through an algorithms ability to flip coins. Therefore, the probability of an event occuring related to a probabilistic polynomial time algorithm is always over the random coin tosses said algorithm has access to.</p>
 <h3 id="negligible-functions">Negligible Functions</h3>
 <p>A negligible function is something that is thrown around <em>all the time</em> in the cryptographic literature. It is absolutely essential to know what functions are negligible. We should all be asking why are negligible functions used so often? The answer lies in the necessity to capture the notion of certain events being so unlikely that we need not consider them. Such events include breaking the security of algorithms which we discuss in the section regarding indistinguishability.<br />
 <br />
@@ -204,12 +210,6 @@ There are three notions of indistinguishability and they are in order of decreas
 <strong>Definition:</strong> <em>A random variable <span class="math inline">\(X\)</span> is statistically indistinguishable from the uniform distribution <span class="math inline">\(U\)</span> if the <a href="https://en.wikipedia.org/wiki/Total_variation_distance_of_probability_measures">total variation distance between</a> <span class="math inline">\(X\)</span> and <span class="math inline">\(U\)</span> is negligible. Intuitivally, this is an information theoretic argument saying that there does not exist a function or algorithm that can pull these two distributions any further apart. The notation used for this is <span class="math inline">\(X \stackrel{\Delta}{=}U\)</span>.</em><br />
 <br />
 <strong>Definition:</strong> <em>A random variable <span class="math inline">\(X\)</span> is computationally indistinguishable from the uniform distribution <span class="math inline">\(U\)</span> if for every probabilistic polynomial time algorithm <span class="math inline">\(A\)</span> and for all security parameter <span class="math inline">\(k \in {\mathbf N}\)</span>:</em> <span class="math display">\[\bigg\lvert \Pr[D(X) = 1] - \Pr[D(U) = 1]\bigg\rvert = \text{ negl}(k)\]</span> <em>The notation used for this is <span class="math inline">\(X \stackrel{c}{=}U\)</span>.</em></p>
-<h3 id="p-and-np"><span class="smallcaps">P</span> and <span class="smallcaps">NP</span></h3>
-<p><strong>Definition:</strong> <em>The complexity class <span class="smallcaps">P</span> is the set of all problems <span class="math inline">\(\mathcal{P}\)</span> that can be solved in polynomial time.</em><br />
-<br />
-<strong>Definition:</strong> <em>The complexity class <span class="smallcaps">NP</span> is the set of all problems <span class="math inline">\(\mathcal{P}\)</span> that can be verified in polynomial time when given a potential solution <span class="math inline">\(\pi\)</span> to an instance of the problem <span class="math inline">\(x\)</span>. Here <span class="math inline">\(\pi\)</span> acts as a proof of sorts for the membership of <span class="math inline">\(x\)</span> in the set of inputs with a solution for <span class="math inline">\(\mathcal{P}\)</span>.</em><br />
-<br />
-<em>Remark:</em> Given these defintions, we know that <span class="smallcaps">P</span> <span class="math inline">\(\subseteq\)</span> <span class="smallcaps">NP</span>. Why is this the case? If we could find the solution to a problem, then of course we could verify the validity of any solution to said problem! However, the literal million dollar question is does <a href="https://en.wikipedia.org/wiki/P_versus_NP_problem"><span class="smallcaps">P</span> <span class="math inline">\(=\)</span> <span class="smallcaps">NP</span>?</a></p>
 <h3 id="proof-systems">Proof Systems</h3>
 <p>Recall that a proof involves a prover and a verifier. Therefore, we have the following definition of a a proof system:<br />
 <br />
