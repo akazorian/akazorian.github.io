@@ -6,21 +6,25 @@ import re
 
 relative_path = os.getcwd()
 nav = '<li><a href="#{}">{}</a></li>\n'
+title = "<title>Alex Kazorian | {}</title>\n"
 
 def gen_file(File=None, FULLPATH=None, O=None, link=None):
     if FULLPATH != None:
-        gen_helper(FULLPATH)
+        gen_helper(FULLPATH, link)
     else:
-        gen_helper(File)
+        gen_helper(File, link)
 
-def gen_helper(File):
+def gen_helper(File, link):
     with open("temp.html", 'w+') as html:
         with open("template.html", 'r+') as temp:
             output = subprocess.check_output(["pandoc", "--from", "latex", "--to", "html5", "--mathjax", File])
             pattern = re.compile("<article class=\"markdown-body\">")
+            head = re.compile("<head>")
             for line in temp:
                 html.write(line)
-                if pattern.match(line):
+                if head.match(line):
+                    html.write(title.format(link.replace(".tex", "").replace("_", " ")))
+                elif pattern.match(line):
                     html.write(output.decode("utf-8"))
 
     with open("temp.html", 'r+') as html:
