@@ -254,4 +254,17 @@ $$\Pr\bigg[\begin{array}{c} (x, \pi) \leftarrow P^*(z) \\ V(x, \pi) = 1\end{arra
 \\
 \noindent \textit{Remark: } Here the proof $\pi$ is a proof of the statement "$w$ is a solution to $x$ for problem $\mathcal{P}$. Moreover, the funky notation for $E^{P^*}$ is saying that $E$ has "oracle" access to $P^*$. This means that $E$ can makes function calls to $P^*$.\\ \\
 \noindent $<$Wipes sweat from forehead$>$ There. zk-SNARKs. Done.
+
+\section*{3. The Real Thing: zk-SNARK}
+Again, I assume graduate level maturity complexity theory at the very least. I won't be going over any proofs in this section and so prior knowledge of cryptography is not entirely necessary. Lastly, this section will mostly act as a reference for the definition of zk-SNARKs as I have noticed that things are somewhat all over the place in the literature.
+
+\subsection*{3.1. Prerequisites}
+\subsubsection*{3.1.1. NP Relations}
+\textbf{Definition:} \textit{A relation $R$ for some language $\mathcal{L}$ is the set of instance, witness pairs $(x, w)$ such that $\mathcal{L}_{R} := \{x : \exists w s.t (x, w) \in R\}$.
+
+\scheck Can you define the class of languages \textsc{NP}?
+
+\textbf{Definition:} \textit{The universal relation $R_U$ is the set of instance, witness pairs $(x, w)$ where $x = (M, y, t)$. Here, $|x|, |w| \leq t$ and $M$ is a random access machine that accepts the input $(y, w)$ in $O(t)$ steps.}
+
+\textit{Remark: } $R_U$ is the relation for the universal language $\mathcal{L}_U$.
 \end{document}
