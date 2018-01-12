@@ -116,57 +116,61 @@ $(document).ready(function() {
 <div id="mySidenav" class="sidenav">
 <ul>
 <li><a href="#introduction">Introduction</a></li>
+<ul>
 <li><a href="#motivation">Motivation</a></li>
-<li><a href="#eli5-a-primer-for-the-average-person">ELI5: A Primer For The Average Person</a></li>
-<ul>
-<li><a href="#what-is-a-proof">What Is A Proof?</a></li>
-<li><a href="#what-is-knowledge">What Is Knowledge?</a></li>
-<li><a href="#what-does-it-mean-to-gain-knowledge">What Does It Mean To Gain Knowledge?</a></li>
-<li><a href="#bringing-it-all-together">Bringing It All Together</a></li>
 </ul>
-<li><a href="#diving-deeper-zk-snarks-for-the-curious">Diving Deeper: zk-SNARKS for the curious</a></li>
+<li><a href="#eli5-a-primer-for-the-average-person">1. ELI5: A Primer For The Average Person</a></li>
 <ul>
-<li><a href="#prerequisites">Prerequisites</a></li>
-<ul>
-<li><a href="#p-and-np"><span class="smallcaps">P</span> and <span class="smallcaps">NP</span></a></li>
-<li><a href="#algorithms-and-randomness">Algorithms and Randomness</a></li>
-<li><a href="#negligible-functions">Negligible Functions</a></li>
-<li><a href="#indistinguishability">Indistinguishability</a></li>
-<li><a href="#proof-systems">Proof Systems</a></li>
+<li><a href="#what-is-a-proof">1.1. What Is A Proof?</a></li>
+<li><a href="#what-is-knowledge">1.2. What Is Knowledge?</a></li>
+<li><a href="#what-does-it-mean-to-gain-knowledge">1.3. What Does It Mean To Gain Knowledge?</a></li>
+<li><a href="#bringing-it-all-together">1.4. Bringing It All Together</a></li>
 </ul>
-<li><a href="#adding-some-formalities">Adding Some Formalities</a></li>
+<li><a href="#diving-deeper-zk-snarks-for-the-curious">2. Diving Deeper: zk-SNARKS for the curious</a></li>
 <ul>
-<li><a href="#non-interactive-proof-systems">Non-interactive Proof Systems</a></li>
-<li><a href="#from-proof-systems-to-argument-systems">From Proof Systems to ARgument Systems</a></li>
-<li><a href="#succinctness">Succinctness</a></li>
-<li><a href="#zero-knowledge-and-the-simulation-paradigm">Zero-knowledge and the Simulation Paradigm</a></li>
-<li><a href="#zk-snar-of-knowledge">zk-SNAR of Knowledge</a></li>
+<li><a href="#prerequisites">2.1. Prerequisites</a></li>
+<ul>
+<li><a href="#p-and-np">2.1.1. <span class="smallcaps">P</span> and <span class="smallcaps">NP</span></a></li>
+<li><a href="#algorithms-and-randomness">2.1.2. Algorithms and Randomness</a></li>
+<li><a href="#negligible-functions">2.1.3. Negligible Functions</a></li>
+<li><a href="#indistinguishability">2.1.4. Indistinguishability</a></li>
+<li><a href="#proof-systems">2.1.5. Proof Systems</a></li>
+</ul>
+<li><a href="#adding-some-formalities">2.2. Adding Some Formalities</a></li>
+<ul>
+<li><a href="#non-interactive-proof-systems">2.2.1. Non-interactive Proof Systems</a></li>
+<li><a href="#from-proof-systems-to-argument-systems">2.2.2. From Proof Systems to ARgument Systems</a></li>
+<li><a href="#succinctness">2.2.3. Succinctness</a></li>
+<li><a href="#zero-knowledge-and-the-simulation-paradigm">2.2.4. Zero-knowledge and the Simulation Paradigm</a></li>
+<li><a href="#zk-snar-of-knowledge">2.2.5. zk-SNAR of Knowledge</a></li>
 </ul>
 </div>
 <div id="main">
 <span style="font-size:200%;cursor:pointer" onclick="nav()" class="openbutton">&#9776;</span>
 <article class="markdown-body">
 
-<h1 id="introduction">Introduction</h1>
+<h1 id="introduction" class="unnumbered unnumbered">Introduction</h1>
 <p>Whether or not we are in a cryptocurrency bubble is not what drives the discussion of zk-SNARKs. Yes, zcash is the currency that introduced many people to the topic of this write up; however, the effect of zk-SNARKs could be wider reaching than a cryptocurrency.<br />
 <br />
-This article will be broken up into three parts, each meant to explain the topic to a seperate audience. These audiences are: the average adult, an undergraduate focusing on computer science or math, and a graduate student interested in cryptography or some complexity theoritic topic or another. For all three audiences, it will be benefitial to know what zk-SNARK is an acronym of. Yeah it’s a catchy thing to say, but it is quite descriptive of an acronym. A zk-SNARK is a zero-knowledge, Succinct, Non-interactive, ARgument of Knowledge and that really is a mouthfull.</p>
-<h1 id="motivation">Motivation</h1>
+This article will be broken up into three parts, each meant to explain the topic to a seperate audience. These audiences are the average adult, an undergraduate focusing on computer science or math, and a graduate student interested in cryptography or some complexity theoritic topic or another. Below is a dependency graph to help in navigating the sections in this article. Note that the dotted line indicates that section two is a &quot;soft prerequisite&quot; for understanding section 3. This is because section 3 assumes graduate level maturity. If you are not comfortable with the material in this section, try revisiting it after reading section 2.</p>
+<p><img src="zk-SNARK_fig1" alt="image" /></p>
+<p>For all three audiences, it will be benefitial to know what zk-SNARK is an acronym of. Yeah it’s a catchy thing to say, but it is quite descriptive of an acronym. A zk-SNARK is a zero-knowledge, Succinct, Non-interactive, ARgument of Knowledge and that really is a mouthfull.</p>
+<h2 id="motivation" class="unnumbered unnumbered">Motivation</h2>
 <p>When trying to understand a cryptographic primitive it always helps to understand why it exists. In other words, what problem does it solve? In doing so, we will have the necessary motivation to drive future research and curiosity! Let’s get to it by first introducing our main characters Alice and Bob. Picture this: our protaganists reside in a dystopian society in the near future where government surveillance runs rampant. Alice and Bob are attempting to orchestrate a rebellion right under the nose of the black suits in office. They have found a hide out to base their operation from, but need a method of proving that a member knows the secret word for getting in. Moreover, no one should be able to learn the secret word or how to find it even if a third party person was listening in.</p>
-<h1 id="eli5-a-primer-for-the-average-person">ELI5: A Primer For The Average Person</h1>
+<h1 id="eli5-a-primer-for-the-average-person" class="unnumbered unnumbered">1. ELI5: A Primer For The Average Person</h1>
 <p>The above scenario is admittedly very contrived; however, the above can be reworded into the following problem: how can we prove the integrity of encrypted data? zk-SNARKS are the solution to this problem. To answer why, we first delve into understanding the notion of a proof and knowledge.</p>
-<h2 id="what-is-a-proof">What Is A Proof?</h2>
+<h2 id="what-is-a-proof" class="unnumbered unnumbered">1.1. What Is A Proof?</h2>
 <p>As humans, we prove statements every day. We do so without even considering what the definition of a proof is and so let us slow down to consider a proof of a mathematical statement. Such proofs have the following properties:</p>
 <ol>
 <li><p>They consist of a static sequence of statements that follow in some logical order. These statements are therefore either axioms of mathematics or are derivational rules.</p></li>
 <li><p>The proof itself is at least as important as the theorem it is proving.</p></li>
 </ol>
 <p>Now, this type of proof would not help us in answering our question of proving integrity over encrypted data. Why? Once the proof is read out loud, it is trivially replicable and recitable. Therefore, a third party can trick us of say their identity as a fellow rebel. Looking ahead at the solution, one aspect of mathematical proofs remains. There are two parties present in such a proof system: the Prover and the Verifier.</p>
-<h2 id="what-is-knowledge">What Is Knowledge?</h2>
+<h2 id="what-is-knowledge" class="unnumbered unnumbered">1.2. What Is Knowledge?</h2>
 <p>I’m no philosopher. Pass!</p>
-<h2 id="what-does-it-mean-to-gain-knowledge">What Does It Mean To Gain Knowledge?</h2>
+<h2 id="what-does-it-mean-to-gain-knowledge" class="unnumbered unnumbered">1.3. What Does It Mean To Gain Knowledge?</h2>
 <p>Informally, one gains no knowledge from an interaction if and only if said person does not receive the proof for something that was otherwise infeasible for them to find themselves. For example, if someone told me that <span class="math inline">\(1 + 1 = 2\)</span>, then I have gained no knowledge because I can do at least that much arithmetic. If, however, someone were to show me a proof of extraterrestial life forms, then I have certainly gained some knowledge.</p>
-<h2 id="bringing-it-all-together">Bringing It All Together</h2>
+<h2 id="bringing-it-all-together" class="unnumbered unnumbered">1.4. Bringing It All Together</h2>
 <p>We now possess the necessary intuition to derive an informal definition of a zk-SNARK. Recall that we know the following:</p>
 <ul>
 <li><p>We want to derive a protocol that can allow for proving knowledge of a secret without anyone learning the proof itself.</p></li>
@@ -180,25 +184,25 @@ This article will be broken up into three parts, each meant to explain the topic
 <li><p><em>Non-interactive:</em> The verifier and prover are not engaged in a &quot;back-and-forth&quot; conversation.</p></li>
 <li><p><em>ARgument of Knowledge:</em> The prover is able to show that they have knowledge of something. In our case, it would be the secret word.</p></li>
 </ul>
-<h1 id="diving-deeper-zk-snarks-for-the-curious">Diving Deeper: zk-SNARKS for the curious</h1>
+<h1 id="diving-deeper-zk-snarks-for-the-curious" class="unnumbered unnumbered">2. Diving Deeper: zk-SNARKS for the curious</h1>
 <p>We all ideally understand zk-SNARKs at the level of an average person, but we’ll be formalizing the above notions for those of us who remain curious. I want to be very clear that the definition outlined in this section is <strong>not</strong> complete and is ignoring some very small technical details that are integral to the study of zk-SNARKs. The decision to omit these details is, in my opinion, necessary to able to discuss this primitive at the level of an undergraduate in Computer Science or mathematics without explaining everything taught in a graduate cryptography course. With that out of the way, let’s brush up on some necessary background material!</p>
-<h2 id="prerequisites">Prerequisites</h2>
+<h2 id="prerequisites" class="unnumbered unnumbered">2.1. Prerequisites</h2>
 <p><strong>Note:</strong> I will be assuming knowledge of <a href="https://en.wikipedia.org/wiki/Asymptotic_analysis">asymptotic analysis</a> and the level of mathematical maturity after having taken a discrete mathematics course.</p>
-<h3 id="p-and-np"><span class="smallcaps">P</span> and <span class="smallcaps">NP</span></h3>
+<h3 id="p-and-np" class="unnumbered unnumbered">2.1.1. <span class="smallcaps">P</span> and <span class="smallcaps">NP</span></h3>
 <p><strong>Definition:</strong> <em>The complexity class <span class="smallcaps">P</span> is the set of all problems <span class="math inline">\(\mathcal{P}\)</span> that can be solved in polynomial time.</em><br />
 <br />
 <strong>Definition:</strong> <em>The complexity class <span class="smallcaps">NP</span> is the set of all problems <span class="math inline">\(\mathcal{P}\)</span> that can be verified in polynomial time when given a potential solution <span class="math inline">\(\pi\)</span> to an instance of the problem <span class="math inline">\(x\)</span>. Here <span class="math inline">\(\pi\)</span> acts as a proof of sorts for the membership of <span class="math inline">\(x\)</span> in the set of inputs with a solution for <span class="math inline">\(\mathcal{P}\)</span>.</em><br />
 <br />
 <em>Remark:</em> Given these defintions, we know that <span class="smallcaps">P</span> <span class="math inline">\(\subseteq\)</span> <span class="smallcaps">NP</span>. Why is this the case? If we could find the solution to a problem, then of course we could verify the validity of any solution to said problem! However, the literal million dollar question is does <a href="https://en.wikipedia.org/wiki/P_versus_NP_problem"><span class="smallcaps">P</span> <span class="math inline">\(=\)</span> <span class="smallcaps">NP</span>?</a></p>
-<h3 id="algorithms-and-randomness">Algorithms and Randomness</h3>
+<h3 id="algorithms-and-randomness" class="unnumbered unnumbered">2.1.2. Algorithms and Randomness</h3>
 <p>We later define our prover and verifier in terms of an algorithm and so we need to introduce some notation. An algorithm is said to accept its input if it outputs one after halting. On the other hand, if an algorithm outputs 0, then we say it rejected its input. Lastly, an important class of algorithms to consider are probabilistic polynomial time algorithms. These are algorithms that terminate in a polynomial number of steps but are allowed some randomness. This randomness is expressed through an algorithms ability to flip coins. Therefore, the probability of an event occuring related to a probabilistic polynomial time algorithm is always over the random coin tosses said algorithm has access to.</p>
-<h3 id="negligible-functions">Negligible Functions</h3>
+<h3 id="negligible-functions" class="unnumbered unnumbered">2.1.3. Negligible Functions</h3>
 <p>A negligible function is something that is thrown around <em>all the time</em> in the cryptographic literature. It is absolutely essential to know what functions are negligible. We should all be asking why are negligible functions used so often? The answer lies in the necessity to capture the notion of certain events being so unlikely that we need not consider them. Such events include breaking the security of algorithms which we discuss in the section regarding indistinguishability.<br />
 <br />
 An intuitive explanation of an event being unlikely is something like a function being exponentially small. In other words a function is small if it grows slower than <em>every</em> polynomial function. This is a definition that we decided on because it satisfies our needs.<br />
 <br />
 <strong>Definition:</strong> <em>A function <span class="math inline">\(\mu\)</span> is negligible if and only if <span class="math inline">\(\forall{c} \in {\mathbf N}\)</span>, <span class="math inline">\(\exists n_0 \in {\mathbf N}\)</span> such that <span class="math inline">\(\forall n \geq n_0\)</span> it is the case that <span class="math inline">\(\mu(n) &lt; n^{-c}\)</span>.</em></p>
-<h3 id="indistinguishability">Indistinguishability</h3>
+<h3 id="indistinguishability" class="unnumbered unnumbered">2.1.4. Indistinguishability</h3>
 <p>Cryptography would be useless if we cannot guarantee the security of our primitives when under attack by adversaries. Most cryptographic primitives (if not all) are randomized algorithms. In effect, they are allowed to flip some number of coins during their execution. Because our primitives are randomized algorithms, they output a random variable with some distribution. Ideally, this random variable would distributed uniformally.<br />
 <br />
 <strong><em><span style="color: red">Sanity Check:</span></em></strong> Why would we want the distribution of the random variable outputted by some cryptographic primitive to be distributed uniformally?<br />
@@ -210,7 +214,7 @@ There are three notions of indistinguishability and they are in order of decreas
 <strong>Definition:</strong> <em>A random variable <span class="math inline">\(X\)</span> is statistically indistinguishable from the uniform distribution <span class="math inline">\(U\)</span> if the <a href="https://en.wikipedia.org/wiki/Total_variation_distance_of_probability_measures">total variation distance between</a> <span class="math inline">\(X\)</span> and <span class="math inline">\(U\)</span> is negligible. Intuitivally, this is an information theoretic argument saying that there does not exist a function or algorithm that can pull these two distributions any further apart. The notation used for this is <span class="math inline">\(X \stackrel{\Delta}{=}U\)</span>.</em><br />
 <br />
 <strong>Definition:</strong> <em>A random variable <span class="math inline">\(X\)</span> is computationally indistinguishable from the uniform distribution <span class="math inline">\(U\)</span> if for every probabilistic polynomial time algorithm <span class="math inline">\(A\)</span> and for all security parameter <span class="math inline">\(k \in {\mathbf N}\)</span>:</em> <span class="math display">\[\bigg\lvert \Pr[D(X) = 1] - \Pr[D(U) = 1]\bigg\rvert = \text{ negl}(k)\]</span> <em>The notation used for this is <span class="math inline">\(X \stackrel{c}{=}U\)</span>.</em></p>
-<h3 id="proof-systems">Proof Systems</h3>
+<h3 id="proof-systems" class="unnumbered unnumbered">2.1.5. Proof Systems</h3>
 <p>Recall that a proof involves a prover and a verifier. Therefore, we have the following definition of a a proof system:<br />
 <br />
 <strong>Definition:</strong> <em>A proof system is a pair of algorithms <span class="math inline">\((P, V)\)</span> for a problem <span class="math inline">\(\mathcal{P}\)</span> such that below properties are satisfied:</em></p>
@@ -222,29 +226,29 @@ There are three notions of indistinguishability and they are in order of decreas
 <p><em>Remark:</em> We allow the verifier to fail with a probability of a third for completeness because we repeat the protocol for any proof system to drive down the probability of failure. A similar argument can be made for the error probability of the soundness property.<br />
 <br />
 </p>
-<h2 id="adding-some-formalities">Adding Some Formalities</h2>
+<h2 id="adding-some-formalities" class="unnumbered unnumbered">2.2. Adding Some Formalities</h2>
 <p>We are not too far from being able to have some formality when discussing the definition of a zk-SNARK. At this point, we only really have a basic proof system. We’re missing quite a bit from our zk-SNARK acronym so let us dive right in!</p>
-<h3 id="non-interactive-proof-systems">Non-interactive Proof Systems</h3>
+<h3 id="non-interactive-proof-systems" class="unnumbered unnumbered">2.2.1. Non-interactive Proof Systems</h3>
 <p>Because I don’t expect everyone to know what an interactive proof system is, the above definition for a proof system suffices for the level of understanding we are going for with zk-SNARKs in this section. Do note that the above definition is missing a detail that will be touched on extensively in the last section of this write up.</p>
-<h3 id="from-proof-systems-to-argument-systems">From Proof Systems to ARgument Systems</h3>
+<h3 id="from-proof-systems-to-argument-systems" class="unnumbered unnumbered">2.2.2. From Proof Systems to ARgument Systems</h3>
 <p>Looking back at our property for efficiency of a proof system, its clear that I did not specify any requirements for the prover. This is because in many proof systems, we do not care about how long it takes for the prover to come up with the a proof. In real life, all I care about is if I am convinced. Yes, this is quite selfish but such is life. Instead, we want an efficient verification process; therefore, the majority of the work falls on the shoulders of the prover in a proof system. A prover is computationally unbounded often times for this very reason. Now, this is interesting. There is a clear discrepancy between the amount of work expected of the prover and the amount of work expected of the verifier, but this imbalance in power or efficiency should remind us of something––<span class="smallcaps">NP</span>! The complexity class <span class="smallcaps">NP</span> can be thought of a class for problems with a proof system.<br />
 <br />
 <strong><em><span style="color: red">Sanity Check:</span></em></strong> Can you define the complexity class <span class="smallcaps">NP</span> in terms of a proof system? Don’t be afraid to redefine soundness and completeness to satisfy <em>your</em> needs. This is math and as mathematicians, we are the wizards!<br />
 <br />
 This is all great, but do we really have unlimited time for provers. Say you are able to verify something quickly. If the prover cannot supply me with a proof to verify before life on Earth ends, then what good is our proof system. There are reasons to consider proof systems for which the prover is computationally unbounded; however, we can relax our definition of a proof system by requiring that the prover is computationally bounded. One might ask: &quot;how is this a relaxation of the problem?&quot; Well our definition will now account for a set of provers that is less powerful. Therefore, possibly malicious provers are also less powerful and the above properties are easier to satisfy. We refer to this &quot;relaxed&quot; definition as a Computationally Sound Non-interactive Proof or a Non-interactive ARgument. Woohoo, we have NAR!</p>
-<h3 id="succinctness">Succinctness</h3>
+<h3 id="succinctness" class="unnumbered unnumbered">2.2.3. Succinctness</h3>
 <p>The proofs the verifier receives should ideally be small. Why? A smaller proof that satisfies the above conditions for a NAR can only improve the efficiency of the verifier. So the question to ask is more along the lines of why wouldn’t we want this? More formally, we add the following property to our NAR:</p>
 <p>5. <em>Succinctness: The size of the proof is polynomial in the size of the problem instance. In other words, for an instance <span class="math inline">\(x\)</span> of problem <span class="math inline">\(\mathcal{P}\)</span>, <span class="math inline">\(\pi = p(\lvert x \rvert)\)</span> for some polynomial <span class="math inline">\(p\)</span> where <span class="math inline">\(\pi\)</span> is the output of <span class="math inline">\(P(x)\)</span>.</em><br />
 <br />
 The scoreboard has us at SNAR. What’s left?</p>
-<h3 id="zero-knowledge-and-the-simulation-paradigm">Zero-knowledge and the Simulation Paradigm</h3>
+<h3 id="zero-knowledge-and-the-simulation-paradigm" class="unnumbered unnumbered">2.2.4. Zero-knowledge and the Simulation Paradigm</h3>
 <p>Previously, we defined the property of zero-knowledge to be such that &quot;the verifier does not learn the prover’s proof and cannot use it later&quot;. We have some new tools in our tool belt and we will use them to formulate a definition that satisfies <em>our</em> needs. First, what does it mean to &quot;learn&quot; a proof? I argue that this means the verifier is able to replicate the proof for any input with a satisfying solution to the problem our proof system is defined under. How can we guarantee this cannot happen?<br />
 <br />
 In a non-interactive proof system, the verifier sees only the proof <span class="math inline">\(\pi\)</span> and the input <span class="math inline">\(x\)</span>. If the verifier learns nothing outside of these two from the protocol, then there is no way the verifier could have learned the proof. To formalize this notion, we introduce the idea of a simulator. A simulator <span class="math inline">\(S\)</span> is an algorithm that outputs a random variable. Because the output of the protocol between the prover and verifier is a random variable as well, we want the distribution of these random variables to be indistinguishable. The level of indistinguishability can vary meaning that our proof system can have perfect, statistical, or computational zero-knowledge. More formally,<br />
 <br />
 <strong>Definition:</strong> <em>A proof system <span class="math inline">\((P, V)\)</span> for a problem <span class="math inline">\(\mathcal{P}\)</span> is zero-knowledge if there exists a probabilistic polynomial time simulator <span class="math inline">\(S\)</span> such that for all <span class="math inline">\(x\)</span> with solutions to <span class="math inline">\(\mathcal{P}\)</span>,</em> <span class="math display">\[\{x, P(x)\} \stackrel{p/\Delta/c}{=} S(x)\]</span><br />
 <strong><em><span style="color: red">Sanity Check: </span></em></strong>I heavily relied on notational macros to shorten the definition. Rewrite the definition for the three different notions of zero-knowledge more explicitly. Once you have done this, we now have zk-SNARs. One more letter...</p>
-<h3 id="zk-snar-of-knowledge">zk-SNAR of Knowledge</h3>
+<h3 id="zk-snar-of-knowledge" class="unnumbered unnumbered">2.2.5. zk-SNAR of Knowledge</h3>
 <p>Thus far, we have discussed proof systems for which a prover can prove whether or not a statement is true. Just as a reminder, the statements are asked by the verifier and are of the form &quot;does <span class="math inline">\(x\)</span> have a solution to the problem <span class="math inline">\(\mathcal{P}\)</span>&quot;. Therefore, with our current definitions, we can answer the question &quot;is <span class="math inline">\(x\)</span> the secret word for entrance?&quot; Really we want someone to prove why <span class="math inline">\(x\)</span> is the secret word for entrance. This is the idea behind a proof of knowledge.<br />
 <br />
 Now, we need to formulaize this notion of the prover &quot;knowing a secret&quot;. Recall that the zero-knowledge property of the proof system we are working with is such that the prover is not going to just reveal their proofs of <em>anything</em>. However, if a prover knows something, then we should be able to extract it. More formally,<br />
