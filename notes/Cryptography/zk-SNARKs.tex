@@ -256,15 +256,18 @@ $$\Pr\bigg[\begin{array}{c} (x, \pi) \leftarrow P^*(z) \\ V(x, \pi) = 1\end{arra
 \noindent $<$Wipes sweat from forehead$>$ There. zk-SNARKs. Done.
 
 \section*{3. The Real Thing: zk-SNARK}
-Again, I assume graduate level maturity complexity theory at the very least. I won't be going over any proofs in this section and so prior knowledge of cryptography is not entirely necessary. Lastly, this section will mostly act as a reference for the definition of zk-SNARKs as I have noticed that things are somewhat all over the place in the literature.
+Again, I assume graduate level maturity of complexity theory and cryptography. This really is an advanced primitive and requires a delicate treatment of the definitions of simpler primitives.
 
 \subsection*{3.1. Prerequisites}
+
 \subsubsection*{3.1.1. NP Relations}
-\textbf{Definition:} \textit{A relation $R$ for some language $\mathcal{L}$ is the set of instance, witness pairs $(x, w)$ such that $\mathcal{L}_{R} := \{x : \exists w s.t (x, w) \in R\}$.
+\textbf{Definition:} \textit{A relation $R$ for some language $\mathcal{L}$ is the set of instance, witness pairs $(x, w)$ such that $\mathcal{L}_{R} := \{x : \exists w s.t (x, w) \in R\}$}.
 
 \scheck Can you define the class of languages \textsc{NP}?
 
 \textbf{Definition:} \textit{The universal relation $R_U$ is the set of instance, witness pairs $(x, w)$ where $x = (M, y, t)$. Here, $|x|, |w| \leq t$ and $M$ is a random access machine that accepts the input $(y, w)$ in $O(t)$ steps.}
 
 \textit{Remark: } $R_U$ is the relation for the universal language $\mathcal{L}_U$.
+\subsubsection*{3.1.2. Common Reference String Model}
+In section 2, the definition of Non-interactive Proof Systems was said to be missing something. It's missing randomness. Think about it. A non-interactive proof system with no randomness is unidirectional and gives no leeway to have a zero-knowledge property. Why? The prover could only prove their statement 
 \end{document}
