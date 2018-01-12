@@ -55,6 +55,9 @@
 \usepackage{graphicx}
 \usepackage{csquotes}
 \usepackage{hyperref}
+\usepackage[backend=biber,style=alphabetic,sorting=anyt]{biblatex}
+\bibliography{zk-SNARKs}
+\renewcommand*{\bibfont}{\small}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -269,5 +272,5 @@ Again, I assume graduate level maturity of complexity theory and cryptography. T
 
 \textit{Remark: } $R_U$ is the relation for the universal language $\mathcal{L}_U$.
 \subsubsection*{3.1.2. Common Reference String Model}
-In section 2, the definition of Non-interactive Proof Systems was said to be missing something. It's missing randomness. Think about it. A non-interactive proof system with no randomness is unidirectional and gives no leeway to have a zero-knowledge property. Why? The prover could only prove their statement 
+In section 2 \cite{QSP}, the definition of Non-interactive Proof Systems was said to be missing something. It's missing randomness. Think about it. A non-interactive proof system with no randomness is unidirectional and gives no leeway to have a zero-knowledge property. Why? The prover could only prove their statement
 \end{document}
