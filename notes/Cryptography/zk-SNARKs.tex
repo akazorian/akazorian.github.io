@@ -144,7 +144,6 @@
 \title{zk-SNARKs}
 \author{Alex Kazorian}
 \date{\today}
-\graphicspath{ {/} }
 
 \begin{document}
 \maketitle
@@ -264,13 +263,27 @@ Again, I assume graduate level maturity of complexity theory and cryptography. T
 \subsection*{3.1. Prerequisites}
 
 \subsubsection*{3.1.1. NP Relations}
-\textbf{Definition:} \textit{A relation $R$ for some language $\mathcal{L}$ is the set of instance, witness pairs $(x, w)$ such that $\mathcal{L}_{R} := \{x : \exists w s.t (x, w) \in R\}$}.
+\textbf{Definition:} \textit{A relation $R$ for some language $\mathcal{L}$ is the set of instance, witness pairs $(x, w)$ such that $\mathcal{L}_{R} := \{x : \exists w \text{ s.t } (x, w) \in R\}$}.
 
 \scheck Can you define the class of languages \textsc{NP}?
 
 \textbf{Definition:} \textit{The universal relation $R_U$ is the set of instance, witness pairs $(x, w)$ where $x = (M, y, t)$. Here, $|x|, |w| \leq t$ and $M$ is a random access machine that accepts the input $(y, w)$ in $O(t)$ steps.}
 
 \textit{Remark: } $R_U$ is the relation for the universal language $\mathcal{L}_U$.
-\subsubsection*{3.1.2. Common Reference String Model}
-In section 2, the definition of Non-interactive Proof Systems was said to be missing something. It's missing randomness. Think about it. A non-interactive proof system with no randomness is unidirectional and gives no leeway to have a zero-knowledge property. Why? The prover could only prove their statement
+\subsection*{3.1.2. Common Reference String Model}
+In section 2, the definition of Non-interactive Zero-Knowledge Proof Systems (NIZK) was said to be missing something. It's missing randomness. Think about it. A non-interactive proof system with no randomness is unidirectional and doesn't give us much room for growth outside of simplistic \textsc{NP} proofs where zero-knowledge is not attainable. There are a few commonly used models for constructing NIZKs and the one we will be focusing on here is known as the Common Reference String model (CRS). \\ \\
+\noindent In this model, both the verifier and prover have access to a common source of randomness that is trusted to be uniformly distributed. With this in mind, the definition for a Non-Interactive proof system with the Zero-Knowledge property is not too different from the one presented in section 2. \\ \\
+\noindent \textbf{Definition:} \textit{A NIZK for a language $\mathcal{L}$ is a triplet of probabilistic algorithms $(G, P, V)$ such that,}
+\begin{itemize}
+    \item Efficiency: \textit{For every sufficiently large security parameter $k \in \N$, $G$ and $V$ are \textsc{PPT} algorithms.}
+    \item Completeness: \textit{For every sufficiently large security parameter $k \in \N$, $\forall{x} \in \mathcal, \forall x$ s.t  $(x, w) \in R_{\mathcal{L}}$},
+    $$\Pr\bigg[V(x, \pi, \sigma) = 1 \bigg\vert \begin{array}{c}\sigma \leftarrow G(1^k) \\ \pi \leftarrow P(x, w, \sigma)\end{array}\bigg] = 1$$
+    \item (Non-adaptive) Soundness: \textit{For every sufficiently large security parameter $k \in \N$, for every probabilistic prover $P^*$, $\forall{(x, w)} \not \in R$,}
+    $$\Pr\bigg[V(x, \pi, \sigma) = 1 \bigg\vert \begin{array}{c}\sigma \leftarrow G(1^k) \\ \pi \leftarrow P^*(x, w, \sigma)\end{array}\bigg] = \text{negl}(k)$$
+\end{itemize}
+The property of non-adaptive soundness is simply saying that a possibly malicious prover $P^*$ cannot choose an adversarial $x$ after seeing the common reference string $\sigma$. Of course, this is a weaker guarantee of soundness than one where an adversarial $x$ can be chosen \textit{after} seeing the shared randomness. This stronger soundness notion is as follows for a triplet $(G, P, V)$,
+\begin{itemize}
+    \item  (Adaptive) Soundness: \textit{For every sufficiently large security parameter $k \in \N$, for every probabilistic prover $P^*$,}
+    $$\Pr\bigg[\begin{array}{c}\not \exists w, \text{ s.t } (x, w) \\ V(x, \pi, \sigma) = 1 \in R_{\mathcal{L}} \end{array} \bigg\vert \begin{array}{c} \sigma \leftarrow G(1^k) \\ (x, \pi) \leftarrow P^*(\sigma)\end{array}\bigg]$$
+\end{itemize}
 \end{document}
