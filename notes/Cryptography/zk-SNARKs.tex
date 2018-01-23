@@ -270,7 +270,7 @@ Again, I assume graduate level maturity of complexity theory and cryptography. T
 \textbf{Definition:} \textit{The universal relation $R_U$ is the set of instance, witness pairs $(x, w)$ where $x = (M, y, t)$. Here, $|x|, |w| \leq t$ and $M$ is a random access machine that accepts the input $(y, w)$ in $O(t)$ steps.}
 
 \textit{Remark: } $R_U$ is the relation for the universal language $\mathcal{L}_U$.
-\subsubection*{3.1.2. Common Reference String Model}
+\subsubsection*{3.1.2. Common Reference String Model}
 In section 2, the definition of Non-interactive Zero-Knowledge Proof Systems (NIZK) was said to be missing something. It's missing randomness. Think about it. A non-interactive proof system with no randomness is unidirectional and doesn't give us much room for growth outside of simplistic \textsc{NP} proofs where zero-knowledge is not attainable. There are a few commonly used models for constructing NIZKs and the one we will be focusing on here is known as the Common Reference String model (CRS). \\ \\
 \noindent In this model, both the verifier and prover have access to a common source of randomness that is trusted to be uniformly distributed. With this in mind, the definition for a Non-Interactive proof system with the Zero-Knowledge property is not too different from the one presented in section 2. \\ \\
 \noindent \textbf{Definition:} \textit{A NIZK for a language $\mathcal{L}$ is a triplet of probabilistic algorithms $(G, P, V)$ such that,}
