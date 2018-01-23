@@ -284,7 +284,7 @@ In section 2, the definition of Non-interactive Zero-Knowledge Proof Systems (NI
 The property of non-adaptive soundness is simply saying that a possibly malicious prover $P^*$ cannot choose an adversarial $x$ after seeing the common reference string $\sigma$. Of course, this is a weaker guarantee of soundness than one where an adversarial $x$ can be chosen \textit{after} seeing the shared randomness. This stronger soundness notion is as follows for a triplet $(G, P, V)$,
 \begin{itemize}
     \item  (Adaptive) Soundness: \textit{For every sufficiently large security parameter $k \in \N$, for every probabilistic prover $P^*$,}
-    $$\Pr\bigg[\begin{array}{c}\not \exists w, \text{ s.t } (x, w) \\ V(x, \pi, \sigma) = 1 \in R_{\mathcal{L}} \end{array} \bigg\vert \begin{array}{c} \sigma \leftarrow G(1^k) \\ (x, \pi) \leftarrow P^*(\sigma)\end{array}\bigg]$$
+    $$\Pr\bigg[\begin{array}{c}\not \exists w, \text{ s.t } (x, w) \\ V(x, \pi, \sigma) = 1 \in R_{\mathcal{L}} \end{array} \bigg\vert \begin{array}{c} \sigma \leftarrow G(1^k) \\ (x, \pi) \leftarrow P^*(\sigma)\end{array}\bigg] = \text{negl}(k)$$
 \end{itemize}
 \textit{Remark: } A Non-Interactive Zero-Knowledge Proof is such that the prover $P$ is computationally unbounded. However, a Non-Interactive Zero-Knowledge Argument assumes that the prover $P$ is a \textsc{PPT} algorithm. Recall that zk-SNARKs are arguments and as such the prover $P$ is a \textsc{PPT}.
 \subsection*{3.2. What is Left?}
