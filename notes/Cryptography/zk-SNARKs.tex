@@ -276,7 +276,7 @@ In section 2, the definition of Non-interactive Zero-Knowledge Proof Systems (NI
 \noindent \textbf{Definition:} \textit{A NIZK for a language $\mathcal{L}$ is a triplet of probabilistic algorithms $(G, P, V)$ such that,}
 \begin{itemize}
     \item Efficiency: \textit{For every sufficiently large security parameter $k \in \N$, $G$ and $V$ are \textsc{PPT} algorithms.}
-    \item Completeness: \textit{For every sufficiently large security parameter $k \in \N$, $\forall{x} \in \mathcal, \forall x$ s.t  $(x, w) \in R_{\mathcal{L}}$},
+    \item Completeness: \textit{For every sufficiently large security parameter $k \in \N$, $\forall{x} \in \mathcal{L}$ s.t  $(x, w) \in R_{\mathcal{L}}$},
     $$\Pr\bigg[V(x, \pi, \sigma) = 1 \bigg\vert \begin{array}{c}\sigma \leftarrow G(1^k) \\ \pi \leftarrow P(x, w, \sigma)\end{array}\bigg] = 1$$
     \item (Non-adaptive) Soundness: \textit{For every sufficiently large security parameter $k \in \N$, for every probabilistic prover $P^*$, $\forall{(x, w)} \not \in R_{\mathcal{L}}$,}
     $$\Pr\bigg[V(x, \pi, \sigma) = 1 \bigg\vert \begin{array}{c}\sigma \leftarrow G(1^k) \\ \pi \leftarrow P^*(x, w, \sigma)\end{array}\bigg] = \text{negl}(k)$$
@@ -286,4 +286,7 @@ The property of non-adaptive soundness is simply saying that a possibly maliciou
     \item  (Adaptive) Soundness: \textit{For every sufficiently large security parameter $k \in \N$, for every probabilistic prover $P^*$,}
     $$\Pr\bigg[\begin{array}{c}\not \exists w, \text{ s.t } (x, w) \\ V(x, \pi, \sigma) = 1 \in R_{\mathcal{L}} \end{array} \bigg\vert \begin{array}{c} \sigma \leftarrow G(1^k) \\ (x, \pi) \leftarrow P^*(\sigma)\end{array}\bigg]$$
 \end{itemize}
+\textit{Remark: } A Non-Interactive Zero-Knowledge Proof is such that the prover $P$ is computationally unbounded. However, a Non-Interactive Zero-Knowledge Argument assumes that the prover $P$ is a \textsc{PPT} algorithm. Recall that zk-SNARKs are arguments and as such the prover $P$ is a \textsc{PPT}.
+\subsection*{3.2. What is Left?}
+We now have defined zero-knowledge proofs in the non-interactive setting under the CRS model. We have yet to define the \textit{succinctness} and \textit{argument of knowledge} properties of a zk-SNARK.
 \end{document}
